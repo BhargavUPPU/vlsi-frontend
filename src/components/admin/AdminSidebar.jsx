@@ -75,56 +75,58 @@ export default function AdminSidebar() {
   };
 
   return (
-    <aside className="w-64 min-h-screen bg-white border-r shadow-sm flex flex-col">
-      {/* Header with gradient */}
-      <div className="bg-gradient-to-br from-blue-600 to-indigo-700 px-4 py-5 border-b border-blue-700">
+    <aside className="w-72 h-screen bg-white border-r border-gray-200 flex flex-col shadow-lg">
+      {/* Header with gradient - Fixed */}
+      <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 px-6 py-6 border-b border-blue-700 shadow-xl">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm shadow-lg">
-            <Cpu className="h-6 w-6 text-white" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm shadow-lg ring-2 ring-white/30">
+            <Cpu className="h-7 w-7 text-white" />
           </div>
           <div className="flex-1 text-left">
-            <span className="block font-bold text-white text-lg">VLSI Admin</span>
-            <span className="block text-xs text-blue-100">GVPCE(A)</span>
+            <span className="block font-bold text-white text-xl tracking-tight">VLSI Admin</span>
+            <span className="block text-xs text-blue-100 font-medium">GVPCE(A)</span>
           </div>
         </div>
       </div>
-      <nav className="flex-1 px-3 py-6 overflow-y-auto">
-        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
-          Menu
+
+      {/* Navigation Menu - Scrollable */}
+      <nav className="flex-1 px-4 py-6 overflow-y-auto custom-scrollbar">
+        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 px-3">
+          Navigation
         </div>
-        <ul className="space-y-1">
+        <ul className="space-y-1.5">
           {menuItems.map((item) => (
             <li key={item.title}>
               {item.items ? (
                 <>
                   <button
-                    className={`flex items-center w-full px-3 py-2.5 rounded-lg transition-all duration-200 ${
+                    className={`flex items-center w-full px-4 py-3 rounded-xl transition-all duration-200 group ${
                       open === item.title 
-                        ? "bg-blue-50 text-blue-700 font-semibold" 
-                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 font-semibold shadow-sm" 
+                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
                     }`}
                     onClick={() => handleToggle(item.title)}
                   >
-                    {item.icon && <item.icon className={`h-5 w-5 mr-3 ${
-                      open === item.title ? "text-blue-600" : "text-gray-500"
+                    {item.icon && <item.icon className={`h-5 w-5 mr-3 transition-colors ${
+                      open === item.title ? "text-blue-600" : "text-gray-500 group-hover:text-gray-700"
                     }`} />}
                     <span className="flex-1 text-left text-sm">{item.title}</span>
                     <ChevronDown
-                      className={`h-4 w-4 transition-transform duration-200 ${
-                        open === item.title ? "rotate-180 text-blue-600" : "text-gray-400"
+                      className={`h-4 w-4 transition-all duration-200 ${
+                        open === item.title ? "rotate-180 text-blue-600" : "text-gray-400 group-hover:text-gray-600"
                       }`}
                     />
                   </button>
                   {open === item.title && (
-                    <ul className="ml-8 mt-2 space-y-1 border-l-2 border-gray-200 pl-4">
+                    <ul className="ml-6 mt-2 space-y-1 border-l-2 border-blue-200 pl-4">
                       {item.items.map((sub) => (
                         <li key={sub.title}>
                           <Link
                             href={sub.url}
-                            className={`block px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+                            className={`block px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
                               pathname === sub.url
-                                ? "bg-blue-600 text-white font-semibold shadow-sm"
-                                : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-md transform scale-105"
+                                : "text-gray-600 hover:bg-blue-50 hover:text-blue-700 hover:translate-x-1"
                             }`}
                           >
                             {sub.title}
@@ -137,10 +139,10 @@ export default function AdminSidebar() {
               ) : (
                 <Link
                   href={item.url}
-                  className={`flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                  className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group ${
                     pathname === item.url 
-                      ? "bg-blue-600 text-white font-semibold shadow-sm" 
-                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg transform scale-105" 
+                      : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm"
                   }`}
                 >
                   {item.icon && <item.icon className={`h-5 w-5 mr-3 transition-colors ${
@@ -153,12 +155,31 @@ export default function AdminSidebar() {
           ))}
         </ul>
       </nav>
-      <div className="p-4 border-t bg-gray-50/50 mt-auto">
-        <button className="flex items-center w-full px-3 py-2.5 rounded-lg hover:bg-red-50 hover:text-red-600 transition-all duration-200 text-gray-700 font-medium group">
+
+      {/* Logout Button - Fixed at bottom */}
+      <div className="p-4 border-t border-gray-200 bg-gradient-to-br from-gray-50 to-white">
+        <button className="flex items-center w-full px-4 py-3 rounded-xl hover:bg-red-50 hover:text-red-600 transition-all duration-200 text-gray-700 font-medium group shadow-sm hover:shadow-md">
           <LogOut className="h-5 w-5 mr-3 text-gray-500 group-hover:text-red-600 transition-colors" />
           <span className="text-sm">Logout</span>
         </button>
       </div>
+
+      {/* Custom Scrollbar Styles */}
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
+        }
+      `}</style>
     </aside>
   );
 }

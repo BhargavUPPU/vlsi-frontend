@@ -28,6 +28,11 @@ function ImageUploadField({
   const [preview, setPreview] = useState(existingImage || null);
   const [dragActive, setDragActive] = useState(false);
 
+  // Update preview when existingImage prop changes (e.g., when data loads)
+  useEffect(() => {
+    setPreview(existingImage || null);
+  }, [existingImage]);
+
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -150,19 +155,24 @@ function ArrayField({
   const [inputValue, setInputValue] = useState('');
   const [items, setItems] = useState(value);
 
+  // Update items when value prop changes (e.g., when data loads)
   useEffect(() => {
-    onChange(items);
-  }, [items]);
+    setItems(value);
+  }, [value]);
 
   const addItem = () => {
     if (inputValue.trim()) {
-      setItems([...items, inputValue.trim()]);
+      const newItems = [...items, inputValue.trim()];
+      setItems(newItems);
+      onChange(newItems);
       setInputValue('');
     }
   };
 
   const removeItem = (index) => {
-    setItems(items.filter((_, i) => i !== index));
+    const newItems = items.filter((_, i) => i !== index);
+    setItems(newItems);
+    onChange(newItems);
   };
 
   const handleKeyPress = (e) => {
@@ -240,6 +250,11 @@ function MultipleImagesField({
   const [previews, setPreviews] = useState(existingImages);
   const [dragActive, setDragActive] = useState(false);
 
+  // Update previews when existingImages prop changes (e.g., when data loads)
+  useEffect(() => {
+    setPreviews(existingImages);
+  }, [existingImages]);
+
   const handleFilesChange = (e) => {
     const files = Array.from(e.target.files || []);
     processFiles(files);
@@ -268,7 +283,7 @@ function MultipleImagesField({
           if (newPreviews.length === files.length) {
             const updatedPreviews = [...previews, ...newPreviews];
             setPreviews(updatedPreviews);
-            onImagesChange(updatedPreviews.map(p => p.file).filter(Boolean));
+            onImagesChange(updatedPreviews);
           }
         };
         reader.readAsDataURL(file);
@@ -300,7 +315,7 @@ function MultipleImagesField({
   const removeImage = (index) => {
     const updated = previews.filter((_, i) => i !== index);
     setPreviews(updated);
-    onImagesChange(updated.map(p => p.file).filter(Boolean));
+    onImagesChange(updated);
   };
 
   const formatFileSize = (bytes) => {
@@ -414,6 +429,13 @@ export function AdminFormTemplate({
     defaultValues
   });
 
+  // Reset form when defaultValues changes (e.g., when data loads from backend)
+  useEffect(() => {
+    if (defaultValues && Object.keys(defaultValues).length > 0) {
+      form.reset(defaultValues);
+    }
+  }, [defaultValues, form]);
+
   // Initialize array fields from defaultValues
   useEffect(() => {
     const imageFieldNames = fields.filter(f => f.type === 'image').map(f => f.name);
@@ -461,8 +483,8 @@ export function AdminFormTemplate({
     // Set existing multiple images - convert files array
     const initialMultipleImagesFields = {};
     multipleImagesFieldNames.forEach(fieldName => {
-      // For eventFiles, it's an array of file objects from the database
-      if (fieldName === 'eventFiles' && defaultValues.files && Array.isArray(defaultValues.files)) {
+      // For eventFiles and projectImages, the data comes from defaultValues.files
+      if ((fieldName === 'eventFiles' || fieldName === 'projectImages') && defaultValues.files && Array.isArray(defaultValues.files)) {
         // Convert each file buffer to a preview object
         const existingImages = defaultValues.files
           .map((file, index) => {
@@ -504,72 +526,63 @@ export function AdminFormTemplate({
   const handleSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      const formData = new FormData();
-      
-      console.log('Form submission - received data:', data);
-      
       // Get ALL form values (includes values from Select components in children)
       const allFormValues = form.getValues();
-      console.log('All form values from form.getValues():', allFormValues);
-      
-      // Merge with submitted data (submitted data takes precedence)
       const mergedData = { ...allFormValues, ...data };
-      console.log('Merged data:', mergedData);
-      
-      // Add regular form fields
-      Object.entries(mergedData).forEach(([key, value]) => {
-        // Skip image, multipleImages, and array fields as they're handled separately
-        const field = fields.find(f => f.name === key);
-        if (field?.type === 'image' || field?.type === 'multipleImages' || field?.type === 'array') {
-          return;
-        }
-        
-        if (Array.isArray(value)) {
-          formData.append(key, JSON.stringify(value));
-        } else if (value !== undefined && value !== null && value !== '') {
-          formData.append(key, value.toString());
-        }
-      });
-      
-      // Add array fields
-      Object.entries(arrayFields).forEach(([key, value]) => {
-        formData.append(key, JSON.stringify(value));
-      });
-      
-      // Add image fields
-      Object.entries(imageFields).forEach(([key, file]) => {
-        if (file instanceof File) {
-          formData.append(key, file);
-        }
-      });
 
-      // Add multiple images fields
-      console.log('multipleImagesFields:', multipleImagesFields);
-      Object.entries(multipleImagesFields).forEach(([key, filesArray]) => {
-        console.log(`Processing ${key}:`, filesArray?.length, 'files');
-        if (Array.isArray(filesArray)) {
-          // For eventFiles and projectImages, use 'files' as the field name for backend
-          const fieldName = key === 'eventFiles' || key === 'projectImages' ? 'files' : key;
-          console.log(`Appending to field: ${fieldName}`);
-          
-          // Filter out existing images (only append new ones)
-          const newFiles = filesArray.filter(item => !item.isExisting && item.file instanceof File);
-          console.log(`  - Found ${newFiles.length} new files out of ${filesArray.length} total`);
-          
-          newFiles.forEach((item, index) => {
-            console.log(`  - Appending file ${index + 1}:`, item.file.name, item.file.size);
-            formData.append(fieldName, item.file);  // Append all with same field name
-          });
-        }
-      });
-      
-      // Log final FormData contents
-      console.log('FormData entries:');
-      for (let pair of formData.entries()) {
-        console.log(' ', pair[0], ':', pair[1] instanceof File ? `File(${pair[1].name})` : pair[1]);
+      // Check if any image or file field is present
+      const hasFileField = fields.some(f => f.type === 'image' || f.type === 'multipleImages');
+
+      if (hasFileField) {
+        const formData = new FormData();
+        // Add regular form fields
+        Object.entries(mergedData).forEach(([key, value]) => {
+          const field = fields.find(f => f.name === key);
+          if (field?.type === 'image' || field?.type === 'multipleImages' || field?.type === 'array') {
+            return;
+          }
+          if (Array.isArray(value)) {
+            formData.append(key, JSON.stringify(value));
+          } else if (value !== undefined && value !== null && value !== '') {
+            formData.append(key, value.toString());
+          }
+        });
+        // Add array fields
+        Object.entries(arrayFields).forEach(([key, value]) => {
+          formData.append(key, JSON.stringify(value));
+        });
+        // Add image fields
+        Object.entries(imageFields).forEach(([key, file]) => {
+          if (file instanceof File) {
+            formData.append(key, file);
+          }
+        });
+        // Add multiple images fields
+        Object.entries(multipleImagesFields).forEach(([key, filesArray]) => {
+          if (Array.isArray(filesArray)) {
+            const fieldName = key === 'eventFiles' || key === 'projectImages' ? 'files' : key;
+            
+            // Add new files
+            const newFiles = filesArray.filter(item => !item.isExisting && item.file instanceof File);
+            newFiles.forEach((item) => {
+              formData.append(fieldName, item.file);
+            });
+            
+            // Add existing image IDs to preserve them
+            const existingIds = filesArray
+              .filter(item => item.isExisting && item.id)
+              .map(item => item.id);
+            
+            if (existingIds.length > 0) {
+              formData.append('existingFileIds', JSON.stringify(existingIds));
+            }
+          }
+        });
+        await onSubmit(formData);
+      } else {
+        // No file/image fields, send plain object
+        await onSubmit(mergedData);
       }
-      
-      await onSubmit(formData);
       router.push(backPath);
     } catch (error) {
       console.error('Form submission error:', error);
@@ -735,54 +748,7 @@ export function AdminFormTemplate({
                 </div>
               )}
 
-              {/* Multiple File Upload Section (Backward Compatibility) */}
-              {!fields.some(f => f.type === 'image') && (
-                <div className="space-y-4 border-t pt-6">
-                  <Label>Additional Files/Images</Label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
-                    <input
-                      type="file"
-                      multiple
-                      onChange={handleFileChange}
-                      className="hidden"
-                      id="file-upload"
-                      accept="image/*,.pdf,.doc,.docx"
-                    />
-                    <label htmlFor="file-upload" className="cursor-pointer">
-                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                      <p className="mt-2 text-sm font-medium text-gray-700">Click to upload files</p>
-                      <p className="mt-1 text-xs text-gray-500">Images, PDFs, or Documents</p>
-                    </label>
-                  </div>
-                  
-                  {files.length > 0 && (
-                    <div className="space-y-2">
-                      <Label>Selected Files:</Label>
-                      <div className="space-y-2">
-                        {files.map((file, index) => (
-                          <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <div className="flex items-center gap-2">
-                              <Upload className="h-4 w-4 text-gray-500" />
-                              <span className="text-sm font-medium">{file.name}</span>
-                              <span className="text-xs text-gray-500">
-                                ({(file.size / 1024).toFixed(1)} KB)
-                              </span>
-                            </div>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removeFile(index)}
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
+              {/* Remove default Additional Files/Images section unless explicitly specified in fields */}
 
               {/* Action Buttons */}
               <div className="flex justify-end gap-3 pt-6 border-t">

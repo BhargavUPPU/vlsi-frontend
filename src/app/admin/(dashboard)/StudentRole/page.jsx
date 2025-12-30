@@ -1,15 +1,14 @@
 "use client";
 import React from "react";
+import  { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/components/ui/table";
+} from "@/components/ui/table";
 import {
   Select,
   SelectContent,
@@ -18,17 +17,19 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../../../components/components/ui/select";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 export default function StudentRole() {
-  const { data: session, status } = useSession();
-  console.log("data", session);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [updatingId, setUpdatingId] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const response = await fetch("/api/users");
         if (!response.ok) {
@@ -37,18 +38,17 @@ export default function StudentRole() {
         const data = await response.json();
         setUsers(data.users);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        setError("Error fetching users");
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchUsers();
   }, []);
 
   const handleRoleChange = async (userId, newRole) => {
+    setUpdatingId(userId);
     try {
-      console.log("Updating role for user:", userId, "to:", newRole);
-
-      // Make the PATCH request to update the role
       const response = await fetch(`/api/users/${userId}`, {
         method: "PATCH",
         headers: {
@@ -56,81 +56,95 @@ export default function StudentRole() {
         },
         body: JSON.stringify({ role: newRole }),
       });
-
       if (!response.ok) {
         throw new Error("Failed to update role");
       }
-
-      // Parse response and update local state
-      const data = await response.json();
-      console.log("Role updated successfully:", data);
-
+      await response.json();
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user.id === userId ? { ...user, role: newRole } : user
         )
       );
     } catch (error) {
-      console.error("Error updating role:", error);
+      setError("Error updating role");
+    } finally {
+      setUpdatingId(null);
     }
   };
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
+  if (status === "loading" || loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <span className="text-gray-500">Loading users...</span>
+      </div>
+    );
   }
 
-  const userRole = session.user.role;
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <span className="text-red-500">{error}</span>
+        <Button className="ml-4" onClick={() => window.location.reload()}>Retry</Button>
+      </div>
+    );
+  }
 
-  if (userRole !== "ADMIN") {
-    return <div>You do not have permission to view this page.</div>;
+  if (!session || session.user.role !== "ADMIN") {
+    return <div className="text-center mt-16 text-red-500">You do not have permission to view this page.</div>;
   }
 
   return (
-    <div className="my-16 inline-block w-full align-middle">
-      <span className="text-sm font-semibold">Users</span>
-      <div className="mt-3 overflow-hidden md:rounded-lg">
-        <div className="relative border rounded-xl border-neutral-30 bg-white px-0 py-0 overflow-auto">
-          <Table>
-            <TableHeader className="bg-zinc-200/30">
+    <div className="my-16 w-full max-w-4xl mx-auto">
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-lg font-semibold">Users</span>
+        <Button onClick={() => window.location.reload()} variant="outline">Refresh</Button>
+      </div>
+      <div className="overflow-hidden rounded-lg border shadow-sm bg-white">
+        <Table>
+          <TableHeader className="bg-zinc-100">
+            <TableRow>
+              <TableHead className="w-[100px] font-medium p-3">ID</TableHead>
+              <TableHead className="font-medium p-3">Name</TableHead>
+              <TableHead className="font-medium p-3">Email</TableHead>
+              <TableHead className="text-right font-medium p-3">Role</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {Array.isArray(users) && users.length > 0 ? (
+              users.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell className="font-medium p-3">{user.id}</TableCell>
+                  <TableCell className="p-3">{user.name}</TableCell>
+                  <TableCell className="p-3">{user.email}</TableCell>
+                  <TableCell className="text-right p-3">
+                    <Select
+                      value={user.role}
+                      onValueChange={(newRole) => handleRoleChange(user.id, newRole)}
+                      disabled={updatingId === user.id}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={user.role} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Role</SelectLabel>
+                          <SelectItem value="USER">User</SelectItem>
+                          <SelectItem value="ADMIN">Admin</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
               <TableRow>
-                <TableHead className="w-[100px] font-medium p-3">ID</TableHead>
-                <TableHead className="font-medium p-3">Name</TableHead>
-                <TableHead className="font-medium p-3">Email</TableHead>
-                <TableHead className="text-right font-medium p-3">
-                  Role
-                </TableHead>
+                <TableCell colSpan={4} className="text-center text-gray-500 py-8">
+                  No users found.
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {Array.isArray(users) &&
-                users.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell className="font-medium p-3">{user.id}</TableCell>
-                    <TableCell className="p-3">{user.name}</TableCell>
-                    <TableCell className="p-3">{user.email}</TableCell>
-                    <TableCell className="text-right p-3">
-                      <Select
-                        onValueChange={(newRole) =>
-                          handleRoleChange(user.id, newRole)
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder={user.role} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Role</SelectLabel>
-                            <SelectItem value="USER">User</SelectItem>
-                            <SelectItem value="ADMIN">Admin</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </div>
+            )}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

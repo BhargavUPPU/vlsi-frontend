@@ -1,5 +1,5 @@
 "use client";
-import { columns } from "./column";
+import { columns } from "./columns";
 import { AdminPageTemplate } from "@/components/AdminPageTemplate";
 import { useTextbooks } from "@/lib/hooks/useAdmin";
 
@@ -16,7 +16,7 @@ export default function TextbooksPage() {
       createPath="/admin/textBooks/createTextBook"
       createButtonText="Add Textbook"
       onRefresh={refetch}
-      searchKey="title"
+      searchKey="name"
       apiEndpoint="textbooks"
     />
   );

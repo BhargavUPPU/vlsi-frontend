@@ -1,5 +1,5 @@
 "use client";
-import { columns } from "./column";
+import { columns } from "./columns";
 import { AdminPageTemplate } from "@/components/AdminPageTemplate";
 import { usePlacementPrep } from "@/lib/hooks/useAdmin";
 
@@ -16,7 +16,7 @@ export default function PlacementPrepPage() {
       createPath="/admin/placementPrep/createPlacementPrep"
       createButtonText="Add Placement Prep"
       onRefresh={refetch}
-      searchKey="title"
+      searchKey="name"
       apiEndpoint="placementPrep"
     />
   );

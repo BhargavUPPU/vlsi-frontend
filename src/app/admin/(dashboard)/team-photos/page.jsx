@@ -1,20 +1,46 @@
 "use client";
 import { AdminPageTemplate } from "@/components/AdminPageTemplate";
 import { useTeamPhotos } from "@/lib/hooks/useAdmin";
-
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ActionCell } from "@/components/ActionCell";
+import { useDeleteTeamPhoto } from "@/lib/hooks/useAdmin";
 const columns = [
   {
-    accessorKey: "year",
-    header: "Year",
+    accessorKey: "academicYear",
+    header: "Academic Year",
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "id",
+    header: "ID",
   },
   {
-    accessorKey: "imageCount",
-    header: "Images",
+    accessorKey: "createdAt",
+    header: "Created At",
   },
+     {
+       id: "actions",
+       cell: ({ row }) => {
+         const deleteTeamPhoto = useDeleteTeamPhoto();
+         return (
+           <ActionCell
+             row={row}
+             onDelete={deleteTeamPhoto.mutateAsync}
+             editPath={`/admin/team-photos/create?edit=${row.original.id}`}
+             itemName="Team Photo"
+           />
+         );
+       },
+     },
 ];
 
 export default function TeamPhotosPage() {
@@ -30,7 +56,7 @@ export default function TeamPhotosPage() {
       createPath="/admin/team-photos/create"
       createButtonText="Upload Team Photos"
       onRefresh={refetch}
-      searchKey="year"
+      searchKey="academicYear"
       apiEndpoint="teamPhotos"
     />
   );

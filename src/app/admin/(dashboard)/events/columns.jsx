@@ -27,7 +27,7 @@ export const columns = [
         <ActionCell
           row={row}
           onDelete={deleteEvent.mutateAsync}
-          editPath="/admin/events/edit-event"
+          editPath={`/admin/events/create-event?edit=${row.original.id}`}
           itemName="Event"
         />
       );

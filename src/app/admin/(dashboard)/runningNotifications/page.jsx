@@ -1,5 +1,5 @@
 "use client";
-import { columns } from "./column";
+import { columns } from "./columns";
 import { AdminPageTemplate } from "@/components/AdminPageTemplate";
 import { useRunningNotifications } from "@/lib/hooks/useAdmin";
 
@@ -16,7 +16,7 @@ export default function NotificationsPage() {
       createPath="/admin/runningNotifications/createRunningNotifications"
       createButtonText="Create Notification"
       onRefresh={refetch}
-      searchKey="title"
+      searchKey="message"
       apiEndpoint="notifications"
     />
   );

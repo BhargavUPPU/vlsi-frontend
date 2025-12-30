@@ -10,7 +10,7 @@ import { Users, Calendar, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 export default function TeamPage() {
-  const [selectedYear, setSelectedYear] = useState("2024-2025");
+  const [selectedYear, setSelectedYear] = useState("2025");
 
   // Fetch core members
   const { data: coreMembersData, isLoading: loadingCoreMembers } = useQuery({
@@ -18,15 +18,19 @@ export default function TeamPage() {
     queryFn: () => apiClient.get(API_ENDPOINTS.CORE_MEMBERS.BASE),
   });
 
+
   // Fetch team photos
   const { data: teamPhotosData, isLoading: loadingTeamPhotos } = useQuery({
     queryKey: ["teamPhotos"],
     queryFn: () => apiClient.get(API_ENDPOINTS.TEAM_PHOTOS.BASE),
   });
+  
 
+  // Backend returns array directly
   const allCoreMembers = Array.isArray(coreMembersData?.data) ? coreMembersData.data : [];
-  const teamPhotos = Array.isArray(teamPhotosData?.data) ? teamPhotosData.data : [];
 
+  // Backend returns array directly
+  const teamPhotos = Array.isArray(teamPhotosData?.data) ? teamPhotosData.data : [];
   // Filter members by selected year
   const filteredMembers = allCoreMembers.filter(
     (member) => member.academicYear === selectedYear
@@ -72,8 +76,9 @@ export default function TeamPage() {
 
   // Get member image
   const getMemberImage = (member) => {
-    if (member.imageUrl) {
-      return bufferToDataURL(member.imageUrl);
+    // Backend returns image as member.image (buffer or base64)
+    if (member.image && Object.keys(member.image).length > 0) {
+      return bufferToDataURL(member.image);
     }
     return null;
   };

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 const projectFields = [
   { name: "title", label: "Project Title", placeholder: "Enter project title", required: true },
   { name: "Introduction", label: "Introduction", type: "textarea", placeholder: "Enter project introduction", rows: 4, required: true },
-  { name: "academicYear", label: "Academic Year", placeholder: "e.g., 2023-2024", required: true },
+  { name: "academicYear", label: "Academic Year", placeholder: "e.g., 2023", required: true },
   { name: "Mentor", label: "Mentor", placeholder: "Enter mentor name", required: true },
   { name: "Members", label: "Team Members", type: "array", placeholder: "Add team member name" },
   { name: "Statement", label: "Problem Statement", type: "textarea", placeholder: "Enter problem statement", rows: 4 },

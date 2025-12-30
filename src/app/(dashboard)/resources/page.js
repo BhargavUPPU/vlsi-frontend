@@ -221,18 +221,30 @@ export default function ResourcesPage() {
           )}
         </div>
 
-        {/* VLSI Textbooks & NPTEL Lectures */}
+        {/* VLSI Textbooks*/}
         <div id="textbooks-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">
-              VLSI Textbooks & NPTEL Lectures
+              VLSI Textbooks
             </h3>
-            <button className="text-blue-600 hover:text-blue-700 font-medium">
-              Explore All →
-            </button>
           </div>
           {textbooks.length > 0 ? (
             <ResourceCarousel items={textbooks} type="textbooks" />
+          ) : (
+            <div className="text-gray-500 text-center py-8">
+              No items found.
+            </div>
+          )}
+        </div>
+        {/* NPTEL Lectures */}
+        <div id="nptel-lectures-section" className="mb-16">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl font-bold text-gray-900">
+              NPTEL Lectures
+            </h3>
+          </div>
+          {nptelLectures.length > 0 ? (
+            <ResourceCarousel items={nptelLectures} type="nptelLectures" />
           ) : (
             <div className="text-gray-500 text-center py-8">
               No items found.
@@ -244,9 +256,6 @@ export default function ResourcesPage() {
         <div id="materials-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">VLSI Materials</h3>
-            <button className="text-blue-600 hover:text-blue-700 font-medium">
-              Explore All →
-            </button>
           </div>
           {vlsiMaterials.length > 0 ? (
             <ResourceCarousel items={vlsiMaterials} type="materials" />
@@ -263,9 +272,6 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Question Banks
             </h3>
-            <button className="text-blue-600 hover:text-blue-700 font-medium">
-              Explore All →
-            </button>
           </div>
           {questionBanks.length > 0 ? (
             <ResourceCarousel items={questionBanks} type="questionBanks" />
@@ -282,9 +288,6 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Recruitment PYQs
             </h3>
-            <button className="text-blue-600 hover:text-blue-700 font-medium">
-              Year →
-            </button>
           </div>
           {placementPrep.length > 0 ? (
             <ResourceCarousel items={placementPrep} type="placement" />
@@ -299,9 +302,6 @@ export default function ResourcesPage() {
         <div id="gate-pyqs-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">ECE Gate PYQs</h3>
-            <button className="text-blue-600 hover:text-blue-700 font-medium">
-              Year →
-            </button>
           </div>
           {gatePyqs.length > 0 ? (
             <ResourceCarousel items={gatePyqs} type="gatePyqs" />

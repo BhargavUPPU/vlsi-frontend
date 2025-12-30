@@ -6,14 +6,14 @@ import { useSearchParams } from "next/navigation";
 
 const coreMemberFields = [
   { name: "name", label: "Name", placeholder: "Enter member name", required: true },
-  { name: "academicYear", label: "Academic Year", placeholder: "e.g., 2023-2024", required: true },
+  { name: "academicYear", label: "Academic Year", placeholder: "e.g., 2023", required: true },
   { name: "sectionBranch", label: "Section/Branch", placeholder: "e.g., CSE-A", required: true },
   { name: "portfolio", label: "Portfolio", placeholder: "Enter portfolio/position", required: true },
   { name: "rollNumber", label: "Roll Number", placeholder: "Enter roll number", required: true },
   { name: "category", label: "Category", placeholder: "Enter category", required: true },
   { name: "teamCategory", label: "Team Category", placeholder: "Enter team category (optional)" },
   { name: "memberShipId", label: "Membership ID", placeholder: "Enter membership ID (optional)" },
-  { name: "imageUrl", label: "Member Photo", type: "image", required: true },
+  { name: "image", label: "Member Photo", type: "image", required: true },
 ];
 
 export default function CreateCoreMemberPage() {

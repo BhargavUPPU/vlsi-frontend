@@ -1,5 +1,5 @@
 "use client";
-import { columns } from "./column";
+import { columns } from "./columns";
 import { AdminPageTemplate } from "@/components/AdminPageTemplate";
 import { useNptelLectures } from "@/lib/hooks/useAdmin";
 
@@ -16,7 +16,7 @@ export default function NptelLecturesPage() {
       createPath="/admin/nptelLectures/createNptelLecture"
       createButtonText="Add NPTEL Lecture"
       onRefresh={refetch}
-      searchKey="title"
+      searchKey="courseName"
       apiEndpoint="nptelLectures"
     />
   );

@@ -1,5 +1,5 @@
 "use client";
-import { columns } from "./column";
+import { columns } from "./columns";
 import { AdminPageTemplate } from "@/components/AdminPageTemplate";
 import { useQuestionBanks } from "@/lib/hooks/useAdmin";
 
@@ -16,7 +16,7 @@ export default function QuestionBanksPage() {
       createPath="/admin/questionBank/createQuestionBank"
       createButtonText="Add Question Bank"
       onRefresh={refetch}
-      searchKey="title"
+      searchKey="topicName"
       apiEndpoint="questionBanks"
     />
   );

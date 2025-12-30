@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 const teamPhotoFields = [
   { name: "academicYear", label: "Academic Year", placeholder: "e.g., 2023-2024" },
+  { name: "image", label: "Team Photo Image", type: "image", required: true },
 ];
 
 export default function CreateTeamPhotoPage() {
@@ -17,11 +18,13 @@ export default function CreateTeamPhotoPage() {
   const createTeamPhoto = useCreateTeamPhoto();
   const updateTeamPhoto = useUpdateTeamPhoto();
 
-  const handleSubmit = async (data) => {
+
+  // AdminFormTemplate will send FormData if an image field is present
+  const handleSubmit = async (formDataOrData) => {
     if (isEditing) {
-      await updateTeamPhoto.mutateAsync({ id: editId, data });
+      await updateTeamPhoto.mutateAsync({ id: editId, data: formDataOrData });
     } else {
-      await createTeamPhoto.mutateAsync(data);
+      await createTeamPhoto.mutateAsync(formDataOrData);
     }
   };
 

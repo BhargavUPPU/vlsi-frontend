@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
@@ -13,9 +13,11 @@ export default function ProjectsPage() {
   const [activeTab, setActiveTab] = useState("ongoing");
   const [currentPage, setCurrentPage] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const carouselInterval = useRef(null);
   const [filters, setFilters] = useState({
-    projectType: "",
-    year: "",
+    category: "",
+    academicYear: "",
     month: "",
     date: "",
   });
@@ -35,19 +37,18 @@ export default function ProjectsPage() {
   const completedProjects = allProjects.filter((p) => p.status?.toLowerCase() === "completed");
 
   const currentProjects = activeTab === "ongoing" ? ongoingProjects : completedProjects;
+  console.log("Current Projects:", currentProjects);
 
   // Apply filters
   const filteredProjects = currentProjects.filter((project) => {
-    if (filters.projectType && project.projectType !== filters.projectType) return false;
-    if (filters.year) {
-      const projectYear = new Date(project.date).getFullYear().toString();
-      if (projectYear !== filters.year) return false;
-    }
+    if (filters.category && project.category !== filters.category) return false;
+    if (filters.academicYear && project.academicYear !== filters.academicYear) return false;
     return true;
   });
 
   // Pagination
-  const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
+  let totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
+  if (!Number.isFinite(totalPages) || totalPages < 1) totalPages = 1;
   const paginatedProjects = filteredProjects.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -61,19 +62,33 @@ export default function ProjectsPage() {
     return null;
   };
 
-  // Animated image blocks data
+  // Latest 10 projects for the right section (by createdAt desc)
+  const latestProjects = [...allProjects]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 10);
+
+  // Animated image blocks data (left grid) still uses allProjects
   const projectImages = allProjects
     .map((p) => getProjectImage(p))
     .filter(Boolean)
     .slice(0, 6);
 
-  // Auto-rotate images
+  // Auto-rotate images (left grid)
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % Math.max(projectImages.length, 1));
     }, 3000);
     return () => clearInterval(interval);
   }, [projectImages.length]);
+
+  // Auto-rotate right section (latest projects carousel)
+  useEffect(() => {
+    if (carouselInterval.current) clearInterval(carouselInterval.current);
+    carouselInterval.current = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % Math.max(latestProjects.length, 1));
+    }, 3500);
+    return () => clearInterval(carouselInterval.current);
+  }, [latestProjects.length]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -85,8 +100,8 @@ export default function ProjectsPage() {
     setCurrentPage(1);
   };
 
-  const projectTypes = [...new Set(currentProjects.map((p) => p.projectType).filter(Boolean))];
-  const years = [...new Set(currentProjects.map((p) => new Date(p.date).getFullYear()))];
+  const projectTypes = [...new Set(currentProjects.map((p) => p.category).filter(Boolean))];
+  const academicYears = [...new Set(currentProjects.map((p) => p.academicYear).filter(Boolean))];
 
   // Card colors
   const cardColors = [
@@ -114,62 +129,79 @@ export default function ProjectsPage() {
       <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Animated Image Blocks */}
+            {/* Left: Animated '11' Symbol (two columns of 3 blocks), group floats up/down */}
             <div className="relative h-96 flex items-center justify-center">
-              {/* Decorative circles */}
-              <div className="absolute w-80 h-80 bg-blue-200/30 rounded-full blur-3xl" />
-              <div className="absolute w-60 h-60 bg-purple-200/30 rounded-full blur-3xl bottom-0 right-0" />
-
-              {/* Animated Image Grid */}
-              <div className="relative grid grid-cols-2 gap-4 w-full max-w-sm">
-                {projectImages.map((img, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{
-                      opacity: 1,
-                      y: index === currentImageIndex ? -10 : 0,
-                      scale: index === currentImageIndex ? 1.05 : 1,
-                    }}
-                    transition={{ duration: 0.5 }}
-                    className={`aspect-square rounded-2xl overflow-hidden shadow-lg ${
-                      index % 2 === 0 ? "mt-0" : "mt-8"
-                    }`}
-                  >
-                    <img
-                      src={img}
-                      alt={`Project ${index + 1}`}
-                      className="w-full h-full object-cover"
+              {/* Sample SVG Bubble/Cloud Background */}
+              <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="250" cy="270" rx="230" ry="180" fill="#E0ECFF" fillOpacity="0.7" />
+                <ellipse cx="400" cy="420" rx="60" ry="40" fill="#B6D0FF" fillOpacity="0.5" />
+              </svg>
+              {/* Animated '11' group */}
+              <motion.div
+                initial={{ y: 0 }}
+                animate={{ y: [0, -30, 0] }}
+                transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
+                className="relative z-10 flex flex-row gap-8 w-full max-w-xs justify-center"
+              >
+                {/* Left '1' (lower) */}
+                <div className="flex flex-col gap-4 translate-y-6">
+                  {[...Array(3)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="aspect-square w-16 md:w-20 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center text-3xl font-bold text-blue-400 select-none"
                     />
-                  </motion.div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                {/* Right '1' (higher) */}
+                <div className="flex flex-col gap-4 -translate-y-6">
+                  {[...Array(3)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="aspect-square w-16 md:w-20 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center text-3xl font-bold text-blue-400 select-none"
+                    />
+                  ))}
+                </div>
+              </motion.div>
             </div>
 
-            {/* Right: Project Counter & Description */}
-            <div className="space-y-6">
+            {/* Right: Project Counter & Description for latest projects carousel - Redesigned */}
+            <div className="flex items-center justify-center h-96">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="space-y-4"
+                className="relative w-full max-w-md mx-auto flex flex-col items-center justify-center h-full"
               >
-                <div className="flex items-start gap-4">
-                  <span className="text-8xl md:text-9xl font-bold text-blue-600/20">
-                    {String(currentImageIndex + 1).padStart(2, "0")}
-                  </span>
-                  <div className="flex-1">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                      Project with Solutions
-                    </h2>
-                    <p className="text-gray-600 leading-relaxed mb-6">
-                      RISC-V is an open-source instruction set architecture for custom processors.
-                      It provides flexibility to tailor the design to fit hardware, scalability and
-                      extensibility. With the help of FPGA's projects.
-                    </p>
-                    <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                      Know more
-                    </button>
-                  </div>
+                {/* Large soft number in background */}
+                <span
+                  className="absolute top-0 left-1/2 -translate-x-1/2 text-[8rem] md:text-[10rem] font-extrabold select-none leading-none z-0 pointer-events-none bg-gradient-to-b from-blue-400 via-blue-200 to-white text-transparent bg-clip-text opacity-90"
+                  style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+                >
+                  {latestProjects.length > 0 ? String((carouselIndex % latestProjects.length) + 1).padStart(2, "0") : "01"}
+                </span>
+                <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center px-2">
+                  {latestProjects.length > 0 ? (
+                    <>
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 mt-20 md:mt-24">
+                        {latestProjects[carouselIndex % latestProjects.length].title}
+                      </h2>
+                      <p className="text-gray-600 text-base md:text-lg font-medium mb-6 max-w-md mx-auto">
+                        {latestProjects[carouselIndex % latestProjects.length].description}
+                      </p>
+                      <Link
+                        href={`/projects/${latestProjects[carouselIndex % latestProjects.length].id}`}
+                        className="bg-blue-600 text-white px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-base md:text-lg shadow-md"
+                      >
+                        Know more
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 mt-20 md:mt-24">
+                        No projects found
+                      </h2>
+                      <p className="text-gray-400 italic mb-6">No project data to display.</p>
+                    </>
+                  )}
                 </div>
               </motion.div>
             </div>
@@ -195,8 +227,8 @@ export default function ProjectsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <select
-              value={filters.projectType}
-              onChange={(e) => handleFilterChange("projectType", e.target.value)}
+              value={filters.category}
+              onChange={(e) => handleFilterChange("category", e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">Project type</option>
@@ -208,12 +240,12 @@ export default function ProjectsPage() {
             </select>
 
             <select
-              value={filters.year}
-              onChange={(e) => handleFilterChange("year", e.target.value)}
+              value={filters.academicYear}
+              onChange={(e) => handleFilterChange("academicYear", e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">Year</option>
-              {years.map((year) => (
+              {academicYears.map((year) => (
                 <option key={year} value={year}>
                   {year}
                 </option>
@@ -396,7 +428,7 @@ export default function ProjectsPage() {
             </AnimatePresence>
 
             {/* Pagination */}
-            {totalPages > 1 && (
+            {totalPages > 1 && Number.isFinite(totalPages) && (
               <div className="flex justify-center items-center gap-2 mt-12">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
@@ -416,7 +448,7 @@ export default function ProjectsPage() {
                         : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
                     }`}
                   >
-                    {page}
+                    {String(page)}
                   </button>
                 ))}
 

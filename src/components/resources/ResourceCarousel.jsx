@@ -125,20 +125,24 @@ export default function ResourceCarousel({ items, type }) {
                 {/* Content */}
                 <div className="p-6">
                   <h3 className="font-bold text-gray-800 mb-2 line-clamp-2 min-h-[3rem]">
-                    {item.title}
+                    {item.title || item.name || item.topicName || item.courseName || 'Untitled'}
                   </h3>
-                  {item.author && (
-                    <p className="text-sm text-gray-600 mb-4">By {item.author}</p>
+                  {item.professorName  && (
+                    <p className="text-sm text-gray-600 mb-4">By {item.professorName}</p>
                   )}
+                  {
+                    item.description && (
+                      <p className="text-md text-gray-600 mb-4 line-clamp-3">
+                        {item.description}
+                      </p>
+                    )
+                  }
 
                   {/* Actions */}
                   <div className="flex gap-3">
-                    <button className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-2 text-sm font-medium">
-                      <Download className="w-4 h-4" />
-                      Download
-                    </button>
-                    <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all flex items-center justify-center">
+                    <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all flex items-center justify-center" onClick={() => window.open(item.link, '_blank')}>
                       <ExternalLink className="w-4 h-4" />
+                      view more
                     </button>
                   </div>
                 </div>
