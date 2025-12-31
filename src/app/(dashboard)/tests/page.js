@@ -13,7 +13,11 @@ export default function TestsPage() {
   const [activeFilter, setActiveFilter] = useState("all");
 
   // Fetch all tests
-  const { data: testsData, isLoading, error } = useQuery({
+  const {
+    data: testsData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["tests"],
     queryFn: () => apiClient.get(API_ENDPOINTS.TESTS.BASE),
   });
@@ -27,54 +31,57 @@ export default function TestsPage() {
   });
 
   // Get unique test types
-  const testTypes = ["all", ...new Set(allTests.map((t) => t.type).filter(Boolean))];
+  const testTypes = [
+    "all",
+    ...new Set(allTests.map((t) => t.type).filter(Boolean)),
+  ];
 
   // Status color mapping
   const getStatusColor = (status) => {
     const statusLower = status?.toLowerCase();
-    if (statusLower === "live") return { bg: "bg-red-100", text: "text-red-600", dot: "bg-red-600" };
-    if (statusLower === "completed") return { bg: "bg-green-100", text: "text-green-600", dot: "bg-green-600" };
-    if (statusLower === "upcoming") return { bg: "bg-orange-100", text: "text-orange-600", dot: "bg-orange-600" };
+    if (statusLower === "live")
+      return { bg: "bg-red-100", text: "text-red-600", dot: "bg-red-600" };
+    if (statusLower === "completed")
+      return {
+        bg: "bg-green-100",
+        text: "text-green-600",
+        dot: "bg-green-600",
+      };
+    if (statusLower === "upcoming")
+      return {
+        bg: "bg-orange-100",
+        text: "text-orange-600",
+        dot: "bg-orange-600",
+      };
     return { bg: "bg-gray-100", text: "text-gray-600", dot: "bg-gray-600" };
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-white border border-gray-200 rounded-2xl mx-4 sm:mx-6 lg:mx-auto lg:max-w-7xl mt-8 overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12 items-center">
-          {/* Left: Text */}
-          <div>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4"
-            >
-              Unleash Your Circuit Mastery: Dive into the Future of VLSI Design!
-            </motion.h1>
-          </div>
-
-          {/* Right: Illustration */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="relative h-80 lg:h-96"
-          >
-            <Image
-              src="/test_hero_illustration_1766917306677.png"
-              alt="Student taking test"
-              fill
-              className="object-contain"
-              priority
-            />
-          </motion.div>
+      <section className="max-w-7xl mx-auto bg-gray-100 p-8 rounded-lg flex flex-col md:flex-row items-center">
+        <div className="flex-grow mb-4 md:mb-0">
+          <h2 className="text-3xl font-bold text-gray-800 text-center md:text-left sm:align-text-top">
+            Unleash Your Circuit <br />
+            Mastery: Dive into the <br />
+            Future of VLSI Design!
+          </h2>
         </div>
-      </div>
+        <Image
+          src="/TestPortal.svg"
+          alt="student image"
+          height={500}
+          width={600}
+          className="mx-auto"
+          priority
+        />
+      </section>
 
       {/* Skill Assessment Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Skill Assessment</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+          Skill Assessment
+        </h2>
 
         {/* Filter Tabs */}
         <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
@@ -97,7 +104,10 @@ export default function TestsPage() {
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
+              <div
+                key={i}
+                className="bg-white rounded-lg shadow-md p-6 animate-pulse"
+              >
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-3 h-3 rounded-full bg-gray-200" />
                   <div className="h-4 bg-gray-200 rounded w-32" />
@@ -118,16 +128,20 @@ export default function TestsPage() {
         {/* Error State */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
-            <p className="text-red-600 text-lg font-semibold mb-2">Failed to load tests</p>
+            <p className="text-red-600 text-lg font-semibold mb-2">
+              Failed to load tests
+            </p>
             <p className="text-red-500">Please try again later</p>
           </div>
         )}
 
         {/* Empty State */}
         {!isLoading && !error && filteredTests.length === 0 && (
-          <div className="bg-white rounded-lg p-16 text-center shadow-sm">
-            <FileQuestion size={64} className="text-gray-300 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">No Tests Available</h3>
+          <div className="bg-gray-100 rounded-lg p-16 text-center shadow-sm">
+            <FileQuestion size={64} className=" mx-auto mb-4" />
+            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+              No Tests Available
+            </h3>
             <p className="text-gray-600">
               {activeFilter === "all"
                 ? "There are no tests available at the moment"
@@ -166,8 +180,12 @@ export default function TestsPage() {
                   >
                     {/* Status Badge */}
                     <div className="flex items-center gap-2 mb-4">
-                      <div className={`w-2 h-2 rounded-full ${statusColors.dot}`} />
-                      <span className={`text-sm font-semibold ${statusColors.text}`}>
+                      <div
+                        className={`w-2 h-2 rounded-full ${statusColors.dot}`}
+                      />
+                      <span
+                        className={`text-sm font-semibold ${statusColors.text}`}
+                      >
                         {test.status}
                       </span>
                     </div>
@@ -186,13 +204,16 @@ export default function TestsPage() {
                       <p className="text-sm text-gray-600 flex items-center gap-2">
                         <FileQuestion size={16} />
                         <span>
-                          {test.duration} Marks · Total Questions: {test.noOfQuestions}
+                          {test.duration} Marks · Total Questions:{" "}
+                          {test.noOfQuestions}
                         </span>
                       </p>
                       {test.date && (
                         <p className="text-sm text-gray-600 flex items-center gap-2">
                           <Clock size={16} />
-                          <span>{new Date(test.date).toLocaleDateString()}</span>
+                          <span>
+                            {new Date(test.date).toLocaleDateString()}
+                          </span>
                         </p>
                       )}
                     </div>

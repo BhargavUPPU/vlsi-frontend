@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { ChevronDown, ChevronUp, Eye, Briefcase } from "lucide-react";
 
-
 const AboutUs = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
 
@@ -62,45 +61,55 @@ const AboutUs = () => {
       image: "/logo.png",
     },
   ];
-
-  const faqs = [
+  // VLSID Club FAQ (from image)
+  const vlsiFaqs = [
     {
-      question: "How long does it take to make a website?",
-      answer: "The timeline for website development typically ranges from 2-8 weeks depending on the complexity and features required."
+      question: "What is the VLSID Club?",
+      answer:
+        "The VLSID Club is a student-driven community focused on learning, designing, and implementing VLSI (Very Large-Scale Integration) and digital electronics systems through hands-on projects, workshops, and competitions.",
     },
     {
-      question: "What is a Low Ticket Website?",
-      answer: "A low ticket website is a basic, cost-effective solution designed for small businesses or startups with essential features and functionality."
+      question: "What activities does the club conduct?",
+      answer:
+        "Our activities include:\n• Hands-on workshops\n• Guest lectures from industry experts\n• FPGA and RTL design\n• Project showcases\n• Magazine releases (Silicon Chronicles)",
     },
     {
-      question: "What is a High Ticket Website?",
-      answer: "A high ticket website is a premium, feature-rich solution with advanced functionality, custom design, and comprehensive features for established businesses."
+      question: "Who can join the VLSID Club?",
+      answer:
+        "Any student interested in electronics, VLSI, chip design, FPGA programming, or digital systems—regardless of year or skill level—is welcome to join.",
     },
     {
-      question: "How a new website cost is calculated?",
-      answer: "Website costs are calculated based on factors like design complexity, number of pages, features required, development time, and ongoing maintenance needs."
+      question: "What are the benefits of joining the VLSID Club?",
+      answer:
+        "Members gain:\n• Strong practical VLSI skills\n• Real-world project experience\n• Internship and networking opportunities\n• Exposure to chip design competitions\n• Resume-building achievements\n• Industry-ready confidence",
     },
     {
-      question: "Do we take on every client?",
-      answer: "We carefully evaluate each project to ensure we can deliver the best results. We work with clients whose projects align with our expertise and values."
+      question: "Do I need prior knowledge of VLSI to join?",
+      answer:
+        "No. We start with beginner-friendly sessions and gradually move to advanced topics. Mentors and seniors guide you throughout the learning process.",
     },
     {
-      question: "Why WIX?",
-      answer: "WIX offers user-friendly design tools, reliable hosting, and extensive customization options that allow us to create professional websites efficiently."
+      question: "How can I become an active member?",
+      answer:
+        "Attend our regular meetings, participate in events, contribute to projects, and engage in discussions. Active members may also take leadership roles.",
     },
     {
-      question: "Are our clients websites SEO friendly?",
-      answer: "Yes, all our websites are built with SEO best practices including optimized code, meta tags, responsive design, and fast loading speeds."
+      question: "What skills will I learn in the club?",
+      answer:
+        "You will learn:\n• Digital design fundamentals\n• Verilog/VHDL Programming\n• FPGA development\n• EDA tools (Cadence, Mentor, Synopsys basics)\n• CORDIC, DCT, and DSP block design\n• Chip design workflow and RTL implementation",
     },
     {
-      question: "Can clients host their own websites?",
-      answer: "Absolutely! We can provide you with all necessary files and guidance to host your website on your preferred hosting platform."
+      question: "How can I stay updated with club announcements?",
+      answer:
+        "You can follow:\n• WhatsApp Group\n• Notice board updates\n• Official Instagram/website\n• LinkedIn",
     },
     {
-      question: "Do we provide high-quality images & videos?",
-      answer: "Yes, we provide high-quality, professionally sourced images and videos that align with your brand and enhance your website's visual appeal."
-    }
+      question: "How do I apply for the VLSID Club recruitment?",
+      answer:
+        "Students interested in joining the VLSID Club can apply through the official Google Form. After submitting the form, applicants must attend a basic exam to assess their fundamental knowledge and interest. Candidates who qualify are called for an interview to evaluate their motivation and willingness to learn. Based on the exam and interview performance, the club finalizes the shortlist of selected members.",
+    },
   ];
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
@@ -115,17 +124,13 @@ const AboutUs = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             {/* VLSID Logo */}
             <div className="flex justify-center">
-              <div className="relative w-64 h-64 bg-gradient-to-br from-[#1e40af] to-[#3b82f6] rounded-full flex items-center justify-center shadow-2xl transform transition-transform hover:scale-105 duration-300">
-                <Image
-                  src="/logo.png"
-                  alt="VLSID Club Logo"
-                  width={200}
-                  height={200}
-                  className="w-48 h-48 object-contain"
-                />
-                <div className="absolute inset-4 border-2 border-white/30 rounded-full"></div>
-                <div className="absolute inset-8 border-2 border-white/30 rounded-full"></div>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="VLSID Club Logo"
+                width={200}
+                height={200}
+                className="w-48 h-48 object-contain"
+              />
             </div>
 
             {/* Description */}
@@ -134,14 +139,15 @@ const AboutUs = () => {
                 <p className="text-gray-700 text-justify leading-relaxed">
                   The VLSID (Very Large Scale Integration Design) Club is a
                   vibrant community of students passionate about semiconductor
-                  technology and chip design. The VLSID Club was formed on January
-                  5, 2023, with a vision to create a collaborative platform for
-                  students interested in VLSI and IC design. The founding members,
-                  led by Deepank Maralwar and Trinath from the 2019-2023 batch,
-                  presented a paper at prestigious VLSI conferences. Inspired by
-                  their efforts, our respected HOD encouraged them to build a
-                  community that would continue this spirit of innovation and
-                  ensure such contributions would not end with a single batch.
+                  technology and chip design. The VLSID Club was formed on
+                  January 5, 2023, with a vision to create a collaborative
+                  platform for students interested in VLSI and IC design. The
+                  founding members, led by Deepank Maralwar and Trinath from the
+                  2019-2023 batch, presented a paper at prestigious VLSI
+                  conferences. Inspired by their efforts, our respected HOD
+                  encouraged them to build a community that would continue this
+                  spirit of innovation and ensure such contributions would not
+                  end with a single batch.
                 </p>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
@@ -208,26 +214,34 @@ const AboutUs = () => {
               <div className="md:w-1/3 p-8 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50">
                 <div className="w-56 h-56 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl mb-6 overflow-hidden shadow-lg border-4 border-white">
                   <div className="w-full h-full flex items-center justify-center">
-                    <span className="text-gray-400 text-sm font-medium">Faculty Photo</span>
+                    <Image
+                      src="/faculty2.png"
+                      alt="Dr.J.Bhaskara Rao"
+                      width={200}
+                      height={200}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
                 <h3 className="text-2xl font-bold text-center text-gray-800 mb-2">
                   Dr.J.Bhaskara Rao
                 </h3>
-                <p className="text-[#2563eb] font-semibold text-center">Associate Professor</p>
+                <p className="text-[#2563eb] font-semibold text-center">
+                  Associate Professor
+                </p>
               </div>
 
               {/* Faculty Details */}
               <div className="md:w-2/3 p-8 bg-white">
                 <div className="prose prose-sm max-w-none">
                   <p className="text-gray-700 leading-relaxed text-justify">
-                    Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID Club,
-                    is an accomplished academician and researcher in the field of
-                    Electronics and Communication Engineering with a PhD in
-                    Approximate Computing. With 12 years of teaching, 4 years of
-                    research, and 3 years of industry experience, he has guided
-                    students towards excellence in Electronics and Communication
-                    Engineering.
+                    Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID
+                    Club, is an accomplished academician and researcher in the
+                    field of Electronics and Communication Engineering with a
+                    PhD in Approximate Computing. With 12 years of teaching, 4
+                    years of research, and 3 years of industry experience, he
+                    has guided students towards excellence in Electronics and
+                    Communication Engineering.
                   </p>
                   <p className="text-gray-700 leading-relaxed text-justify mt-4">
                     Dr. Rao has earned his M.Tech in VLSI System Design and
@@ -312,22 +326,9 @@ const AboutUs = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Column */}
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-lg p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-4">Does my website come in a package deal?</h3>
-                  <div className="space-y-2 text-sm text-gray-700">
-                    <p>We are pleased to inform you that, every website we create comes with comprehensive website content, such as:</p>
-                    <ul className="list-disc list-inside space-y-1 ml-4">
-                      <li>Lookup/ Transfer of Domain</li>
-                      <li>Two rounds of changes</li>
-                      <li>Submission of sitemap to your chosen email</li>
-                      <li>Linking of social media accounts</li>
-                      <li>Etc.</li>
-                      <li>Free Zoom Call</li>
-                    </ul>
-                  </div>
-                </div>
+               
 
-                {faqs.slice(0, Math.ceil(faqs.length/2)).map((faq, index) => (
+                {vlsiFaqs.slice(0, Math.ceil(vlsiFaqs.length / 2)).map((faq, index) => (
                   <div
                     key={index}
                     className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm"
@@ -360,8 +361,8 @@ const AboutUs = () => {
 
               {/* Right Column */}
               <div className="space-y-4">
-                {faqs.slice(Math.ceil(faqs.length/2)).map((faq, index) => {
-                  const actualIndex = index + Math.ceil(faqs.length/2);
+                {vlsiFaqs.slice(Math.ceil(vlsiFaqs.length / 2)).map((faq, index) => {
+                  const actualIndex = index + Math.ceil(vlsiFaqs.length / 2);
                   return (
                     <div
                       key={actualIndex}

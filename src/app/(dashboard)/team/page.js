@@ -7,6 +7,8 @@ import { API_ENDPOINTS } from "@/lib/api/config";
 import { bufferToDataURL } from "@/lib/utils/imageUtils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Users, Calendar, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
 export default function TeamPage() {
@@ -18,26 +20,30 @@ export default function TeamPage() {
     queryFn: () => apiClient.get(API_ENDPOINTS.CORE_MEMBERS.BASE),
   });
 
-
   // Fetch team photos
   const { data: teamPhotosData, isLoading: loadingTeamPhotos } = useQuery({
     queryKey: ["teamPhotos"],
     queryFn: () => apiClient.get(API_ENDPOINTS.TEAM_PHOTOS.BASE),
   });
-  
 
   // Backend returns array directly
-  const allCoreMembers = Array.isArray(coreMembersData?.data) ? coreMembersData.data : [];
+  const allCoreMembers = Array.isArray(coreMembersData?.data)
+    ? coreMembersData.data
+    : [];
 
   // Backend returns array directly
-  const teamPhotos = Array.isArray(teamPhotosData?.data) ? teamPhotosData.data : [];
+  const teamPhotos = Array.isArray(teamPhotosData?.data)
+    ? teamPhotosData.data
+    : [];
   // Filter members by selected year
   const filteredMembers = allCoreMembers.filter(
     (member) => member.academicYear === selectedYear
   );
 
   // Get unique academic years for dropdown
-  const academicYears = [...new Set(allCoreMembers.map((m) => m.academicYear))].sort().reverse();
+  const academicYears = [...new Set(allCoreMembers.map((m) => m.academicYear))]
+    .sort()
+    .reverse();
 
   // Define hierarchy order
   const hierarchyOrder = [
@@ -51,7 +57,7 @@ export default function TeamPage() {
     "Outreach Team",
     "Translation & Data Handling Team",
     "Documentation Team",
-    "Web Handling Team"
+    "Web Handling Team",
   ];
 
   // Group members by portfolio (team category)
@@ -97,7 +103,14 @@ export default function TeamPage() {
   const isLoading = loadingCoreMembers || loadingTeamPhotos;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+      >
+        <ArrowLeft size={20} />
+        <span>Team</span>
+      </Link>
       {/* Hero Section with Team Photo */}
       {teamPhotoUrl && (
         <div className="relative h-96 overflow-hidden">
@@ -107,7 +120,7 @@ export default function TeamPage() {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/70" />
-          <div className="absolute bottom-8 left-0 right-0 text-center text-white">
+          <div className="absolute bottom-8 left-0 right-0 text-center">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -128,7 +141,7 @@ export default function TeamPage() {
       )}
 
       {/* Year Selector */}
-      <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
+      <div className="">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <h2 className="text-2xl font-bold text-gray-900">
@@ -138,7 +151,7 @@ export default function TeamPage() {
               <select
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="appearance-none bg-white border-2 border-gray-300 rounded-lg px-6 py-3 pr-12 font-semibold text-gray-700 hover:border-blue-600 focus:outline-none focus:border-blue-600 transition-colors"
+                className="appearance-none border-2 rounded-lg px-6 py-3 pr-12 font-semibold text-gray-700 hover:border-blue-600 focus:outline-none focus:border-blue-600 transition-colors"
               >
                 {academicYears.map((year) => (
                   <option key={year} value={year}>
@@ -146,7 +159,10 @@ export default function TeamPage() {
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={20} />
+              <ChevronDown
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                size={20}
+              />
             </div>
           </div>
         </div>
@@ -163,9 +179,11 @@ export default function TeamPage() {
 
         {/* Empty State */}
         {!isLoading && filteredMembers.length === 0 && (
-          <div className="bg-white rounded-lg p-16 text-center shadow-sm">
-            <Users size={64} className="text-gray-300 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">No Team Members Found</h3>
+          <div className="bg-gray-100 rounded-lg p-16 text-center shadow-sm">
+            <Users size={64} className=" mx-auto mb-4" />
+            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+              No Team Members Found
+            </h3>
             <p className="text-gray-600">
               There are no team members for the selected academic year
             </p>
@@ -177,7 +195,7 @@ export default function TeamPage() {
           <div className="space-y-16">
             {sortedPortfolios.map((portfolio) => {
               const members = groupedByPortfolio[portfolio];
-              
+
               return (
                 <motion.div
                   key={portfolio}
@@ -229,7 +247,7 @@ export default function TeamPage() {
                             <p className="text-sm text-blue-600 font-semibold mb-3">
                               {member.category || member.portfolio}
                             </p>
-                            
+
                             <div className="space-y-1 text-sm text-gray-600">
                               {member.rollNumber && (
                                 <p>Roll No: {member.rollNumber}</p>

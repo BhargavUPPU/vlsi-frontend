@@ -1,11 +1,19 @@
 "use client";
 import Image from "next/image";
-
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 export default function RoadMap() {
   return (
     <div className="bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Header */}
+            <Link
+                href="/resources"
+                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+              >
+                <ArrowLeft size={20} />
+                <span>RoadMap</span>
+              </Link>
         <header className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <span className="text-4xl" role="img" aria-label="roadmap">
@@ -16,16 +24,20 @@ export default function RoadMap() {
             </h1>
           </div>
           <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-            A beginner-friendly roadmap for VLSI engineers introducing frontend (design, Verilog, simulation) and backend (synthesis, placement, routing) concepts to build strong fundamentals in chip design and physical implementation workflows.
+            A beginner-friendly roadmap for VLSI engineers introducing frontend
+            (design, Verilog, simulation) and backend (synthesis, placement,
+            routing) concepts to build strong fundamentals in chip design and
+            physical implementation workflows.
           </p>
           <h2 className="text-2xl font-bold mb-3 text-gray-800">
             How to prepare for a VLSI profile from scratch?
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            If you are a fresher and want to start your career in VLSI and don't know where to start, follow this roadmap to understand the VLSI domain.
+            If you are a fresher and want to start your career in VLSI and don't
+            know where to start, follow this roadmap to understand the VLSI
+            domain.
           </p>
         </header>
-
         {/* Types of Semiconductor Companies */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold mb-8 text-gray-800">
@@ -56,15 +68,14 @@ export default function RoadMap() {
                 <div className="w-20 h-20 rounded-full bg-white shadow-lg flex items-center justify-center mb-4 text-4xl">
                   {item.icon}
                 </div>
-                <h4 className="font-bold text-xl mb-2 text-gray-800">{item.title}</h4>
-                <p className="text-sm text-center text-gray-600">
-                  {item.desc}
-                </p>
+                <h4 className="font-bold text-xl mb-2 text-gray-800">
+                  {item.title}
+                </h4>
+                <p className="text-sm text-center text-gray-600">{item.desc}</p>
               </div>
             ))}
           </div>
         </section>
-
         {/* VLSI Division */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold mb-4 text-gray-800">
@@ -74,33 +85,58 @@ export default function RoadMap() {
             <ul className="space-y-2 text-gray-700">
               <li className="flex items-start">
                 <span className="mr-2 mt-1">•</span>
-                <span>There are specific job roles in front-end design and backend design listed below.</span>
+                <span>
+                  There are specific job roles in front-end design and backend
+                  design listed below.
+                </span>
               </li>
               <li className="flex items-start">
                 <span className="mr-2 mt-1">•</span>
-                <span>All stages from logic synthesis to GDS2 are considered as backend design.</span>
+                <span>
+                  All stages from logic synthesis to GDS2 are considered as
+                  backend design.
+                </span>
               </li>
             </ul>
           </div>
         </section>
-
         {/* Front End Roadmap */}
         <section className="mb-16">
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl p-8 mb-6">
             <h2 className="text-3xl font-bold mb-2">Front End Roadmap</h2>
             <p className="opacity-90">
-              Focuses on designing and verifying digital circuits using HDL (Hardware Description Languages).
+              Focuses on designing and verifying digital circuits using HDL
+              (Hardware Description Languages).
             </p>
           </div>
           <div className="bg-gray-50 rounded-2xl p-8 shadow-md overflow-x-auto">
-            <svg className="w-full min-w-[900px] h-64" viewBox="0 0 900 200">
-              <line x1="60" y1="80" x2="750" y2="80" stroke="#3b82f6" strokeWidth="3" />
-              <path d="M 750 80 Q 800 80 800 120 Q 800 160 750 160" stroke="#3b82f6" strokeWidth="3" fill="none" />
-              <line x1="750" y1="160" x2="650" y2="160" stroke="#3b82f6" strokeWidth="3" />
+            <svg className="w-full min-w-6xl h-96" viewBox="0 0 900 200">
+              <line
+                x1="60"
+                y1="80"
+                x2="750"
+                y2="80"
+                stroke="#3b82f6"
+                strokeWidth="3"
+              />
+              <path
+                d="M 750 80 Q 800 80 800 120 Q 800 160 750 160"
+                stroke="#3b82f6"
+                strokeWidth="3"
+                fill="none"
+              />
+              <line
+                x1="750"
+                y1="160"
+                x2="650"
+                y2="160"
+                stroke="#3b82f6"
+                strokeWidth="3"
+              />
               {[
                 { x: 60, label: "RTL Design\nEngineer", active: true },
                 { x: 180, label: "RTL Integration\nEngineer" },
-                { x: 300, label: "ASIC/IP/SOC\nVerification Engineer" },
+                { x: 290, label: "ASIC/IP/SOC\nVerification Engineer" },
                 { x: 420, label: "Pre Silicon\nValidation Engineer" },
                 { x: 540, label: "FPGA Design\nEngineer" },
                 { x: 660, label: "Emulation\nEngineer" },
@@ -134,31 +170,74 @@ export default function RoadMap() {
                   </text>
                 </g>
               ))}
-              <circle cx="750" cy="160" r="12" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="3" />
-              <text x="750" y="190" textAnchor="middle" fontSize="13" fill="#1e293b" fontWeight="600">
-                <tspan x="750" dy="0">Formal Verification</tspan>
-                <tspan x="750" dy="14">Engineer</tspan>
+              <circle
+                cx="750"
+                cy="160"
+                r="12"
+                fill="#e2e8f0"
+                stroke="#94a3b8"
+                strokeWidth="3"
+              />
+              <text
+                x="750"
+                y="190"
+                textAnchor="middle"
+                fontSize="13"
+                fill="#1e293b"
+                fontWeight="600"
+              >
+                <tspan x="750" dy="0">
+                  Formal Verification
+                </tspan>
+                <tspan x="750" dy="14">
+                  Engineer
+                </tspan>
               </text>
-              <circle cx="650" cy="160" r="12" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="3" />
-              <text x="650" y="190" textAnchor="middle" fontSize="13" fill="#1e293b" fontWeight="600">
-                <tspan x="650" dy="0">Post Silicon</tspan>
-                <tspan x="650" dy="14">Validation Engineer</tspan>
+              <circle
+                cx="650"
+                cy="160"
+                r="12"
+                fill="#e2e8f0"
+                stroke="#94a3b8"
+                strokeWidth="3"
+              />
+              <text
+                x="650"
+                y="190"
+                textAnchor="middle"
+                fontSize="13"
+                fill="#1e293b"
+                fontWeight="600"
+              >
+                <tspan x="650" dy="0">
+                  Post Silicon
+                </tspan>
+                <tspan x="650" dy="14">
+                  Validation Engineer
+                </tspan>
               </text>
             </svg>
           </div>
         </section>
-
         {/* Back End Roadmap */}
         <section className="mb-16">
           <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl p-8 mb-6">
             <h2 className="text-3xl font-bold mb-2">Back End Roadmap</h2>
             <p className="opacity-90">
-              Focuses on physical implementation, verification, and layout of digital/analog circuits.
+              Focuses on physical implementation, verification, and layout of
+              digital/analog circuits.
             </p>
           </div>
           <div className="bg-gray-50 rounded-2xl p-8 shadow-md overflow-x-auto">
             <svg className="w-full min-w-[800px] h-48" viewBox="0 0 900 120">
-              <line x1="60" y1="60" x2="820" y2="60" stroke="#a855f7" strokeWidth="3" />
+              <line
+                x1="60"
+                y1="60"
+                x2="820"
+                y2="60"
+                stroke="#a855f7"
+                strokeWidth="3"
+              />
               {[
                 { x: 60, label: "Physical Design\nEngineer", active: true },
                 { x: 240, label: "Synthesis and\nSTA Engineer" },
@@ -198,7 +277,6 @@ export default function RoadMap() {
             </svg>
           </div>
         </section>
-
         {/* Fundamentals */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold mb-10 text-gray-800">
@@ -256,7 +334,9 @@ export default function RoadMap() {
                 key={i}
                 className="relative bg-white rounded-2xl shadow-xl p-8 pt-16 hover:shadow-2xl transition-shadow"
               >
-                <div className={`absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-to-br ${category.color} rounded-full shadow-lg flex items-center justify-center text-3xl`}>
+                <div
+                  className={`absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-to-br ${category.color} rounded-full shadow-lg flex items-center justify-center text-3xl`}
+                >
                   {category.icon}
                 </div>
                 <h5 className="font-bold text-2xl mb-6 text-center text-gray-800">
@@ -274,7 +354,6 @@ export default function RoadMap() {
             ))}
           </div>
         </section>
-
         {/* Job Roles */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold mb-8 text-gray-800">
@@ -342,15 +421,20 @@ export default function RoadMap() {
                 ],
               },
             ].map((role, i) => (
-              <div key={i} className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-md border-l-4 border-blue-600">
+              <div
+                key={i}
+                className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-md border-l-4 border-blue-600"
+              >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
-                  <h4 className="font-bold text-lg text-blue-700">{role.title}</h4>
+                  <h4 className="font-bold text-lg text-blue-700">
+                    {role.title}
+                  </h4>
                 </div>
                 <ul className="space-y-2 text-sm text-gray-700">
                   {role.items.map((item, idx) => (
                     <li key={idx} className="flex items-start">
-                      <span className="mr-2 text-blue-600">→</span>
+                      <span className="mr-2 text-blue-600">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -359,29 +443,30 @@ export default function RoadMap() {
             ))}
           </div>
         </section>
-
         {/* Semicore Value Chain */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold mb-6 text-gray-800">
             Semicore Value Chain
           </h3>
-          <div className="bg-gray-100 rounded-2xl p-8 overflow-x-auto">
+          <div className=" flex flex-col justify-center items-center  bg-gray-100 rounded-2xl p-8  overflow-x-auto">
             <p className="text-center text-gray-600 mb-4">
-              Comprehensive diagram showing the semiconductor value chain from design to manufacturing
+              Comprehensive diagram showing the semiconductor value chain from
+              design to manufacturing
             </p>
-            <div className="min-w-[600px] text-center">
-              <p className="text-sm text-gray-500 italic">
-                [Value chain diagram placeholder - insert actual diagram here]
-              </p>
-            </div>
+            <Image
+              src="/roadmap.png"
+              alt="Semicore Value Chain Diagram"
+              className="rounded-lg"
+              width={600}
+              height={220}
+            />
           </div>
         </section>
-
-        {/* Interview Checklist */}
         <section className="bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-2xl p-8">
           <h3 className="text-2xl font-bold mb-4">VLSI Interview Checklist</h3>
           <p className="text-lg opacity-90 mb-4">
-            Quick, concise guide covering key concepts, important questions, and must-know topics to ace your VLSI job interview confidently.
+            Quick, concise guide covering key concepts, important questions, and
+            must-know topics to ace your VLSI job interview confidently.
           </p>
           <button className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
             Download Checklist

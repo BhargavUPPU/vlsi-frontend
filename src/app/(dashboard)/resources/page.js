@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import ResourceCarousel from "@/components/resources/ResourceCarousel";
 
 export default function ResourcesPage() {
@@ -94,8 +96,15 @@ export default function ResourcesPage() {
     loadingGatePyqs;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Hero Banner */}
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+      >
+        <ArrowLeft size={20} />
+        <span>Resources</span>
+      </Link>
       <Image
         src="/resourceBanner.png"
         alt="Resources Hero Banner"
@@ -105,18 +114,24 @@ export default function ResourcesPage() {
       />
       {/* Quick Access Cards */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+          <Link
+            href="/resources/roadmap"
+            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block"
+          >
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
               <BookOpen className="w-6 h-6 text-blue-600" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">VLSI Materials</h3>
+            <h3 className="text-lg font-semibold mb-2">VLSI RoadMap</h3>
             <p className="text-gray-600 text-sm">
-              Comprehensive study materials and resources
+              Comprehensive guide to VLSI design and development
             </p>
-          </div>
+          </Link>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+          <Link
+            href="/resources/softwaretools"
+            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block"
+          >
             <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
               <Video className="w-6 h-6 text-purple-600" />
             </div>
@@ -124,20 +139,9 @@ export default function ResourcesPage() {
             <p className="text-gray-600 text-sm">
               Industry-standard design and simulation tools
             </p>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-              <FileText className="w-6 h-6 text-green-600" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">Placement Prep</h3>
-            <p className="text-gray-600 text-sm">
-              Interview preparation and placement resources
-            </p>
-          </div>
+          </Link>
         </div>
       </div>
-
       {/* Resources Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="mb-12">
@@ -224,9 +228,7 @@ export default function ResourcesPage() {
         {/* VLSI Textbooks*/}
         <div id="textbooks-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">
-              VLSI Textbooks
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900">VLSI Textbooks</h3>
           </div>
           {textbooks.length > 0 ? (
             <ResourceCarousel items={textbooks} type="textbooks" />
@@ -239,9 +241,7 @@ export default function ResourcesPage() {
         {/* NPTEL Lectures */}
         <div id="nptel-lectures-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">
-              NPTEL Lectures
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900">NPTEL Lectures</h3>
           </div>
           {nptelLectures.length > 0 ? (
             <ResourceCarousel items={nptelLectures} type="nptelLectures" />

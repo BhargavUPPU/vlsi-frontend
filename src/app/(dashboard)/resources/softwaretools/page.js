@@ -7,9 +7,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/components/ui/table";
-import { Badge } from "../../../components/components/ui/badge";
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import VlsiFlowChart from "./FlowChart";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 // Data for the table
 const designData = [
@@ -123,6 +125,13 @@ export default function VlsiToolsPage() {
     <main className="bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Section 1: Introduction */}
+            <Link
+                        href="/resources"
+                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+                      >
+                        <ArrowLeft size={20} />
+                        <span>Software Tools</span>
+                      </Link>
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-8">
             <span className="text-4xl">🛠️</span>
@@ -173,7 +182,7 @@ export default function VlsiToolsPage() {
 
             <div className="w-full rounded-2xl overflow-hidden shadow-2xl border-4 border-gray-200">
               <Image
-                src="/softwareTools/Chip.png"
+                src="/Chip.png"
                 alt="VLSI Chip Die Shot"
                 width={600}
                 height={400}

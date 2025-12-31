@@ -115,7 +115,7 @@ export default function VoicesSection() {
               return (
                 <div
                   key={index}
-                  className="min-w-0 w-full max-w-xl flex-shrink-0 relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg hover:shadow-2xl transition-all duration-300"
+                  className="min-w-0 w-full max-w-xl flex-shrink-0 relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg hover:shadow-2xl transition-all duration-300 m-2"
                 >
                   {/* Background Gradient */}
                   <div

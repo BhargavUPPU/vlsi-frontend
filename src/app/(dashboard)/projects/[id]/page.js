@@ -103,17 +103,19 @@ export default function ProjectDetailsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Back Button */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft size={20} />
-            <span>Back</span>
-          </Link>
-        </div>
-      </div>
+          <div className="bg-white border-b">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  <ArrowLeft size={20} />
+                  <span>Projects</span>
+                  <span className="text-gray-400">&gt;&gt;</span>
+                  <span className="text-gray-900">{project.title}</span>
+                </Link>
+              </div>
+            </div>
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

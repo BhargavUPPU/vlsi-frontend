@@ -6,8 +6,17 @@ import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
 import { bufferToDataURL } from "@/lib/utils/imageUtils";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, MapPin, Users, Filter as FilterIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Filter as FilterIcon,
+  ChevronLeft,
+  ArrowLeft,
+  ChevronRight,
+} from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function EventsPage() {
   const [activeTab, setActiveTab] = useState("upcoming"); // "upcoming" or "completed"
@@ -22,24 +31,34 @@ export default function EventsPage() {
   const itemsPerPage = 6;
 
   // Fetch all events
-  const { data: eventsData, isLoading, error } = useQuery({
+  const {
+    data: eventsData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["events"],
     queryFn: () => apiClient.get(API_ENDPOINTS.EVENTS.GET_ALL),
   });
 
   // Process and filter events
   const allEvents = Array.isArray(eventsData?.data) ? eventsData.data : [];
-  
+
   // Separate upcoming and completed events
-  const upcomingEvents = allEvents.filter((event) => event.status?.toLowerCase() === "upcoming");
-  const completedEvents = allEvents.filter((event) => event.status?.toLowerCase() === "completed");
+  const upcomingEvents = allEvents.filter(
+    (event) => event.status?.toLowerCase() === "upcoming"
+  );
+  const completedEvents = allEvents.filter(
+    (event) => event.status?.toLowerCase() === "completed"
+  );
 
   // Get current tab events
-  const currentEvents = activeTab === "upcoming" ? upcomingEvents : completedEvents;
+  const currentEvents =
+    activeTab === "upcoming" ? upcomingEvents : completedEvents;
 
   // Apply filters
   const filteredEvents = currentEvents.filter((event) => {
-    if (filters.eventType && event.eventType !== filters.eventType) return false;
+    if (filters.eventType && event.eventType !== filters.eventType)
+      return false;
     if (filters.year) {
       const eventYear = new Date(event.eventDate).getFullYear().toString();
       if (eventYear !== filters.year) return false;
@@ -75,33 +94,38 @@ export default function EventsPage() {
   };
 
   // Get unique event types and years for filters
-  const eventTypes = [...new Set(currentEvents.map((e) => e.eventType).filter(Boolean))];
-  const years = [...new Set(currentEvents.map((e) => new Date(e.eventDate).getFullYear()))];
+  const eventTypes = [
+    ...new Set(currentEvents.map((e) => e.eventType).filter(Boolean)),
+  ];
+  const years = [
+    ...new Set(currentEvents.map((e) => new Date(e.eventDate).getFullYear())),
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            Join the Event
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-blue-100"
-          >
-            Welcome to VLSI Innovation!
-          </motion.p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+        >
+          <ArrowLeft size={20} />
+          <span>Events</span>
+        </Link>
+        <header className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold">Join the Event</h1>
+            <p className="text-lg text-gray-600">Welcome to VLSI Innovation!</p>
+          </div>
+          <div>
+            <Image
+              src="/eventHeader.jpg"
+              alt="Event Header"
+              className="rounded-lg"
+              width={200}
+              height={200}
+            />
+          </div>
+        </header>
         {/* Tabs */}
         <div className="flex gap-4 mb-8">
           <button
@@ -189,7 +213,10 @@ export default function EventsPage() {
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+              <div
+                key={i}
+                className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse"
+              >
                 <div className="w-full h-64 bg-gray-200" />
                 <div className="p-6 space-y-3">
                   <div className="h-6 bg-gray-200 rounded w-3/4" />
@@ -204,7 +231,9 @@ export default function EventsPage() {
         {/* Error State */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
-            <p className="text-red-600 text-lg font-semibold mb-2">Failed to load events</p>
+            <p className="text-red-600 text-lg font-semibold mb-2">
+              Failed to load events
+            </p>
             <p className="text-red-500">Please try again later</p>
           </div>
         )}
@@ -215,7 +244,9 @@ export default function EventsPage() {
             <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
               <Calendar size={48} className="text-gray-400" />
             </div>
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">No Events Found</h3>
+            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+              No Events Found
+            </h3>
             <p className="text-gray-600">
               {activeTab === "upcoming"
                 ? "There are no upcoming events at the moment"
@@ -258,14 +289,16 @@ export default function EventsPage() {
                             <Calendar size={64} className="text-gray-300" />
                           </div>
                         )}
-                        
+
                         {/* Status Badge */}
                         <div className="absolute top-4 right-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            activeTab === "upcoming"
-                              ? "bg-green-500 text-white"
-                              : "bg-gray-700 text-white"
-                          }`}>
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                              activeTab === "upcoming"
+                                ? "bg-green-500 text-white"
+                                : "bg-gray-700 text-white"
+                            }`}
+                          >
                             {event.status}
                           </span>
                         </div>
@@ -328,22 +361,26 @@ export default function EventsPage() {
                   <ChevronLeft size={20} />
                 </button>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                      currentPage === page
-                        ? "bg-blue-600 text-white"
-                        : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                ))}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                        currentPage === page
+                          ? "bg-blue-600 text-white"
+                          : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  )
+                )}
 
                 <button
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(totalPages, p + 1))
+                  }
                   disabled={currentPage === totalPages}
                   className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >

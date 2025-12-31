@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
-  console.log("Current User:", user);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
@@ -32,7 +32,7 @@ export default function Navbar() {
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
                   <span className="text-xl font-bold ">VLSI</span>
-                <span className="text-xl font-bold text-blue-950">D</span>
+                <span className="text-xl font-bold text-indigo-600">D</span>
               </Link>
             </div>
 
@@ -47,7 +47,7 @@ export default function Navbar() {
                   isActive(item.href)
                     ? "text-white bg-blue-600"
                     : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                } px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md`}
+                } px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md m-2`}
               >
                 {item.name}
               </Link>

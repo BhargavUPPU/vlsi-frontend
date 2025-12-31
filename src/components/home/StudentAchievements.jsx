@@ -87,7 +87,7 @@ export default function StudentAchievements() {
             >
               {/* Image Placeholder */}
               <div
-                className={`rounded-xl p-4 sm:p-6 mb-5 sm:mb-6 flex items-center justify-center h-28 sm:h-32 md:h-36 bg-gray-100`}
+                className={`rounded-xl p-4 sm:p-6 mb-5 sm:mb-6 flex items-center justify-center h-28 sm:h-32 md:h-36`}
               >
                 <Image
                   src={achievement.image}
