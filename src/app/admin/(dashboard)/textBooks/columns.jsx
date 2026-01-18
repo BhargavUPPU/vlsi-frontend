@@ -15,6 +15,10 @@ export const columns = [
     header: "Subject",
   },
   {
+    accessorKey: "category",
+    header: "Category",
+  },
+  {
     accessorKey: "link",
     header: "Download",
     cell: ({ row }) => (

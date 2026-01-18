@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 const teamPhotoFields = [
   { name: "academicYear", label: "Academic Year", placeholder: "e.g., 2023-2024" },
-  { name: "image", label: "Team Photo Image", type: "image", required: true },
+  { name: "images", label: "Team Photo Images", type: "multipleImages", maxFiles: 5, required: true },
 ];
 
 export default function CreateTeamPhotoPage() {

@@ -81,7 +81,7 @@ export function AdminPageTemplate({
           <div className="bg-white rounded-lg border">
             <DataTable
               columns={columns}
-              data={data || []}
+              data={Array.isArray(data?.data) ? data.data : (data || [])}
               searchKey={searchKey}
               apiEndpoint={apiEndpoint}
             />

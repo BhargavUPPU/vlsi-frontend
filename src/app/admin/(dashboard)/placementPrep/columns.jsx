@@ -3,6 +3,7 @@ import { useDeletePlacementPrep } from "@/lib/hooks/useAdmin";
 
 export const columns = [
   { accessorKey: "name", header: "Resource Name" },
+  { accessorKey: "category", header: "Category" },
   {
     accessorKey: "link",
     header: "Link",

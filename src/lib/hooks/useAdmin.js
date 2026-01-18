@@ -16,6 +16,9 @@ import {
   notificationsService,
   runningNotificationsService,
   teamPhotosService,
+  announcementsService,
+  achievementsService,
+  photoGalleryService,
   uploadService
 } from '../api/services';
 
@@ -194,6 +197,72 @@ export const useTeamPhoto = (id, options) => useGetById('teamPhotos', teamPhotos
 export const useCreateTeamPhoto = (options) => useCreate('teamPhotos', teamPhotosService, options);
 export const useUpdateTeamPhoto = (options) => useUpdate('teamPhotos', teamPhotosService, options);
 export const useDeleteTeamPhoto = (options) => useDelete('teamPhotos', teamPhotosService, options);
+
+// Announcements hooks
+export const useAnnouncements = (options) => useGetAll('announcements', announcementsService, options);
+export const useAnnouncement = (id, options) => useGetById('announcements', announcementsService, id, options);
+export const useCreateAnnouncement = (options) => useCreate('announcements', announcementsService, options);
+export const useUpdateAnnouncement = (options) => useUpdate('announcements', announcementsService, options);
+export const useDeleteAnnouncement = (options) => useDelete('announcements', announcementsService, options);
+
+// Achievements hooks
+export const useAchievements = (type, options) => {
+  const queryKey = type ? ['achievements', type] : ['achievements'];
+  return useQuery({
+    queryKey,
+    queryFn: () => achievementsService.getAll({ type }),
+    ...options
+  });
+};
+
+export const useActiveAchievements = (type, options) => {
+  const queryKey = type ? ['achievements', 'active', type] : ['achievements', 'active'];
+  return useQuery({
+    queryKey,
+    queryFn: () => achievementsService.get('/active', { params: { type } }),
+    ...options
+  });
+};
+
+export const useAchievement = (id, options) => useGetById('achievements', achievementsService, id, options);
+export const useCreateAchievement = (options) => useCreate('achievements', achievementsService, options);
+export const useUpdateAchievement = (options) => useUpdate('achievements', achievementsService, options);
+export const useDeleteAchievement = (options) => useDelete('achievements', achievementsService, options);
+
+// Photo Gallery hooks
+export const usePhotoGalleries = (options) => useGetAll('photoGallery', photoGalleryService, options);
+export const usePhotoGallery = (id, options) => useGetById('photoGallery', photoGalleryService, id, options);
+
+export const usePhotoGalleryByCategory = (category, options) => {
+  return useQuery({
+    queryKey: ['photoGallery', 'category', category],
+    queryFn: () => photoGalleryService.getByCategory(category),
+    enabled: !!category,
+    staleTime: 5 * 60 * 1000,
+    ...options
+  });
+};
+
+export const useCreatePhotoGallery = (options) => useCreate('photoGallery', photoGalleryService, options);
+export const useUpdatePhotoGallery = (options) => useUpdate('photoGallery', photoGalleryService, options);
+export const useDeletePhotoGallery = (options) => useDelete('photoGallery', photoGalleryService, options);
+
+export const useTogglePhotoGalleryActive = (options = {}) => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (id) => photoGalleryService.toggleActive(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['photoGallery'] });
+      toast.success('Gallery status updated');
+      options.onSuccess?.();
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || 'Failed to update status');
+      options.onError?.(error);
+    }
+  });
+};
 
 // Upload hooks
 export const useUploadImage = (options = {}) => {

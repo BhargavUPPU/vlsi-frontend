@@ -5,6 +5,7 @@ import { useDeleteNptelLecture } from "@/lib/hooks/useAdmin";
 export const columns = [
   { accessorKey: "courseName", header: "Course Name" },
   { accessorKey: "professorName", header: "Professor" },
+  { accessorKey: "category", header: "Category" },
   {
     accessorKey: "link",
     header: "Video",

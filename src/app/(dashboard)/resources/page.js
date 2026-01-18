@@ -68,23 +68,41 @@ export default function ResourcesPage() {
     queryFn: () => apiClient.get(API_ENDPOINTS.GATE_PYQS.BASE),
   });
 
-  const textbooks = Array.isArray(textbooksData?.data)
-    ? textbooksData.data
-    : [];
-  const nptelLectures = Array.isArray(nptelData?.data) ? nptelData.data : [];
-  const vlsiMaterials = Array.isArray(materialsData?.data)
-    ? materialsData.data
-    : [];
-  const questionBanks = Array.isArray(questionBanksData?.data)
-    ? questionBanksData.data
-    : [];
-  const placementPrep = Array.isArray(placementPrepData?.data)
-    ? placementPrepData.data
-    : [];
-  const magazines = Array.isArray(magazinesData?.data)
-    ? magazinesData.data
-    : [];
-  const gatePyqs = Array.isArray(gatePyqsData?.data) ? gatePyqsData.data : [];
+  const textbooks = Array.isArray(textbooksData?.data?.data)
+    ? textbooksData.data.data
+    : Array.isArray(textbooksData?.data) 
+      ? textbooksData.data 
+      : [];
+  const nptelLectures = Array.isArray(nptelData?.data?.data)
+    ? nptelData.data.data
+    : Array.isArray(nptelData?.data)
+      ? nptelData.data
+      : [];
+  const vlsiMaterials = Array.isArray(materialsData?.data?.data)
+    ? materialsData.data.data
+    : Array.isArray(materialsData?.data)
+      ? materialsData.data
+      : [];
+  const questionBanks = Array.isArray(questionBanksData?.data?.data)
+    ? questionBanksData.data.data
+    : Array.isArray(questionBanksData?.data)
+      ? questionBanksData.data
+      : [];
+  const placementPrep = Array.isArray(placementPrepData?.data?.data)
+    ? placementPrepData.data.data
+    : Array.isArray(placementPrepData?.data)
+      ? placementPrepData.data
+      : [];
+  const magazines = Array.isArray(magazinesData?.data?.data)
+    ? magazinesData.data.data
+    : Array.isArray(magazinesData?.data)
+      ? magazinesData.data
+      : [];
+  const gatePyqs = Array.isArray(gatePyqsData?.data?.data)
+    ? gatePyqsData.data.data
+    : Array.isArray(gatePyqsData?.data)
+      ? gatePyqsData.data
+      : [];
 
   const isLoading =
     loadingTextbooks ||
@@ -212,9 +230,12 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               Silicon Chronicle Magazines
             </h3>
-            <button className="text-blue-600 hover:text-blue-700 font-medium">
-              Explore All →
-            </button>
+            <Link 
+              href="/resources/explore?type=magazines" 
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+            >
+              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           {magazines.length > 0 ? (
             <ResourceCarousel items={magazines} type="magazines" />
@@ -229,6 +250,12 @@ export default function ResourcesPage() {
         <div id="textbooks-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">VLSI Textbooks</h3>
+            <Link 
+              href="/resources/explore?type=textbooks" 
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+            >
+              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           {textbooks.length > 0 ? (
             <ResourceCarousel items={textbooks} type="textbooks" />
@@ -242,6 +269,12 @@ export default function ResourcesPage() {
         <div id="nptel-lectures-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">NPTEL Lectures</h3>
+            <Link 
+              href="/resources/explore?type=nptelLectures" 
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+            >
+              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           {nptelLectures.length > 0 ? (
             <ResourceCarousel items={nptelLectures} type="nptelLectures" />
@@ -256,6 +289,12 @@ export default function ResourcesPage() {
         <div id="materials-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">VLSI Materials</h3>
+            <Link 
+              href="/resources/explore?type=vlsiMaterials" 
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+            >
+              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           {vlsiMaterials.length > 0 ? (
             <ResourceCarousel items={vlsiMaterials} type="materials" />
@@ -272,6 +311,12 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Question Banks
             </h3>
+            <Link 
+              href="/resources/explore?type=questionBanks" 
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+            >
+              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           {questionBanks.length > 0 ? (
             <ResourceCarousel items={questionBanks} type="questionBanks" />
@@ -288,6 +333,12 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Recruitment PYQs
             </h3>
+            <Link 
+              href="/resources/explore?type=placementPrep" 
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+            >
+              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           {placementPrep.length > 0 ? (
             <ResourceCarousel items={placementPrep} type="placement" />
@@ -302,6 +353,12 @@ export default function ResourcesPage() {
         <div id="gate-pyqs-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">ECE Gate PYQs</h3>
+            <Link 
+              href="/resources/explore?type=gatePyqs" 
+              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+            >
+              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           {gatePyqs.length > 0 ? (
             <ResourceCarousel items={gatePyqs} type="gatePyqs" />

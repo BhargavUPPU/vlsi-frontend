@@ -110,6 +110,26 @@ export const API_ENDPOINTS = {
     BY_ID: (id) => `/teamPhotos/${id}`,
   },
   
+  // Photo Gallery
+  PHOTO_GALLERY: {
+    BASE: '/photoGallery',
+    BY_ID: (id) => `/photoGallery/${id}`,
+    BY_CATEGORY: (category) => `/photoGallery?category=${category}`,
+    IMAGES: (id) => `/photoGallery/${id}/images`,
+    TOGGLE_ACTIVE: (id) => `/photoGallery/${id}/toggle-active`,
+  },
+  
+  // Milestones
+  MILESTONES: {
+    BASE: '/milestones',
+    BY_ID: (id) => `/milestones/${id}`,
+    IMAGE: (id) => `/milestones/${id}/image`,
+    YEARS: '/milestones/years',
+    CATEGORIES: '/milestones/categories',
+    TOGGLE_ACTIVE: (id) => `/milestones/${id}/toggle-active`,
+    UPDATE_PRIORITY: (id) => `/milestones/${id}/priority`,
+  },
+  
   // File Upload
   UPLOAD: {
     IMAGE: '/upload/image',

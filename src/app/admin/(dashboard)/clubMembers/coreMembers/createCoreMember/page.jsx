@@ -57,6 +57,12 @@ const coreMemberFields = [
     label: "Membership ID",
     placeholder: "Enter membership ID (optional)",
   },
+  {
+    name: "description",
+    label: "Description/Biography",
+    placeholder: "Enter short bio or description (optional)",
+    type: "textarea"
+  },
   { name: "image", label: "Member Photo", type: "image", required: true },
 ];
 

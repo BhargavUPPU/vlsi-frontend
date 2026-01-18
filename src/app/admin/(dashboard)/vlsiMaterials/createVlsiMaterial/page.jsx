@@ -6,7 +6,20 @@ import { useSearchParams } from "next/navigation";
 
 const vlsiMaterialFields = [
   { name: "name", label: "Material Name", placeholder: "Enter material name" },
-  { name: "category", label: "Category", placeholder: "Enter category" },
+  { 
+    name: "category", 
+    label: "Category", 
+    type: "select", 
+    options: [
+      { label: "Analog design", value: "Analog design" },
+      { label: "CMOS VLSI Design", value: "CMOS VLSI Design" },
+      { label: "Digital Design", value: "Digital Design" },
+      { label: "Digital IC Design", value: "Digital IC Design" },
+      { label: "FPGA & ASIC Design", value: "FPGA & ASIC Design" },
+      { label: "Semiconductor Physics", value: "Semiconductor Physics" },
+      { label: "General", value: "General" }
+    ]
+  },
   { name: "link", label: "Download Link", placeholder: "https://..." },
   { name: "image", label: "Material Thumbnail", type: "image" },
 ];

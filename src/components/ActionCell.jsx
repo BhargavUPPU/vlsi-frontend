@@ -1,15 +1,18 @@
 "use client";
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { DeleteDialog } from '@/components/DeleteDialog';
-import { MoreHorizontal, Edit, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DeleteDialog } from "@/components/DeleteDialog";
+import { MoreHorizontal, Edit, Trash2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function ActionCell({ row, onDelete, editPath, itemName = "item" }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
+  const { isSuperAdmin } = useAuth();
 
   const handleEdit = () => {
     router.push(`${editPath}?edit=${row.original.id}`);
@@ -21,7 +24,7 @@ export function ActionCell({ row, onDelete, editPath, itemName = "item" }) {
       await onDelete(row.original.id);
       setShowDeleteDialog(false);
     } catch (error) {
-      console.error('Delete failed:', error);
+      console.error("Delete failed:", error);
     } finally {
       setIsDeleting(false);
     }
@@ -40,13 +43,16 @@ export function ActionCell({ row, onDelete, editPath, itemName = "item" }) {
             <Edit className="mr-2 h-4 w-4" />
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem 
-            onClick={() => setShowDeleteDialog(true)}
-            className="text-red-600"
-          >
-            <Trash2 className="mr-2 h-4 w-4" />
-            Delete
-          </DropdownMenuItem>
+          {/* Only show delete for SUPERADMIN */}
+          {isSuperAdmin() && (
+            <DropdownMenuItem
+              onClick={() => setShowDeleteDialog(true)}
+              className="text-red-600"
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 

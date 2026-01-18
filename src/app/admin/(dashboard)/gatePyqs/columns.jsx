@@ -4,6 +4,7 @@ import { useDeleteGatePyq } from "@/lib/hooks/useAdmin";
 export const columns = [
   { accessorKey: "year", header: "Year" },
   { accessorKey: "name", header: "Paper Name" },
+  { accessorKey: "category", header: "Category" },
   {
     accessorKey: "link",
     header: "Download",

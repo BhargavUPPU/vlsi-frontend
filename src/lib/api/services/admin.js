@@ -133,6 +133,37 @@ export class TeamPhotosService extends BaseApiService {
   }
 }
 
+// Announcements Service
+export class AnnouncementsService extends BaseApiService {
+  constructor() {
+    super('/announcements');
+  }
+}
+
+// Achievements Service
+export class AchievementsService extends BaseApiService {
+  constructor() {
+    super('/achievements');
+  }
+}
+
+// Photo Gallery Service
+export class PhotoGalleryService extends BaseApiService {
+  constructor() {
+    super('/photoGallery');
+  }
+
+  async getByCategory(category) {
+    const response = await apiClient.get(`${this.endpoint}?category=${category}`);
+    return response.data;
+  }
+
+  async toggleActive(id) {
+    const response = await apiClient.patch(`${this.endpoint}/${id}/toggle-active`);
+    return response.data;
+  }
+}
+
 // Upload Service
 export class UploadService {
   async uploadImage(file) {
@@ -175,4 +206,27 @@ export const testsService = new TestsService();
 export const notificationsService = new NotificationsService();
 export const runningNotificationsService = new RunningNotificationsService();
 export const teamPhotosService = new TeamPhotosService();
+export const announcementsService = new AnnouncementsService();
+export const achievementsService = new AchievementsService();
+export const photoGalleryService = new PhotoGalleryService();
+
+// Users Service
+export class UsersService extends BaseApiService {
+  constructor() {
+    super('/users');
+  }
+
+  async updateRole(userId, role) {
+    const response = await apiClient.patch(`${this.endpoint}/${userId}/role`, { role });
+    return response.data;
+  }
+
+  async resetPassword(userId) {
+    const response = await apiClient.post(`${this.endpoint}/${userId}/reset-password`);
+    return response.data;
+  }
+}
+
+export const usersService = new UsersService();
+
 export const uploadService = new UploadService();

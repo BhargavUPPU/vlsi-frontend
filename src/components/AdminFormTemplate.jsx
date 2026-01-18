@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +13,13 @@ import { AdminLoading } from '@/components/AdminLoading';
 import { ArrowLeft, Save, Loader2, Upload, X, Image as ImageIcon, Plus } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { bufferToDataURL } from '@/lib/utils/imageUtils';
 
 
@@ -485,7 +492,7 @@ export function AdminFormTemplate({
     multipleImagesFieldNames.forEach(fieldName => {
       // For eventFiles and projectImages, the data comes from defaultValues.files
       if ((fieldName === 'eventFiles' || fieldName === 'projectImages') && defaultValues.files && Array.isArray(defaultValues.files)) {
-        // Convert each file buffer to a preview object
+        // ... (existing logic for files)
         const existingImages = defaultValues.files
           .map((file, index) => {
             const preview = bufferToDataURL(file.fileData);
@@ -498,7 +505,23 @@ export function AdminFormTemplate({
               id: file.id
             };
           })
-          .filter(Boolean); // Remove any null entries
+          .filter(Boolean);
+        initialMultipleImagesFields[fieldName] = existingImages;
+      } else if (fieldName === 'images' && defaultValues.images && Array.isArray(defaultValues.images)) {
+        // Handle TeamPhoto images relation
+        const existingImages = defaultValues.images
+          .map((img, index) => {
+            const preview = bufferToDataURL(img.imageData || img);
+            if (!preview) return null;
+            return {
+              preview,
+              name: `Photo ${index + 1}`,
+              size: (img.imageData?.length || img?.length || 0),
+              isExisting: true,
+              id: img.id
+            };
+          })
+          .filter(Boolean);
         initialMultipleImagesFields[fieldName] = existingImages;
       } else if (defaultValues[fieldName]) {
         // Handle other multiple image fields
@@ -720,6 +743,25 @@ export function AdminFormTemplate({
                             placeholder={field.placeholder}
                             {...form.register(field.name, { valueAsNumber: true })}
                             className={form.formState.errors[field.name] ? 'border-red-500' : ''}
+                          />
+                        ) : field.type === 'select' ? (
+                          <Controller
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: { onChange, value } }) => (
+                              <Select onValueChange={onChange} value={value}>
+                                <SelectTrigger className={form.formState.errors[field.name] ? 'border-red-500' : ''}>
+                                  <SelectValue placeholder={field.placeholder || "Select an option"} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {field.options?.map((option) => (
+                                    <SelectItem key={option.value || option} value={option.value || option}>
+                                      {option.label || option}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            )}
                           />
                         ) : (
                           <Input

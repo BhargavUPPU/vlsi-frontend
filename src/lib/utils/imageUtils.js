@@ -172,20 +172,62 @@ export const processProjectImages = (projects) => {
 };
 
 /**
- * Combine and shuffle images from events and projects
+ * Process images from Photo Gallery API
+ * @param {Array} photoGalleries - Array of photo gallery objects
+ * @returns {Array} - Array of processed image URLs
+ */
+export const processPhotoGalleryImages = (photoGalleries) => {
+  if (!Array.isArray(photoGalleries)) return [];
+  
+  const images = [];
+  
+  photoGalleries.forEach(gallery => {
+    if (gallery.images && Array.isArray(gallery.images)) {
+      gallery.images.forEach(image => {
+        if (image.imageData) {
+          const imageUrl = bufferToDataURL(image.imageData);
+          if (imageUrl) {
+            images.push({
+              url: imageUrl,
+              title: gallery.title,
+              type: 'photo gallery',
+              id: gallery.id,
+              priority: gallery.priority || 0,
+              caption: image.caption,
+            });
+          }
+        }
+      });
+    }
+  });
+  
+  return images;
+};
+
+/**
+ * Combine and shuffle images from events, projects, and photo galleries
  * @param {Array} events - Array of event objects
  * @param {Array} projects - Array of project objects
+ * @param {Array} photoGalleries - Array of photo gallery objects
  * @param {number} limit - Maximum number of images to return
  * @returns {Array} - Combined and shuffled array of images
  */
-export const combineHighlightImages = (events, projects, limit = 12) => {
+export const combineHighlightImages = (events, projects, photoGalleries = [], limit = 12) => {
   const eventImages = processEventImages(events);
   const projectImages = processProjectImages(projects);
+  const galleryImages = processPhotoGalleryImages(photoGalleries);
   
-  const allImages = [...eventImages, ...projectImages];
+  const allImages = [...eventImages, ...projectImages, ...galleryImages];
   
-  // Shuffle array
-  const shuffled = allImages.sort(() => Math.random() - 0.5);
+  // Sort by priority (higher first) then shuffle within same priority
+  const sorted = allImages.sort((a, b) => {
+    const priorityA = a.priority || 0;
+    const priorityB = b.priority || 0;
+    if (priorityA !== priorityB) {
+      return priorityB - priorityA; // Higher priority first
+    }
+    return Math.random() - 0.5; // Shuffle within same priority
+  });
   
-  return limit ? shuffled.slice(0, limit) : shuffled;
+  return limit ? sorted.slice(0, limit) : sorted;
 };

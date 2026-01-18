@@ -32,10 +32,24 @@ export default function ClubHighlights() {
     queryFn: () => apiClient.get(API_ENDPOINTS.PROJECTS.GET_ALL),
   });
 
+  // Fetch photo gallery items for club highlights
+  const { data: photoGalleries } = useQuery({
+    queryKey: ["photo-gallery-highlights"],
+    queryFn: async () => {
+      // Fetch galleries with CLUB_HIGHLIGHTS or BOTH category
+      const [highlights, both] = await Promise.all([
+        apiClient.get(`${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=CLUB_HIGHLIGHTS`),
+        apiClient.get(`${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=BOTH`),
+      ]);
+      return [...(highlights.data || []), ...(both.data || [])];
+    },
+  });
+
   // Process and combine images
   const images = combineHighlightImages(
     events?.data || [],
     projects?.data || [],
+    photoGalleries || [],
     12
   );
 

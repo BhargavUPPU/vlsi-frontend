@@ -3,6 +3,7 @@ import { useDeleteMagazine } from "@/lib/hooks/useAdmin";
 
 export const columns = [
   { accessorKey: "title", header: "Magazine Title" },
+  { accessorKey: "category", header: "Category" },
   {
     accessorKey: "link",
     header: "Download",
