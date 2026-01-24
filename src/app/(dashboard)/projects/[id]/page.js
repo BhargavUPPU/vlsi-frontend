@@ -274,46 +274,6 @@ export default function ProjectDetailsPage() {
                 )}
               </div>
             )}
-
-            {/* Project Highlights Carousel */}
-            {images.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Project Highlights</h2>
-
-                <div className="relative">
-                  <div className="overflow-hidden rounded-xl border-4 border-blue-600" ref={emblaRef}>
-                    <div className="flex">
-                      {images.map((image, index) => (
-                        <div key={index} className="flex-[0_0_100%] min-w-0">
-                          <div className="relative aspect-video">
-                            <img
-                              src={image}
-                              alt={`Project highlight ${index + 1}`}
-                              className="w-full h-full object-contain bg-black"
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Dots */}
-                  <div className="flex justify-center items-center gap-2 mt-4">
-                    {scrollSnaps.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => scrollTo(index)}
-                        className={`h-2 rounded-full transition-all ${
-                          index === selectedIndex
-                            ? "w-8 bg-blue-600"
-                            : "w-2 bg-gray-300 hover:bg-gray-400"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Sidebar */}
@@ -441,6 +401,57 @@ export default function ProjectDetailsPage() {
           </div>
         </div>
       </div>
+      {images.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="rounded-lg shadow-sm p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Project Highlights</h2>
+
+            <div className="relative">
+              <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
+                <div className="flex gap-4">
+                  {images.map((image, index) => (
+                    <div key={index} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        className="relative aspect-video rounded-xl overflow-hidden shadow-lg group cursor-pointer"
+                      >
+                        <img
+                          src={image}
+                          alt={`Project highlight ${index + 1}`}
+                          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                        />
+                        {/* Overlay on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="absolute bottom-0 left-0 right-0 p-4">
+                            <p className="text-white font-semibold text-sm">
+                              Image {index + 1} of {images.length}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dots Navigation */}
+              <div className="flex justify-center items-center gap-2 mt-8">
+                {scrollSnaps.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollTo(index)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === selectedIndex
+                        ? "w-8 bg-blue-600"
+                        : "w-2 bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

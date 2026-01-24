@@ -16,6 +16,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+import ProjectsCarousel from "@/components/home/ProjectsCarousel";
+
 export default function ProjectsPage() {
   const [activeTab, setActiveTab] = useState("ongoing");
   const [currentPage, setCurrentPage] = useState(1);
@@ -133,6 +135,7 @@ export default function ProjectsPage() {
   const academicYears = [
     ...new Set(currentProjects.map((p) => p.academicYear).filter(Boolean)),
   ];
+  console.log("projects",projectsData)
 
   // Card colors
   const cardColors = [
@@ -145,56 +148,64 @@ export default function ProjectsPage() {
   ];
 
   return (
-    <div className="min-h-screen ">
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
-      >
-        <ArrowLeft size={20} />
-        <span>Projects</span>
-      </Link>
+    <div className="min-h-screen">
+      {/* Featured Projects Carousel */}
+      {/* {!isLoading && !error && allProjects.length > 0 && (
+        <ProjectsCarousel projects={allProjects.slice(0, 5)} />
+      )} */}
+
+
 
       {/* Hero Section with Animated Blocks */}
       <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4"
+        >
+          <ArrowLeft size={20} />
+          <span>Home</span>
+        </Link>
+      </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Animated '11' Symbol (two columns of 3 blocks), group floats up/down */}
             <div className="relative h-112 flex items-center justify-center">
               {/* Sample SVG Bubble/Cloud Background */}
               <svg
-                className="absolute inset-0 w-full h-full z-0"
-                width="949"
-                height="923"
-                viewBox="0 0 949 923"
+                className="absolute inset-0 w-full h-full z-0 scale-150"
+                width="1400"
+                height="1400"
+                viewBox="0 0 1400 1400"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <circle
-                  cx="710"
-                  cy="739.299"
-                  r="50"
+                  cx="1050"
+                  cy="1100"
+                  r="80"
                   fill="#367CFF"
                   fillOpacity="0.2"
                 />
                 <circle
-                  cx="864"
-                  cy="635.299"
-                  r="20"
+                  cx="1280"
+                  cy="950"
+                  r="35"
                   fill="#367CFF"
                   fillOpacity="0.2"
                 />
                 <path
-                  d="M493.15 815.459C625.24 769.108 732.134 678.704 773.688 527.221C810.468 393.567 813.84 245.716 744.976 127.445C701.916 53.6286 627.463 51.5477 545.61 66.2558C420.66 88.5004 295.853 120.983 171.622 148.081C43.4306 176.257 -4.78191 282.775 -4.16524 398.217C-3.13205 557.273 29.8601 774.525 195.65 838.926C228.26 851.445 267.426 854.456 303.324 852.083C369.18 848.032 433.635 836.372 493.15 815.459Z"
+                  d="M730 1220C925 1150 1085 1015 1145 785C1200 585 1205 365 1105 190C1040 80 930 77 810 98C625 132 440 180 255 220C65 262 -7 420 -6 595C-5 830 45 1155 290 1255C340 1275 395 1280 450 1275C545 1265 640 1250 730 1220Z"
                   fill="#367CFF"
                   fillOpacity="0.09"
                 />
                 <path
-                  d="M555.665 822.126C695.752 773.49 809.319 679.43 853.913 522.551C893.382 384.136 897.518 231.215 825.029 109.268C779.703 33.1579 700.85 31.4008 614.094 47.0455C481.662 70.7129 349.342 104.967 217.653 133.65C81.7655 163.468 30.2916 273.882 30.5035 393.264C30.9898 557.75 65.1045 782.25 240.463 847.972C274.956 860.745 316.429 863.652 354.461 861.008C424.231 856.469 492.546 844.068 555.665 822.126Z"
+                  d="M825 1230C1030 1155 1200 1015 1265 780C1320 575 1325 345 1225 163C1155 50 1040 47 910 70C715 105 520 157 325 200C120 245 45 410 45 590C45 835 95 1170 355 1270C410 1290 470 1295 530 1290C630 1280 730 1260 825 1230Z"
                   fill="#367CFF"
                   fillOpacity="0.09"
                 />
                 <path
-                  d="M824.602 109.546C896.996 231.333 892.885 384.094 853.438 522.434L853.438 522.435C808.903 679.105 695.496 773.055 555.527 821.649L555.527 821.649C492.459 843.574 424.189 855.968 354.455 860.504L354.453 860.505C316.462 863.145 275.064 860.239 240.655 847.497C153.146 814.7 100.853 742.28 70.3721 657.459C39.8901 572.634 31.2417 475.453 30.9986 393.237C30.8928 333.614 43.6946 276.274 73.4505 230.132C102.965 184.365 149.186 149.573 216.148 134.496L217.733 134.144C349.449 105.454 481.734 71.2081 614.155 47.5426L614.156 47.5424C657.514 39.7235 698.839 36.2656 734.969 44.2422C770.511 52.0894 801.041 71.0055 823.537 107.781L824.602 109.546Z"
+                  d="M1220 164C1330 345 1325 575 1265 780L1265 780C1200 1015 1030 1155 825 1230L825 1230C730 1260 630 1280 530 1290L530 1290C470 1295 410 1290 355 1270C225 1220 150 1110 105 985C60 860 45 710 45 590C45 500 65 413 110 345C153 276 220 223 320 201L325 200C520 157 715 105 910 70L910 70C975 59 1035 54 1090 66C1145 78 1190 106 1220 161L1220 164Z"
                   stroke="black"
                   strokeOpacity="0.2"
                 />
@@ -283,10 +294,10 @@ export default function ProjectsPage() {
                             .title
                         }
                       </h2>
-                      <p className="text-gray-600 text-base md:text-lg font-medium mb-6 max-w-md mx-auto">
+                      <p className="text-gray-600 text-base md:text-lg font-medium mb-6 max-w-md mx-auto line-clamp-3">
                         {
                           latestProjects[carouselIndex % latestProjects.length]
-                            .abstraction
+                            .Introduction
                         }
                       </p>
                       <Link
@@ -332,7 +343,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
+      <div className="bg-white border-b  shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <select
@@ -377,14 +388,6 @@ export default function ProjectsPage() {
                 </option>
               ))}
             </select>
-
-            <input
-              type="date"
-              value={filters.date}
-              onChange={(e) => handleFilterChange("date", e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-
             <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2">
               <Filter size={18} />
               Filter
@@ -487,13 +490,14 @@ export default function ProjectsPage() {
                     >
                       {/* Colored Header with Image */}
                       <div
-                        className={`relative h-48 ${colorClass} p-6 flex items-center justify-center`}
+                        className={`relative ${colorClass} flex items-center justify-center`}
                       >
                         {imageUrl ? (
                           <img
                             src={imageUrl}
                             alt={project.title}
-                            className="w-full h-full object-contain"
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            loading="lazy"
                           />
                         ) : (
                           <div className="text-center text-white">
@@ -529,7 +533,7 @@ export default function ProjectsPage() {
                         </h3>
 
                         <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                          {project.description}
+                          {project.Introduction}
                         </p>
 
                         <div className="flex gap-3">
@@ -538,12 +542,6 @@ export default function ProjectsPage() {
                             className="flex-1 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
                           >
                             Know more
-                          </Link>
-                          <Link
-                            href={`/projects/${project.id}`}
-                            className="flex-1 border-2 border-blue-600 text-blue-600 text-center py-2 rounded-lg hover:bg-blue-50 transition-colors font-medium text-sm"
-                          >
-                            View More
                           </Link>
                         </div>
                       </div>

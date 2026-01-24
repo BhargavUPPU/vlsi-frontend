@@ -5,58 +5,84 @@ import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
 import { combineHighlightImages } from "@/lib/utils/imageUtils";
-import { staggerContainer, staggerItem, defaultViewport } from "@/lib/animations";
+import {
+  staggerContainer,
+  staggerItem,
+  defaultViewport,
+} from "@/lib/animations";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ClubHighlights() {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start", slidesToScroll: 1 },
-    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+    [Autoplay({ delay: 3000, stopOnInteraction: false })],
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  // Fetch events
+  // Fetch events with caching
   const { data: events } = useQuery({
     queryKey: ["public-events"],
     queryFn: () => apiClient.get(API_ENDPOINTS.EVENTS.GET_ALL),
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 15 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
-  // Fetch projects
+  // Fetch projects with caching
   const { data: projects } = useQuery({
     queryKey: ["public-projects"],
     queryFn: () => apiClient.get(API_ENDPOINTS.PROJECTS.GET_ALL),
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 15 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
-  // Fetch photo gallery items for club highlights
+  // Fetch photo gallery items for club highlights with caching
   const { data: photoGalleries } = useQuery({
     queryKey: ["photo-gallery-highlights"],
     queryFn: async () => {
       // Fetch galleries with CLUB_HIGHLIGHTS or BOTH category
       const [highlights, both] = await Promise.all([
-        apiClient.get(`${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=CLUB_HIGHLIGHTS`),
+        apiClient.get(
+          `${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=CLUB_HIGHLIGHTS`,
+        ),
         apiClient.get(`${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=BOTH`),
       ]);
       return [...(highlights.data || []), ...(both.data || [])];
     },
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 15 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
-  // Process and combine images
-  const images = combineHighlightImages(
-    events?.data || [],
-    projects?.data || [],
-    photoGalleries || [],
-    12
-  );
+  // Memoize processed images to avoid recalculation
+  const images = useMemo(() => {
+    return combineHighlightImages(
+      events?.data || [],
+      projects?.data || [],
+      photoGalleries || [],
+      12,
+    );
+  }, [events?.data, projects?.data, photoGalleries]);
 
   // Carousel navigation
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
+  const scrollPrev = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi],
+  );
+  const scrollNext = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi],
+  );
+  const scrollTo = useCallback(
+    (index) => emblaApi && emblaApi.scrollTo(index),
+    [emblaApi],
+  );
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -124,6 +150,7 @@ export default function ClubHighlights() {
                           src={image.url}
                           alt={image.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
                         />
                         {/* Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">

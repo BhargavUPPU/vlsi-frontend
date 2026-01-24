@@ -3,27 +3,30 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
   const { pathname } = request.nextUrl;
   
-  // Check if the request is for admin routes
-  // if (pathname.startsWith('/admin')) {
-  //   // Get token from cookies
-  //   const token = request.cookies.get('accessToken')?.value;
-    
-  //   // If no token and not on login page, redirect to login
-  //   if (!token && !pathname.startsWith('/admin/login')) {
-  //     const loginUrl = new URL('/login', request.url);
-  //     return NextResponse.redirect(loginUrl);
-  //   }
-    
-  //   // If token exists and on login page, redirect to admin dashboard
-  //   if (token && pathname === '/admin/login') {
-  //     const dashboardUrl = new URL('/admin/projects', request.url);
-  //     return NextResponse.redirect(dashboardUrl);
-  //   }
-  // }
+  // Public routes that don't require authentication
+  const publicRoutes = ['/auth/login', '/auth/change-password', '/'];
   
+  // Check if it's a public route
+  const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route + '/'));
+  
+  // Allow public routes and static files
+  if (isPublicRoute || pathname.startsWith('/_next') || pathname.startsWith('/api')) {
+    return NextResponse.next();
+  }
+  
+  // For admin routes, we'll handle auth in client-side middleware
+  // This is because we need to check localStorage which isn't available in server middleware
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*']
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+  ],
 };

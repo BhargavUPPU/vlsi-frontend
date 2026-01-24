@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
@@ -18,6 +18,8 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 
+import EventsCarousel from "@/components/home/EventsCarousel";
+
 export default function EventsPage() {
   const [activeTab, setActiveTab] = useState("upcoming"); // "upcoming" or "completed"
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +32,7 @@ export default function EventsPage() {
 
   const itemsPerPage = 6;
 
-  // Fetch all events
+  // Fetch all events with optimized caching
   const {
     data: eventsData,
     isLoading,
@@ -38,41 +40,54 @@ export default function EventsPage() {
   } = useQuery({
     queryKey: ["events"],
     queryFn: () => apiClient.get(API_ENDPOINTS.EVENTS.GET_ALL),
+    staleTime: 3 * 60 * 1000, // 3 minutes
+    cacheTime: 15 * 60 * 1000, // 15 minutes
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: 2,
   });
 
   // Process and filter events
   const allEvents = Array.isArray(eventsData?.data) ? eventsData.data : [];
 
-  // Separate upcoming and completed events
-  const upcomingEvents = allEvents.filter(
-    (event) => event.status?.toLowerCase() === "upcoming"
-  );
-  const completedEvents = allEvents.filter(
-    (event) => event.status?.toLowerCase() === "completed"
-  );
+  // Separate upcoming and completed events - memoized
+  const { upcomingEvents, completedEvents } = useMemo(() => {
+    return {
+      upcomingEvents: allEvents.filter(
+        (event) => event.status?.toLowerCase() === "upcoming",
+      ),
+      completedEvents: allEvents.filter(
+        (event) => event.status?.toLowerCase() === "completed",
+      ),
+    };
+  }, [allEvents]);
 
   // Get current tab events
   const currentEvents =
     activeTab === "upcoming" ? upcomingEvents : completedEvents;
 
-  // Apply filters
-  const filteredEvents = currentEvents.filter((event) => {
-    if (filters.eventType && event.eventType !== filters.eventType)
-      return false;
-    if (filters.year) {
-      const eventYear = new Date(event.eventDate).getFullYear().toString();
-      if (eventYear !== filters.year) return false;
-    }
-    // Add more filter logic as needed
-    return true;
-  });
+  // Apply filters - memoized
+  const filteredEvents = useMemo(() => {
+    return currentEvents.filter((event) => {
+      if (filters.eventType && event.eventType !== filters.eventType)
+        return false;
+      if (filters.year) {
+        const eventYear = new Date(event.eventDate).getFullYear().toString();
+        if (eventYear !== filters.year) return false;
+      }
+      return true;
+    });
+  }, [currentEvents, filters]);
 
-  // Pagination
-  const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-  const paginatedEvents = filteredEvents.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // Pagination - memoized
+  const { totalPages, paginatedEvents } = useMemo(() => {
+    const pages = Math.ceil(filteredEvents.length / itemsPerPage);
+    const paginated = filteredEvents.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage,
+    );
+    return { totalPages: pages, paginatedEvents: paginated };
+  }, [filteredEvents, currentPage]);
 
   // Get first image from event files
   const getEventImage = (event) => {
@@ -93,36 +108,45 @@ export default function EventsPage() {
     setCurrentPage(1);
   };
 
-  // Get unique event types and years for filters
-  const eventTypes = [
-    ...new Set(currentEvents.map((e) => e.eventType).filter(Boolean)),
-  ];
-  const years = [
-    ...new Set(currentEvents.map((e) => new Date(e.eventDate).getFullYear())),
-  ];
+  // Get unique event types and years for filters - memoized
+  const { eventTypes, years } = useMemo(() => {
+    const types = [
+      ...new Set(currentEvents.map((e) => e.eventType).filter(Boolean)),
+    ];
+    const eventYears = [
+      ...new Set(currentEvents.map((e) => new Date(e.eventDate).getFullYear())),
+    ];
+    return { eventTypes: types, years: eventYears };
+  }, [currentEvents]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-12 bg-gray-50">
+      {/* Featured Events Carousel */}
+      {/* {!isLoading && !error && allEvents.length > 0 && (
+        <EventsCarousel events={allEvents.slice(0, 5)} />
+      )} */}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-6"
         >
           <ArrowLeft size={20} />
-          <span>Events</span>
+          <span>Home</span>
         </Link>
-        <header className="flex items-center justify-between mb-6">
+        
+        <header className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
           <div>
-            <h1 className="text-3xl font-bold">Join the Event</h1>
-            <p className="text-lg text-gray-600">Welcome to VLSI Innovation!</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Internal Events Hub</h1>
+            <p className="text-xl text-gray-600 font-medium">Be part of the next big innovation at VLSI Club!</p>
           </div>
-          <div>
+          <div className="hidden md:block">
             <Image
               src="/eventHeader.jpg"
               alt="Event Header"
-              className="rounded-lg"
-              width={200}
-              height={200}
+              className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300"
+              width={240}
+              height={240}
             />
           </div>
         </header>
@@ -152,7 +176,7 @@ export default function EventsPage() {
 
         {/* Filters */}
         <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="flex flex-col md:flex-row items-end justify-end gap-4">
             {/* Event Type */}
             <select
               value={filters.eventType}
@@ -180,27 +204,6 @@ export default function EventsPage() {
                 </option>
               ))}
             </select>
-
-            {/* Branch */}
-            <select
-              value={filters.branch}
-              onChange={(e) => handleFilterChange("branch", e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Branch</option>
-              <option value="ECE">ECE</option>
-              <option value="CSE">CSE</option>
-              <option value="EEE">EEE</option>
-            </select>
-
-            {/* Date */}
-            <input
-              type="date"
-              value={filters.date}
-              onChange={(e) => handleFilterChange("date", e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-
             {/* Filter Button */}
             <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2">
               <FilterIcon size={18} />
@@ -283,6 +286,7 @@ export default function EventsPage() {
                             src={imageUrl}
                             alt={event.title}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            loading="lazy"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
@@ -336,12 +340,6 @@ export default function EventsPage() {
                           >
                             Read more
                           </Link>
-                          <Link
-                            href={`/events/${event.id}`}
-                            className="flex-1 border-2 border-blue-600 text-blue-600 text-center py-2 rounded-lg hover:bg-blue-50 transition-colors font-medium"
-                          >
-                            View More
-                          </Link>
                         </div>
                       </div>
                     </motion.div>
@@ -374,7 +372,7 @@ export default function EventsPage() {
                     >
                       {page}
                     </button>
-                  )
+                  ),
                 )}
 
                 <button

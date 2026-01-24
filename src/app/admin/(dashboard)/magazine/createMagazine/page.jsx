@@ -1,35 +1,42 @@
 "use client";
+import { Suspense } from "react";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
-import { useCreateMagazine, useMagazine, useUpdateMagazine } from "@/lib/hooks/useAdmin";
+import {
+  useCreateMagazine,
+  useMagazine,
+  useUpdateMagazine,
+} from "@/lib/hooks/useAdmin";
 import { magazineSchema } from "@/lib/validations/admin";
 import { useSearchParams } from "next/navigation";
 
 const magazineFields = [
-  { name: "title", label: "Magazine Title", placeholder: "Enter magazine title" },
+  {
+    name: "title",
+    label: "Magazine Title",
+    placeholder: "Enter magazine title",
+  },
   { name: "link", label: "Download Link", placeholder: "https://..." },
   { name: "image", label: "Magazine Cover Image", type: "image" },
-  { 
-    name: "category", 
-    label: "Category", 
-    type: "select", 
+  {
+    name: "category",
+    label: "Category",
+    type: "select",
     options: [
-      { label: "Analog design", value: "Analog design" },
-      { label: "CMOS VLSI Design", value: "CMOS VLSI Design" },
-      { label: "Digital Design", value: "Digital Design" },
-      { label: "Digital IC Design", value: "Digital IC Design" },
-      { label: "FPGA & ASIC Design", value: "FPGA & ASIC Design" },
-      { label: "Semiconductor Physics", value: "Semiconductor Physics" },
-      { label: "General", value: "General" }
-    ]
+      { label: "General", value: "General" },
+      { label: "Technical", value: "Technical" },
+      { label: "Research", value: "Research" },
+    ],
   },
 ];
 
-export default function CreateMagazinePage() {
+function CreateMagazineContent() {
   const searchParams = useSearchParams();
   const editId = searchParams?.get("edit");
   const isEditing = !!editId;
 
-  const { data: magazine, isLoading } = useMagazine(editId, { enabled: isEditing });
+  const { data: magazine, isLoading } = useMagazine(editId, {
+    enabled: isEditing,
+  });
   const createMagazine = useCreateMagazine();
   const updateMagazine = useUpdateMagazine();
 
@@ -52,5 +59,13 @@ export default function CreateMagazinePage() {
       backPath="/admin/magazine"
       fields={magazineFields}
     />
+  );
+}
+
+export default function CreateMagazinePage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateMagazineContent />
+    </Suspense>
   );
 }

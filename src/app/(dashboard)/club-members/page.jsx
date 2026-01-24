@@ -131,7 +131,7 @@ export default function ClubMembersPage() {
                       <TableHead className="font-bold text-slate-600 uppercase tracking-wider text-xs h-14">Roll Number</TableHead>
                       <TableHead className="font-bold text-slate-600 uppercase tracking-wider text-xs h-14">Academic Year</TableHead>
                       <TableHead className="font-bold text-slate-600 uppercase tracking-wider text-xs h-14">Branch / Section</TableHead>
-                      <TableHead className="font-bold text-slate-600 uppercase tracking-wider text-xs h-14 text-right pr-8">Status</TableHead>
+                     
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -163,11 +163,6 @@ export default function ClubMembersPage() {
                            <div className="text-slate-600 font-medium text-sm">
                               {member.sectionBranch || 'N/A'}
                            </div>
-                        </TableCell>
-                        <TableCell className="py-4 text-right pr-8">
-                           <Badge className="bg-emerald-50 text-emerald-600 border-emerald-100 hover:bg-emerald-100 transition-colors font-bold">
-                              Verified
-                           </Badge>
                         </TableCell>
                       </TableRow>
                     ))}

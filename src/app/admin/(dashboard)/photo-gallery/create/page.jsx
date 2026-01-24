@@ -1,15 +1,26 @@
 "use client";
+import { Suspense } from "react";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
-import { useCreatePhotoGallery, usePhotoGallery, useUpdatePhotoGallery } from "@/lib/hooks/useAdmin";
+import {
+  useCreatePhotoGallery,
+  usePhotoGallery,
+  useUpdatePhotoGallery,
+} from "@/lib/hooks/useAdmin";
 import { photoGallerySchema } from "@/lib/validations/admin";
 import { useSearchParams } from "next/navigation";
 
 const photoGalleryFields = [
   { name: "title", label: "Title", placeholder: "e.g., Tech Fest 2024" },
-  { name: "description", label: "Description", type: "textarea", placeholder: "Optional description...", required: false },
-  { 
-    name: "category", 
-    label: "Display Category", 
+  {
+    name: "description",
+    label: "Description",
+    type: "textarea",
+    placeholder: "Optional description...",
+    required: false,
+  },
+  {
+    name: "category",
+    label: "Display Category",
     type: "select",
     options: [
       { value: "CLUB_HIGHLIGHTS", label: "Club Highlights (Homepage only)" },
@@ -18,23 +29,41 @@ const photoGalleryFields = [
     ],
     required: true,
   },
-  { name: "priority", label: "Priority", type: "number", placeholder: "0", helperText: "Higher priority shows first", required: false },
-  { name: "images", label: "Gallery Images", type: "multipleImages", maxFiles: 20, required: true },
+  {
+    name: "priority",
+    label: "Priority",
+    type: "number",
+    placeholder: "0",
+    helperText: "Higher priority shows first",
+    required: false,
+  },
+  {
+    name: "images",
+    label: "Gallery Images",
+    type: "multipleImages",
+    maxFiles: 20,
+    required: true,
+  },
 ];
 
-export default function CreatePhotoGalleryPage() {
+function CreatePhotoGalleryContent() {
   const searchParams = useSearchParams();
   const editId = searchParams?.get("edit");
   const isEditing = !!editId;
 
-  const { data: photoGallery, isLoading } = usePhotoGallery(editId, { enabled: isEditing });
+  const { data: photoGallery, isLoading } = usePhotoGallery(editId, {
+    enabled: isEditing,
+  });
   const createPhotoGallery = useCreatePhotoGallery();
   const updatePhotoGallery = useUpdatePhotoGallery();
 
   // AdminFormTemplate will send FormData if an image field is present
   const handleSubmit = async (formDataOrData) => {
     if (isEditing) {
-      await updatePhotoGallery.mutateAsync({ id: editId, data: formDataOrData });
+      await updatePhotoGallery.mutateAsync({
+        id: editId,
+        data: formDataOrData,
+      });
     } else {
       await createPhotoGallery.mutateAsync(formDataOrData);
     }
@@ -51,5 +80,13 @@ export default function CreatePhotoGalleryPage() {
       backPath="/admin/photo-gallery"
       fields={photoGalleryFields}
     />
+  );
+}
+
+export default function CreatePhotoGalleryPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreatePhotoGalleryContent />
+    </Suspense>
   );
 }

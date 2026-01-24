@@ -1,4 +1,4 @@
-import { apiClient } from '../client';
+import { apiClient } from "../client";
 
 /**
  * Base API service class providing common CRUD operations
@@ -18,11 +18,19 @@ export class BaseApiService {
     return response.data;
   }
 
+  async get(path, config = {}) {
+    const url = path.startsWith("/")
+      ? `${this.endpoint}${path}`
+      : `${this.endpoint}/${path}`;
+    const response = await apiClient.get(url, config);
+    return response.data;
+  }
+
   async create(data) {
     const config = {};
     // If data is FormData, let browser set Content-Type with boundary
     if (data instanceof FormData) {
-      config.headers = { 'Content-Type': 'multipart/form-data' };
+      config.headers = { "Content-Type": "multipart/form-data" };
     }
     const response = await apiClient.post(this.endpoint, data, config);
     return response.data;
@@ -32,9 +40,13 @@ export class BaseApiService {
     const config = {};
     // If data is FormData, let browser set Content-Type with boundary
     if (data instanceof FormData) {
-      config.headers = { 'Content-Type': 'multipart/form-data' };
+      config.headers = { "Content-Type": "multipart/form-data" };
     }
-    const response = await apiClient.put(`${this.endpoint}/${id}`, data, config);
+    const response = await apiClient.put(
+      `${this.endpoint}/${id}`,
+      data,
+      config,
+    );
     return response.data;
   }
 
@@ -44,7 +56,9 @@ export class BaseApiService {
   }
 
   async bulkDelete(ids) {
-    const response = await apiClient.delete(`${this.endpoint}/bulk`, { data: { ids } });
+    const response = await apiClient.delete(`${this.endpoint}/bulk`, {
+      data: { ids },
+    });
     return response.data;
   }
 }

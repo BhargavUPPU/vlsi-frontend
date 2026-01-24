@@ -1,38 +1,53 @@
 "use client";
+import { Suspense } from "react";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
-import { useCreateTextbook, useTextbook, useUpdateTextbook } from "@/lib/hooks/useAdmin";
+import {
+  useCreateTextbook,
+  useTextbook,
+  useUpdateTextbook,
+} from "@/lib/hooks/useAdmin";
 import { textbookSchema } from "@/lib/validations/admin";
 import { useSearchParams } from "next/navigation";
 
 const textbookFields = [
   { name: "name", label: "Book Name", placeholder: "Enter book name" },
-  { name: "description", label: "Description", type: "textarea", placeholder: "Enter description" },
+  {
+    name: "description",
+    label: "Description",
+    type: "textarea",
+    placeholder: "Enter description",
+  },
   { name: "subject", label: "Subject", placeholder: "Enter subject" },
   { name: "author", label: "Author", placeholder: "Enter author name" },
   { name: "link", label: "Download Link", placeholder: "https://..." },
   { name: "image", label: "Book Cover Image", type: "image" },
-  { 
-    name: "category", 
-    label: "Category", 
-    type: "select", 
+  {
+    name: "category",
+    label: "Category",
+    type: "select",
     options: [
-      { label: "Analog design", value: "Analog design" },
-      { label: "CMOS VLSI Design", value: "CMOS VLSI Design" },
-      { label: "Digital Design", value: "Digital Design" },
-      { label: "Digital IC Design", value: "Digital IC Design" },
-      { label: "FPGA & ASIC Design", value: "FPGA & ASIC Design" },
-      { label: "Semiconductor Physics", value: "Semiconductor Physics" },
-      { label: "General", value: "General" }
-    ]
+      { label: "VLSI Textbooks & NPTEL Lectures", value: "VLSI Textbooks & NPTEL Lectures" },
+      { label: "Analog Design (CMOS)", value: "Analog Design (CMOS)" },
+      { label: "CMOS VLSI Design (B)", value: "CMOS VLSI Design (B)" },
+      { label: "DFT (B)", value: "DFT (B)" },
+      { label: "Digital Design (B)", value: "Digital Design (B)" },
+      { label: "Digital IC Design (B)", value: "Digital IC Design (B)" },
+      { label: "VLSI Flow", value: "VLSI Flow" },
+      { label: "Scripting Language (TCL, PERL)", value: "Scripting Language (TCL, PERL)" },
+      { label: "Verilog & SystemVerilog", value: "Verilog & SystemVerilog" },
+      { label: "Semiconductor Physics & FPGAs", value: "Semiconductor Physics & FPGAs" },
+    ],
   },
 ];
 
-export default function CreateTextbookPage() {
+function CreateTextbookContent() {
   const searchParams = useSearchParams();
   const editId = searchParams?.get("edit");
   const isEditing = !!editId;
 
-  const { data: textbook, isLoading } = useTextbook(editId, { enabled: isEditing });
+  const { data: textbook, isLoading } = useTextbook(editId, {
+    enabled: isEditing,
+  });
   const createTextbook = useCreateTextbook();
   const updateTextbook = useUpdateTextbook();
 
@@ -55,5 +70,13 @@ export default function CreateTextbookPage() {
       backPath="/admin/textBooks"
       fields={textbookFields}
     />
+  );
+}
+
+export default function CreateTextbookPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateTextbookContent />
+    </Suspense>
   );
 }

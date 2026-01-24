@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
 import {
   useCreateCoreMember,
@@ -61,12 +62,12 @@ const coreMemberFields = [
     name: "description",
     label: "Description/Biography",
     placeholder: "Enter short bio or description (optional)",
-    type: "textarea"
+    type: "textarea",
   },
   { name: "image", label: "Member Photo", type: "image", required: true },
 ];
 
-export default function CreateCoreMemberPage() {
+function CreateCoreMemberContent() {
   const searchParams = useSearchParams();
   const editId = searchParams?.get("edit");
   const isEditing = !!editId;
@@ -75,7 +76,7 @@ export default function CreateCoreMemberPage() {
     editId,
     {
       enabled: isEditing,
-    }
+    },
   );
 
   const createCoreMember = useCreateCoreMember({
@@ -142,5 +143,13 @@ export default function CreateCoreMemberPage() {
         </>
       )}
     </AdminFormTemplate>
+  );
+}
+
+export default function CreateCoreMemberPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateCoreMemberContent />
+    </Suspense>
   );
 }

@@ -1,7 +1,12 @@
 // Question Bank Form
 "use client";
+import { Suspense } from "react";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
-import { useCreateQuestionBank, useQuestionBank, useUpdateQuestionBank } from "@/lib/hooks/useAdmin";
+import {
+  useCreateQuestionBank,
+  useQuestionBank,
+  useUpdateQuestionBank,
+} from "@/lib/hooks/useAdmin";
 import { questionBankSchema } from "@/lib/validations/admin";
 import { useSearchParams } from "next/navigation";
 
@@ -10,28 +15,30 @@ const questionBankFields = [
   { name: "subject", label: "Subject", placeholder: "Enter subject" },
   { name: "link", label: "Link", placeholder: "https://..." },
   { name: "image", label: "Question Bank Thumbnail", type: "image" },
-  { 
-    name: "category", 
-    label: "Category", 
-    type: "select", 
+  {
+    name: "category",
+    label: "Category",
+    type: "select",
     options: [
-      { label: "Analog design", value: "Analog design" },
-      { label: "CMOS VLSI Design", value: "CMOS VLSI Design" },
-      { label: "Digital Design", value: "Digital Design" },
-      { label: "Digital IC Design", value: "Digital IC Design" },
-      { label: "FPGA & ASIC Design", value: "FPGA & ASIC Design" },
-      { label: "Semiconductor Physics", value: "Semiconductor Physics" },
-      { label: "General", value: "General" }
-    ]
+      { label: "Analog Electronics", value: "Analog Electronics" },
+      { label: "Digital Electronics", value: "Digital Electronics" },
+      { label: "Network Theory", value: "Network Theory" },
+      { label: "Signals & Systems", value: "Signals & Systems" },
+      { label: "Communication", value: "Communication" },
+      { label: "Verilog", value: "Verilog" },
+      { label: "EDC", value: "EDC" },
+    ],
   },
 ];
 
-export default function CreateQuestionBankPage() {
+function CreateQuestionBankContent() {
   const searchParams = useSearchParams();
   const editId = searchParams?.get("edit");
   const isEditing = !!editId;
 
-  const { data: questionBank, isLoading } = useQuestionBank(editId, { enabled: isEditing });
+  const { data: questionBank, isLoading } = useQuestionBank(editId, {
+    enabled: isEditing,
+  });
   const createQuestionBank = useCreateQuestionBank();
   const updateQuestionBank = useUpdateQuestionBank();
 
@@ -54,5 +61,13 @@ export default function CreateQuestionBankPage() {
       backPath="/admin/questionBank"
       fields={questionBankFields}
     />
+  );
+}
+
+export default function CreateQuestionBankPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateQuestionBankContent />
+    </Suspense>
   );
 }

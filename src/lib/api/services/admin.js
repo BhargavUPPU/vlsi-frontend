@@ -1,18 +1,22 @@
-import { BaseApiService } from './base';
-import { apiClient } from '../client';
+import { BaseApiService } from "./base";
+import { apiClient } from "../client";
 
 // Projects Service
 export class ProjectsService extends BaseApiService {
   constructor() {
-    super('/projects');
+    super("/projects");
   }
 
   async uploadImages(id, files) {
     const formData = new FormData();
-    files.forEach(file => formData.append('images', file));
-    const response = await apiClient.post(`${this.endpoint}/${id}/images`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
+    files.forEach((file) => formData.append("images", file));
+    const response = await apiClient.post(
+      `${this.endpoint}/${id}/images`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
     return response.data;
   }
 }
@@ -20,24 +24,32 @@ export class ProjectsService extends BaseApiService {
 // Events Service
 export class EventsService extends BaseApiService {
   constructor() {
-    super('/events');
+    super("/events");
   }
 
   async uploadCertificate(id, file) {
     const formData = new FormData();
-    formData.append('certificate', file);
-    const response = await apiClient.post(`${this.endpoint}/${id}/certificate`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
+    formData.append("certificate", file);
+    const response = await apiClient.post(
+      `${this.endpoint}/${id}/certificate`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
     return response.data;
   }
 
   async uploadFiles(id, files) {
     const formData = new FormData();
-    files.forEach(file => formData.append('files', file));
-    const response = await apiClient.post(`${this.endpoint}/${id}/files`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
+    files.forEach((file) => formData.append("files", file));
+    const response = await apiClient.post(
+      `${this.endpoint}/${id}/files`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
     return response.data;
   }
 }
@@ -45,121 +57,169 @@ export class EventsService extends BaseApiService {
 // Club Members Service
 export class ClubMembersService extends BaseApiService {
   constructor() {
-    super('/clubMembers');
+    super("/clubMembers");
   }
 }
 
 // Core Members Service
 export class CoreMembersService extends BaseApiService {
   constructor() {
-    super('/coreMembers');
+    super("/coreMembers");
   }
 }
 
 // Question Banks Service
 export class QuestionBanksService extends BaseApiService {
   constructor() {
-    super('/questionBanks');
+    super("/questionBanks");
   }
 }
 
 // Textbooks Service
 export class TextbooksService extends BaseApiService {
   constructor() {
-    super('/textBooks');
+    super("/textBooks");
   }
 }
 
 // NPTEL Lectures Service
 export class NptelLecturesService extends BaseApiService {
   constructor() {
-    super('/nptelLectures');
+    super("/nptelLectures");
   }
 }
 
 // Placement Prep Service
 export class PlacementPrepService extends BaseApiService {
   constructor() {
-    super('/placementPrep');
+    super("/placementPrep");
   }
 }
 
 // VLSI Materials Service
 export class VlsiMaterialsService extends BaseApiService {
   constructor() {
-    super('/vlsiMaterials');
+    super("/vlsiMaterials");
   }
 }
 
 // GATE PYQs Service
 export class GatePyqsService extends BaseApiService {
   constructor() {
-    super('/gatePyqs');
+    super("/gatePyqs");
   }
 }
 
 // Magazines Service
 export class MagazinesService extends BaseApiService {
   constructor() {
-    super('/magazines');
+    super("/magazines");
   }
 }
 
 // Tests Service
 export class TestsService extends BaseApiService {
   constructor() {
-    super('/tests');
+    super("/tests");
   }
 }
 
 // Notifications Service
 export class NotificationsService extends BaseApiService {
   constructor() {
-    super('/notifications');
+    super("/notifications");
   }
 }
 
 // Running Notifications Service
 export class RunningNotificationsService extends BaseApiService {
   constructor() {
-    super('/runningNotifications');
+    super("/runningNotifications");
   }
 }
 
 // Team Photos Service
 export class TeamPhotosService extends BaseApiService {
   constructor() {
-    super('/teamPhotos');
+    super("/teamPhotos");
   }
 }
 
 // Announcements Service
 export class AnnouncementsService extends BaseApiService {
   constructor() {
-    super('/announcements');
+    super("/announcements");
   }
 }
 
 // Achievements Service
 export class AchievementsService extends BaseApiService {
   constructor() {
-    super('/achievements');
+    super("/achievements");
+  }
+
+  async getActive(type) {
+    const params = type ? { type } : {};
+    return this.get("/active", { params });
   }
 }
 
 // Photo Gallery Service
 export class PhotoGalleryService extends BaseApiService {
   constructor() {
-    super('/photoGallery');
+    super("/photoGallery");
   }
 
   async getByCategory(category) {
-    const response = await apiClient.get(`${this.endpoint}?category=${category}`);
+    const response = await apiClient.get(
+      `${this.endpoint}?category=${category}`,
+    );
     return response.data;
   }
 
   async toggleActive(id) {
-    const response = await apiClient.patch(`${this.endpoint}/${id}/toggle-active`);
+    const response = await apiClient.put(
+      `${this.endpoint}/${id}/toggle-active`,
+    );
+    return response.data;
+  }
+}
+
+// Milestones Service
+export class MilestonesService extends BaseApiService {
+  constructor() {
+    super("/milestones");
+  }
+
+  async getByYear(year) {
+    return this.getAll({ year });
+  }
+
+  async getByCategory(category) {
+    return this.getAll({ category });
+  }
+
+  async getYears() {
+    const response = await apiClient.get(`${this.endpoint}/years`);
+    return response.data;
+  }
+
+  async getCategories() {
+    const response = await apiClient.get(`${this.endpoint}/categories`);
+    return response.data;
+  }
+
+  async toggleActive(id) {
+    const response = await apiClient.put(
+      `${this.endpoint}/${id}/toggle-active`,
+    );
+    return response.data;
+  }
+
+  async updatePriority(id, priority) {
+    const response = await apiClient.put(`${this.endpoint}/${id}/priority`, {
+      priority,
+    });
     return response.data;
   }
 }
@@ -168,18 +228,18 @@ export class PhotoGalleryService extends BaseApiService {
 export class UploadService {
   async uploadImage(file) {
     const formData = new FormData();
-    formData.append('image', file);
-    const response = await apiClient.post('/upload/image', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+    formData.append("image", file);
+    const response = await apiClient.post("/upload/image", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
     return response.data;
   }
 
   async uploadFile(file) {
     const formData = new FormData();
-    formData.append('file', file);
-    const response = await apiClient.post('/upload/file', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+    formData.append("file", file);
+    const response = await apiClient.post("/upload/file", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
     return response.data;
   }
@@ -209,20 +269,32 @@ export const teamPhotosService = new TeamPhotosService();
 export const announcementsService = new AnnouncementsService();
 export const achievementsService = new AchievementsService();
 export const photoGalleryService = new PhotoGalleryService();
+export const milestonesService = new MilestonesService();
 
 // Users Service
 export class UsersService extends BaseApiService {
   constructor() {
-    super('/users');
+    super("/users");
   }
 
   async updateRole(userId, role) {
-    const response = await apiClient.patch(`${this.endpoint}/${userId}/role`, { role });
+    const response = await apiClient.put(`${this.endpoint}/${userId}/role`, {
+      role,
+    });
     return response.data;
   }
 
   async resetPassword(userId) {
-    const response = await apiClient.post(`${this.endpoint}/${userId}/reset-password`);
+    const response = await apiClient.post(
+      `${this.endpoint}/${userId}/reset-password`,
+    );
+    return response.data;
+  }
+
+  async toggleActive(id) {
+    const response = await apiClient.put(
+      `${this.endpoint}/${id}/toggle-active`,
+    );
     return response.data;
   }
 }

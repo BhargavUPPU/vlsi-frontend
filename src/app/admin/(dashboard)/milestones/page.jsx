@@ -6,7 +6,16 @@ import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Calendar, Plus, Edit, Trash2, Eye, EyeOff, Search, ImageIcon } from "lucide-react";
+import {
+  Calendar,
+  Plus,
+  Edit,
+  Trash2,
+  Eye,
+  EyeOff,
+  Search,
+  ImageIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +27,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,15 +53,17 @@ export default function MilestonesAdminPage() {
   const [deleteId, setDeleteId] = useState(null);
 
   // Fetch all milestones (including inactive)
-  const { data: milestonesData, isLoading } = useQuery({
+  const { data: milestones, isLoading } = useQuery({
     queryKey: ["admin-milestones"],
     queryFn: async () => {
-      const response = await apiClient.get(`${API_ENDPOINTS.MILESTONES.BASE}?isActive=undefined`);
+      const response = await apiClient.get(
+        `${API_ENDPOINTS.MILESTONES.BASE}?isActive=undefined`,
+      );
       return response.data;
     },
   });
 
-  const milestones = Array.isArray(milestonesData?.data) ? milestonesData.data : [];
+  const milestonesArray = Array.isArray(milestones) ? milestones : [];
 
   // Delete mutation
   const deleteMutation = useMutation({
@@ -64,7 +81,8 @@ export default function MilestonesAdminPage() {
 
   // Toggle active mutation
   const toggleActiveMutation = useMutation({
-    mutationFn: (id) => apiClient.patch(API_ENDPOINTS.MILESTONES.TOGGLE_ACTIVE(id)),
+    mutationFn: (id) =>
+      apiClient.put(API_ENDPOINTS.MILESTONES.TOGGLE_ACTIVE(id)),
     onSuccess: () => {
       queryClient.invalidateQueries(["admin-milestones"]);
       queryClient.invalidateQueries(["milestones"]);
@@ -75,7 +93,7 @@ export default function MilestonesAdminPage() {
     },
   });
 
-  const filteredMilestones = milestones.filter((milestone) => {
+  const filteredMilestones = milestonesArray.filter((milestone) => {
     const searchStr = searchTerm.toLowerCase();
     return (
       milestone.title?.toLowerCase().includes(searchStr) ||
@@ -90,7 +108,9 @@ export default function MilestonesAdminPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Club Milestones</h1>
-          <p className="text-gray-600 mt-1">Manage timeline milestones and achievements</p>
+          <p className="text-gray-600 mt-1">
+            Manage timeline milestones and achievements
+          </p>
         </div>
         <Link href="/admin/milestones/create">
           <Button className="gap-2">
@@ -115,7 +135,10 @@ export default function MilestonesAdminPage() {
         <CardContent>
           <div className="mb-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                size={18}
+              />
               <Input
                 placeholder="Search by title, description, or category..."
                 className="pl-10"
@@ -166,7 +189,9 @@ export default function MilestonesAdminPage() {
                             <ImageIcon size={16} className="text-blue-500" />
                           )}
                           <div>
-                            <p className="font-semibold text-gray-900">{milestone.title}</p>
+                            <p className="font-semibold text-gray-900">
+                              {milestone.title}
+                            </p>
                             <p className="text-sm text-gray-500 line-clamp-1">
                               {milestone.description}
                             </p>
@@ -177,16 +202,19 @@ export default function MilestonesAdminPage() {
                         <div className="flex items-center gap-2">
                           <Calendar size={14} className="text-gray-400" />
                           <span className="text-sm">
-                            {new Date(milestone.date).toLocaleDateString('en-US', {
-                              month: 'short',
-                              year: 'numeric',
-                            })}
+                            {new Date(milestone.date).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                year: "numeric",
+                              },
+                            )}
                           </span>
                         </div>
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline" className="capitalize">
-                          {milestone.category || 'general'}
+                          {milestone.category || "general"}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -205,8 +233,12 @@ export default function MilestonesAdminPage() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => toggleActiveMutation.mutate(milestone.id)}
-                            title={milestone.isActive ? "Deactivate" : "Activate"}
+                            onClick={() =>
+                              toggleActiveMutation.mutate(milestone.id)
+                            }
+                            title={
+                              milestone.isActive ? "Deactivate" : "Activate"
+                            }
                           >
                             {milestone.isActive ? (
                               <EyeOff size={16} />
@@ -239,13 +271,16 @@ export default function MilestonesAdminPage() {
       </Card>
 
       {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteId !== null} onOpenChange={() => setDeleteId(null)}>
+      <AlertDialog
+        open={deleteId !== null}
+        onOpenChange={() => setDeleteId(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Milestone?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the milestone
-              from the timeline.
+              This action cannot be undone. This will permanently delete the
+              milestone from the timeline.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

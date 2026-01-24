@@ -1,23 +1,39 @@
 "use client";
+import { Suspense } from "react";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
-import { useCreateTeamPhoto, useTeamPhoto, useUpdateTeamPhoto } from "@/lib/hooks/useAdmin";
+import {
+  useCreateTeamPhoto,
+  useTeamPhoto,
+  useUpdateTeamPhoto,
+} from "@/lib/hooks/useAdmin";
 import { teamPhotoSchema } from "@/lib/validations/admin";
 import { useSearchParams } from "next/navigation";
 
 const teamPhotoFields = [
-  { name: "academicYear", label: "Academic Year", placeholder: "e.g., 2023-2024" },
-  { name: "images", label: "Team Photo Images", type: "multipleImages", maxFiles: 5, required: true },
+  {
+    name: "academicYear",
+    label: "Academic Year",
+    placeholder: "e.g., 2023-2024",
+  },
+  {
+    name: "images",
+    label: "Team Photo Images",
+    type: "multipleImages",
+    maxFiles: 5,
+    required: true,
+  },
 ];
 
-export default function CreateTeamPhotoPage() {
+function CreateTeamPhotoContent() {
   const searchParams = useSearchParams();
   const editId = searchParams?.get("edit");
   const isEditing = !!editId;
 
-  const { data: teamPhoto, isLoading } = useTeamPhoto(editId, { enabled: isEditing });
+  const { data: teamPhoto, isLoading } = useTeamPhoto(editId, {
+    enabled: isEditing,
+  });
   const createTeamPhoto = useCreateTeamPhoto();
   const updateTeamPhoto = useUpdateTeamPhoto();
-
 
   // AdminFormTemplate will send FormData if an image field is present
   const handleSubmit = async (formDataOrData) => {
@@ -39,5 +55,13 @@ export default function CreateTeamPhotoPage() {
       backPath="/admin/team-photos"
       fields={teamPhotoFields}
     />
+  );
+}
+
+export default function CreateTeamPhotoPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateTeamPhotoContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
 import { useCreateUser, useUser, useUpdateUser } from "@/lib/hooks/useUsers";
@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Copy, Check } from "lucide-react";
 
-export default function CreateUserPage() {
+function CreateUserContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("edit");
@@ -170,5 +170,13 @@ export default function CreateUserPage() {
         </DialogContent>
       </Dialog>
     </>
+  );
+}
+
+export default function CreateUserPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateUserContent />
+    </Suspense>
   );
 }

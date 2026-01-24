@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -50,7 +50,7 @@ export default function StudentRole() {
     setUpdatingId(userId);
     try {
       const response = await fetch(`/api/users/${userId}`, {
-        method: "PATCH",
+        method: "Put",
         headers: {
           "Content-Type": "application/json",
         },
@@ -62,8 +62,8 @@ export default function StudentRole() {
       await response.json();
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
-          user.id === userId ? { ...user, role: newRole } : user
-        )
+          user.id === userId ? { ...user, role: newRole } : user,
+        ),
       );
     } catch (error) {
       setError("Error updating role");
@@ -72,7 +72,7 @@ export default function StudentRole() {
     }
   };
 
-  if (status === "loading" || loading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
         <span className="text-gray-500">Loading users...</span>
@@ -84,20 +84,20 @@ export default function StudentRole() {
     return (
       <div className="flex items-center justify-center h-64">
         <span className="text-red-500">{error}</span>
-        <Button className="ml-4" onClick={() => window.location.reload()}>Retry</Button>
+        <Button className="ml-4" onClick={() => window.location.reload()}>
+          Retry
+        </Button>
       </div>
     );
-  }
-
-  if (!session || session.user.role !== "ADMIN") {
-    return <div className="text-center mt-16 text-red-500">You do not have permission to view this page.</div>;
   }
 
   return (
     <div className="my-16 w-full max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <span className="text-lg font-semibold">Users</span>
-        <Button onClick={() => window.location.reload()} variant="outline">Refresh</Button>
+        <Button onClick={() => window.location.reload()} variant="outline">
+          Refresh
+        </Button>
       </div>
       <div className="overflow-hidden rounded-lg border shadow-sm bg-white">
         <Table>
@@ -119,7 +119,9 @@ export default function StudentRole() {
                   <TableCell className="text-right p-3">
                     <Select
                       value={user.role}
-                      onValueChange={(newRole) => handleRoleChange(user.id, newRole)}
+                      onValueChange={(newRole) =>
+                        handleRoleChange(user.id, newRole)
+                      }
                       disabled={updatingId === user.id}
                     >
                       <SelectTrigger>
@@ -138,7 +140,10 @@ export default function StudentRole() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={4} className="text-center text-gray-500 py-8">
+                <TableCell
+                  colSpan={4}
+                  className="text-center text-gray-500 py-8"
+                >
                   No users found.
                 </TableCell>
               </TableRow>

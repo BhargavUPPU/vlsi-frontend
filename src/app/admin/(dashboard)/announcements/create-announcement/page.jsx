@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import * as z from "zod";
 import {
@@ -19,13 +20,15 @@ const announcementSchema = z.object({
   priority: z.coerce.number().default(0),
 });
 
-export default function CreateAnnouncementPage() {
+function CreateAnnouncementContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams.get("edit");
   const isEditing = !!id;
 
-  const { data: announcement, isLoading: isLoadingData } = useAnnouncement(id, { enabled: isEditing });
+  const { data: announcement, isLoading: isLoadingData } = useAnnouncement(id, {
+    enabled: isEditing,
+  });
   const createMutation = useCreateAnnouncement({
     onSuccess: () => router.push("/admin/announcements"),
   });
@@ -42,12 +45,37 @@ export default function CreateAnnouncementPage() {
   };
 
   const fields = [
-    { name: "title", label: "Title", type: "text", placeholder: "e.g., New Advanced EDA Tools Available" },
-    { name: "description", label: "Description", type: "textarea", placeholder: "Detailed description of the announcement..." },
-    { name: "date", label: "Date", type: "text", placeholder: "e.g., Today or 22-23 Oct" },
+    {
+      name: "title",
+      label: "Title",
+      type: "text",
+      placeholder: "e.g., New Advanced EDA Tools Available",
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "textarea",
+      placeholder: "Detailed description of the announcement...",
+    },
+    {
+      name: "date",
+      label: "Date",
+      type: "text",
+      placeholder: "e.g., Today or 22-23 Oct",
+    },
     { name: "time", label: "Time", type: "text", placeholder: "e.g., 2:30pm" },
-    { name: "venue", label: "Venue", type: "text", placeholder: "e.g., MCA-1 LAB" },
-    { name: "priority", label: "Priority", type: "number", placeholder: "Higher number means higher priority" },
+    {
+      name: "venue",
+      label: "Venue",
+      type: "text",
+      placeholder: "e.g., MCA-1 LAB",
+    },
+    {
+      name: "priority",
+      label: "Priority",
+      type: "number",
+      placeholder: "Higher number means higher priority",
+    },
     { name: "isActive", label: "Active", type: "switch" },
   ];
 
@@ -55,20 +83,32 @@ export default function CreateAnnouncementPage() {
     <AdminFormTemplate
       title="Announcement"
       schema={announcementSchema}
-      defaultValues={announcement || {
-        title: "",
-        description: "",
-        date: "",
-        time: "",
-        venue: "",
-        isActive: true,
-        priority: 0,
-      }}
+      defaultValues={
+        announcement || {
+          title: "",
+          description: "",
+          date: "",
+          time: "",
+          venue: "",
+          isActive: true,
+          priority: 0,
+        }
+      }
       onSubmit={onSubmit}
       fields={fields}
-      isLoading={createMutation.isPending || updateMutation.isPending || isLoadingData}
+      isLoading={
+        createMutation.isPending || updateMutation.isPending || isLoadingData
+      }
       isEditing={isEditing}
       backPath="/admin/announcements"
     />
+  );
+}
+
+export default function CreateAnnouncementPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateAnnouncementContent />
+    </Suspense>
   );
 }

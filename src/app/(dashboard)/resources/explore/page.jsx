@@ -26,18 +26,89 @@ const RESOURCE_TYPES = [
   { id: "placementPrep", label: "Club Recruitment PYQs" },
   { id: "gatePyqs", label: "Gate PYQs" },
   { id: "vlsiMaterials", label: "VLSI Materials" },
-  { id: "questionBanks", label: "Question Banks" }
+  { id: "questionBanks", label: "Question Banks" },
+  { id: "projects", label: "Projects" }
 ];
 
-const CATEGORIES = [
-  "Analog design",
-  "CMOS VLSI Design",
-  "Digital Design",
-  "Digital IC Design",
-  "FPGA & ASIC Design",
-  "Semiconductor Physics",
-  "General"
-];
+// Category mappings based on resource type
+const CATEGORY_MAP = {
+  textbooks: [
+    "VLSI Textbooks & NPTEL Lectures",
+    "Analog Design (CMOS)",
+    "CMOS VLSI Design (B)",
+    "DFT (B)",
+    "Digital Design (B)",
+    "Digital IC Design (B)",
+    "VLSI Flow",
+    "Scripting Language (TCL, PERL)",
+    "Verilog & SystemVerilog",
+    "Semiconductor Physics & FPGAs"
+  ],
+  nptelLectures: [
+    "VLSI Textbooks & NPTEL Lectures",
+    "Analog Design (CMOS)",
+    "CMOS VLSI Design (B)",
+    "DFT (B)",
+    "Digital Design (B)",
+    "Digital IC Design (B)",
+    "VLSI Flow",
+    "Scripting Language (TCL, PERL)",
+    "Verilog & SystemVerilog",
+    "Semiconductor Physics & FPGAs"
+  ],
+  vlsiMaterials: [
+    "CMOS VLSI Design",
+    "Digital Design",
+    "Computer Architecture",
+    "FPGAs",
+    "Physical Design",
+    "RTL to GDS",
+    "SoC Design & Verification",
+    "Programming",
+    "RISC-V",
+    "Protocols",
+    "Semiconductor Physics"
+  ],
+  gatePyqs: [
+    "Analog Electronics",
+    "Digital Electronics",
+    "Network Theory",
+    "Signals & Systems",
+    "Communication",
+    "Verilog",
+    "EDC"
+  ],
+  placementPrep: [
+    "Previous Year Gate PYQs (ECE)",
+    "Previous Year Club Recruitment & Aptitude Papers (V)",
+    "VLSI Club Recruitment PYQs"
+  ],
+  questionBanks: [
+    "Analog Electronics",
+    "Digital Electronics",
+    "Network Theory",
+    "Signals & Systems",
+    "Communication",
+    "Verilog",
+    "EDC"
+  ],
+  magazines: [
+    "General",
+    "Technical",
+    "Research"
+  ],
+  projects: [
+    "VLSI",
+    "Embedded",
+    "AI",
+    "Communication"
+  ]
+};
+
+// Get categories based on selected resource type
+const getCategories = (resourceType) => {
+  return CATEGORY_MAP[resourceType] || ["General"];
+};
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
@@ -48,6 +119,9 @@ export default function ResourcesExplorePage() {
   const [page, setPage] = useState(1);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const limit = 6;
+
+  // Get categories for current resource type
+  const currentCategories = getCategories(selectedType);
 
   // Fetch categorized resources
   const { data: resourcesData, isLoading } = useQuery({
@@ -74,6 +148,11 @@ export default function ResourcesExplorePage() {
   useEffect(() => {
     setPage(1);
   }, [selectedType, selectedCategory, searchQuery]);
+
+  // Reset category when resource type changes
+  useEffect(() => {
+    setSelectedCategory("All");
+  }, [selectedType]);
 
   const getImageUrl = (item) => {
     if (item.image) {
@@ -128,7 +207,7 @@ export default function ResourcesExplorePage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           
           {/* Mobile Filter Toggle */}
@@ -194,7 +273,7 @@ export default function ResourcesExplorePage() {
                     >
                       All
                     </button>
-                    {CATEGORIES.map((cat) => (
+                    {currentCategories.map((cat) => (
                       <button
                         key={cat}
                         onClick={() => {
@@ -226,7 +305,7 @@ export default function ResourcesExplorePage() {
               </div>
             ) : resources.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
                   <AnimatePresence mode="popLayout">
                     {resources.map((item) => (
                       <motion.div
@@ -236,7 +315,7 @@ export default function ResourcesExplorePage() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         whileHover={{ y: -8 }}
-                        className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group h-full"
+                        className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col group h-full"
                       >
                         <div className="relative aspect-[4/3] bg-gray-50 overflow-hidden">
                           <Image

@@ -8,24 +8,70 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
-import { ArrowLeft, Save, Upload, X, Rocket, Award, Users, Lightbulb, Calendar } from "lucide-react";
+import {
+  ArrowLeft,
+  Save,
+  Upload,
+  X,
+  Rocket,
+  Award,
+  Users,
+  Lightbulb,
+  Calendar,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 
 // Icon mapping
 const iconOptions = [
-  { value: "rocket", label: "Rocket", Icon: Rocket, color: "bg-blue-500", bgColor: "bg-blue-50" },
-  { value: "award", label: "Award", Icon: Award, color: "bg-orange-500", bgColor: "bg-orange-50" },
-  { value: "users", label: "Users", Icon: Users, color: "bg-green-500", bgColor: "bg-green-50" },
-  { value: "lightbulb", label: "Lightbulb", Icon: Lightbulb, color: "bg-purple-500", bgColor: "bg-purple-50" },
-  { value: "calendar", label: "Calendar", Icon: Calendar, color: "bg-pink-500", bgColor: "bg-pink-50" },
+  {
+    value: "rocket",
+    label: "Rocket",
+    Icon: Rocket,
+    color: "bg-blue-500",
+    bgColor: "bg-blue-50",
+  },
+  {
+    value: "award",
+    label: "Award",
+    Icon: Award,
+    color: "bg-orange-500",
+    bgColor: "bg-orange-50",
+  },
+  {
+    value: "users",
+    label: "Users",
+    Icon: Users,
+    color: "bg-green-500",
+    bgColor: "bg-green-50",
+  },
+  {
+    value: "lightbulb",
+    label: "Lightbulb",
+    Icon: Lightbulb,
+    color: "bg-purple-500",
+    bgColor: "bg-purple-50",
+  },
+  {
+    value: "calendar",
+    label: "Calendar",
+    Icon: Calendar,
+    color: "bg-pink-500",
+    bgColor: "bg-pink-50",
+  },
 ];
 
 const categoryOptions = [
@@ -39,7 +85,10 @@ const categoryOptions = [
 // Form validation schema
 const milestoneSchema = z.object({
   title: z.string().min(1, "Title is required").max(200, "Title is too long"),
-  description: z.string().min(1, "Description is required").max(1000, "Description is too long"),
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(1000, "Description is too long"),
   date: z.string().min(1, "Date is required"),
   icon: z.string().optional(),
   color: z.string().optional(),
@@ -60,19 +109,28 @@ export default function EditMilestonePage() {
   const { data: milestoneData, isLoading } = useQuery({
     queryKey: ["milestone", params.id],
     queryFn: async () => {
-      const response = await apiClient.get(API_ENDPOINTS.MILESTONES.BY_ID(params.id));
+      const response = await apiClient.get(
+        API_ENDPOINTS.MILESTONES.BY_ID(params.id),
+      );
       return response.data;
     },
   });
 
   const milestone = milestoneData?.data || milestoneData;
 
-  const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(milestoneSchema),
     defaultValues: {
       title: "",
       description: "",
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
       icon: "rocket",
       color: "bg-blue-500",
       bgColor: "bg-blue-50",
@@ -88,7 +146,9 @@ export default function EditMilestonePage() {
       reset({
         title: milestone.title || "",
         description: milestone.description || "",
-        date: milestone.date ? new Date(milestone.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        date: milestone.date
+          ? new Date(milestone.date).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0],
         icon: milestone.icon || "rocket",
         color: milestone.color || "bg-blue-500",
         bgColor: milestone.bgColor || "bg-blue-50",
@@ -113,26 +173,30 @@ export default function EditMilestonePage() {
   const watchedCategory = watch("category");
   const watchedIsActive = watch("isActive");
 
-  const selectedIconData = iconOptions.find(opt => opt.value === watchedIcon);
+  const selectedIconData = iconOptions.find((opt) => opt.value === watchedIcon);
 
   // Update mutation
   const updateMutation = useMutation({
     mutationFn: async (data) => {
       const formData = new FormData();
-      
-      Object.keys(data).forEach(key => {
+
+      Object.keys(data).forEach((key) => {
         if (data[key] !== undefined && data[key] !== null) {
           formData.append(key, data[key]);
         }
       });
 
       if (imageFile) {
-        formData.append('image', imageFile);
+        formData.append("image", imageFile);
       }
 
-      return apiClient.patch(API_ENDPOINTS.MILESTONES.BY_ID(params.id), formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      return apiClient.put(
+        API_ENDPOINTS.MILESTONES.BY_ID(params.id),
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["milestones"]);
@@ -142,7 +206,9 @@ export default function EditMilestonePage() {
       router.push("/admin/milestones");
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to update milestone");
+      toast.error(
+        error.response?.data?.message || "Failed to update milestone",
+      );
     },
   });
 
@@ -164,11 +230,13 @@ export default function EditMilestonePage() {
 
   const removeImage = () => {
     setImageFile(null);
-    setImagePreview(milestone?.id ? `${API_ENDPOINTS.MILESTONES.IMAGE(milestone.id)}` : null);
+    setImagePreview(
+      milestone?.id ? `${API_ENDPOINTS.MILESTONES.IMAGE(milestone.id)}` : null,
+    );
   };
 
   const handleIconChange = (value) => {
-    const iconData = iconOptions.find(opt => opt.value === value);
+    const iconData = iconOptions.find((opt) => opt.value === value);
     if (iconData) {
       setValue("icon", value);
       setValue("color", iconData.color);
@@ -216,7 +284,9 @@ export default function EditMilestonePage() {
                   placeholder="e.g., Club Inception"
                 />
                 {errors.title && (
-                  <p className="text-sm text-red-600 mt-1">{errors.title.message}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {errors.title.message}
+                  </p>
                 )}
               </div>
 
@@ -230,20 +300,20 @@ export default function EditMilestonePage() {
                   rows={4}
                 />
                 {errors.description && (
-                  <p className="text-sm text-red-600 mt-1">{errors.description.message}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {errors.description.message}
+                  </p>
                 )}
               </div>
 
               {/* Date */}
               <div>
                 <Label htmlFor="date">Date *</Label>
-                <Input
-                  id="date"
-                  type="date"
-                  {...register("date")}
-                />
+                <Input id="date" type="date" {...register("date")} />
                 {errors.date && (
-                  <p className="text-sm text-red-600 mt-1">{errors.date.message}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {errors.date.message}
+                  </p>
                 )}
               </div>
 
@@ -272,7 +342,10 @@ export default function EditMilestonePage() {
               {/* Category */}
               <div>
                 <Label htmlFor="category">Category</Label>
-                <Select value={watchedCategory} onValueChange={(value) => setValue("category", value)}>
+                <Select
+                  value={watchedCategory}
+                  onValueChange={(value) => setValue("category", value)}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -296,7 +369,9 @@ export default function EditMilestonePage() {
                   min="0"
                   max="100"
                 />
-                <p className="text-xs text-gray-500 mt-1">Higher priority items appear first</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Higher priority items appear first
+                </p>
               </div>
 
               {/* Active Status */}
@@ -337,7 +412,9 @@ export default function EditMilestonePage() {
                   ) : (
                     <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
                       <Upload className="w-8 h-8 text-gray-400 mb-2" />
-                      <span className="text-sm text-gray-500">Click to upload new image</span>
+                      <span className="text-sm text-gray-500">
+                        Click to upload new image
+                      </span>
                       <input
                         id="image"
                         type="file"
@@ -382,28 +459,37 @@ export default function EditMilestonePage() {
             <CardTitle>Live Preview</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className={`${watchedBgColor} rounded-2xl p-6 shadow-md border border-white/50`}>
+            <div
+              className={`${watchedBgColor} rounded-2xl p-6 shadow-md border border-white/50`}
+            >
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-                <div className={`${watchedColor} rounded-xl p-3 shadow-md w-fit`}>
-                  {selectedIconData && <selectedIconData.Icon className="w-6 h-6 text-white" />}
+                <div
+                  className={`${watchedColor} rounded-xl p-3 shadow-md w-fit`}
+                >
+                  {selectedIconData && (
+                    <selectedIconData.Icon className="w-6 h-6 text-white" />
+                  )}
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-gray-500" />
                   <span className="text-sm font-semibold text-gray-600">
-                    {watchedDate ? new Date(watchedDate).toLocaleDateString('en-US', {
-                      month: 'long',
-                      year: 'numeric'
-                    }) : 'Select a date'}
+                    {watchedDate
+                      ? new Date(watchedDate).toLocaleDateString("en-US", {
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : "Select a date"}
                   </span>
                 </div>
               </div>
 
               <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {watchedTitle || 'Milestone Title'}
+                {watchedTitle || "Milestone Title"}
               </h3>
 
               <p className="text-base text-gray-700 leading-relaxed">
-                {watchedDescription || 'Milestone description will appear here...'}
+                {watchedDescription ||
+                  "Milestone description will appear here..."}
               </p>
 
               {imagePreview && (
@@ -418,7 +504,8 @@ export default function EditMilestonePage() {
 
               {!watchedIsActive && (
                 <div className="mt-4 p-2 bg-yellow-100 border border-yellow-300 rounded text-sm text-yellow-800">
-                  ⚠️ This milestone is inactive and won't appear on the public timeline
+                  ⚠️ This milestone is inactive and won't appear on the public
+                  timeline
                 </div>
               )}
             </div>

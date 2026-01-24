@@ -62,14 +62,6 @@ export default function Navbar() {
                   <User size={16} />
                   <span className="text-sm font-medium">{user.name}</span>
                 </div>
-                {user.role === "ADMIN" || user.role === "SUPERADMIN" ? (
-                  <Link
-                    href="/admin"
-                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-1.5 rounded-md text-sm font-medium transition"
-                  >
-                    ADMIN Login
-                  </Link>
-                ) : null}
                 <button
                   onClick={logout}
                   className="bg-red-600 text-white hover:bg-red-700 px-4 py-1.5 rounded-md text-sm font-medium transition inline-flex items-center gap-2"
@@ -80,16 +72,10 @@ export default function Navbar() {
             ) : (
               <>
                 <Link
-                  href="/login"
+                  href="/auth/login"
                   className="bg-blue-600 text-white hover:bg-blue-700 px-5 py-1.5 rounded-md text-sm font-medium transition"
                 >
-                  Student Login
-                </Link>
-                <Link
-                  href="/admin/login"
-                  className="bg-indigo-600 text-white hover:bg-indigo-700 px-5 py-1.5 rounded-md text-sm font-medium transition"
-                >
-                  ADMIN Login
+                Login
                 </Link>
               </>
             )}
@@ -158,7 +144,7 @@ export default function Navbar() {
               ) : (
                 <>
                   <Link
-                    href="/login"
+                    href="/auth/login"
                     onClick={() => setMobileMenuOpen(false)}
                     className="block px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md"
                   >

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import * as z from "zod";
 import {
@@ -8,8 +9,20 @@ import {
   useUpdateAchievement,
 } from "@/lib/hooks/useAdmin";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 
 const ACHIEVEMENT_TYPES = [
   "HERO_CAROUSEL",
@@ -17,7 +30,7 @@ const ACHIEVEMENT_TYPES = [
   "SUMMARY_STAT",
   "PROUD_MOMENT",
   "AWARD_HIGHLIGHT",
-  "GALLERY_IMAGE"
+  "GALLERY_IMAGE",
 ];
 
 const achievementSchema = z.object({
@@ -29,13 +42,15 @@ const achievementSchema = z.object({
   priority: z.coerce.number().default(0),
 });
 
-export default function CreateAchievementPage() {
+function CreateAchievementContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams.get("edit");
   const isEditing = !!id;
 
-  const { data: achievement, isLoading: isLoadingData } = useAchievement(id, { enabled: isEditing });
+  const { data: achievement, isLoading: isLoadingData } = useAchievement(id, {
+    enabled: isEditing,
+  });
   const createMutation = useCreateAchievement({
     onSuccess: () => router.push("/admin/achievements"),
   });
@@ -54,30 +69,65 @@ export default function CreateAchievementPage() {
   };
 
   const fields = [
-    { name: "title", label: "Title", type: "text", placeholder: "Achievement title or person name" },
-    { name: "description", label: "Description", type: "textarea", placeholder: "Detailed description of the achievement..." },
-    { name: "value", label: "Value / Stat", type: "text", placeholder: "e.g., 50+ or Hearty Congratulations" },
-    { name: "priority", label: "Priority", type: "number", placeholder: "Higher number means higher priority" },
+    {
+      name: "title",
+      label: "Title",
+      type: "text",
+      placeholder: "Achievement title or person name",
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "textarea",
+      placeholder: "Detailed description of the achievement...",
+    },
+    {
+      name: "value",
+      label: "Value / Stat",
+      type: "text",
+      placeholder: "e.g., 50+ or Hearty Congratulations",
+    },
+    {
+      name: "priority",
+      label: "Priority",
+      type: "number",
+      placeholder: "Higher number means higher priority",
+    },
     { name: "isActive", label: "Active", type: "switch" },
-    { name: "mainImage", label: "Main Image / Thumbnail", type: "image", required: false },
-    { name: "images", label: "Additional Images (Carousels/Gallery)", type: "multipleImages", required: false, maxFiles: 20 },
+    {
+      name: "mainImage",
+      label: "Main Image / Thumbnail",
+      type: "image",
+      required: false,
+    },
+    {
+      name: "images",
+      label: "Additional Images (Carousels/Gallery)",
+      type: "multipleImages",
+      required: false,
+      maxFiles: 20,
+    },
   ];
 
   return (
     <AdminFormTemplate
       title="Achievement"
       schema={achievementSchema}
-      defaultValues={achievement || {
-        type: "HERO_CAROUSEL",
-        title: "",
-        description: "",
-        value: "",
-        isActive: true,
-        priority: 0,
-      }}
+      defaultValues={
+        achievement || {
+          type: "HERO_CAROUSEL",
+          title: "",
+          description: "",
+          value: "",
+          isActive: true,
+          priority: 0,
+        }
+      }
       onSubmit={onSubmit}
       fields={fields}
-      isLoading={createMutation.isPending || updateMutation.isPending || isLoadingData}
+      isLoading={
+        createMutation.isPending || updateMutation.isPending || isLoadingData
+      }
       isEditing={isEditing}
       backPath="/admin/achievements"
     >
@@ -89,7 +139,9 @@ export default function CreateAchievementPage() {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Achievement Type <span className="text-red-500">*</span></FormLabel>
+                  <FormLabel>
+                    Achievement Type <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -112,5 +164,13 @@ export default function CreateAchievementPage() {
         </div>
       )}
     </AdminFormTemplate>
+  );
+}
+
+export default function CreateAchievementPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateAchievementContent />
+    </Suspense>
   );
 }

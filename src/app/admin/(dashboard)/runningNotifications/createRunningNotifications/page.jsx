@@ -1,20 +1,32 @@
 "use client";
+import { Suspense } from "react";
 import { AdminFormTemplate } from "@/components/AdminFormTemplate";
-import { useCreateRunningNotification, useRunningNotification, useUpdateRunningNotification } from "@/lib/hooks/useAdmin";
+import {
+  useCreateRunningNotification,
+  useRunningNotification,
+  useUpdateRunningNotification,
+} from "@/lib/hooks/useAdmin";
 import { runningNotificationSchema } from "@/lib/validations/admin";
 import { useSearchParams } from "next/navigation";
 
 const runningNotificationFields = [
-  { name: "message", label: "Notification Message", type: "textarea", placeholder: "Enter notification message" },
+  {
+    name: "message",
+    label: "Notification Message",
+    type: "textarea",
+    placeholder: "Enter notification message",
+  },
   { name: "link", label: "Link (Optional)", placeholder: "https://..." },
 ];
 
-export default function CreateRunningNotificationPage() {
+function CreateRunningNotificationContent() {
   const searchParams = useSearchParams();
   const editId = searchParams?.get("edit");
   const isEditing = !!editId;
 
-  const { data: notification, isLoading } = useRunningNotification(editId, { enabled: isEditing });
+  const { data: notification, isLoading } = useRunningNotification(editId, {
+    enabled: isEditing,
+  });
   const createNotification = useCreateRunningNotification();
   const updateNotification = useUpdateRunningNotification();
 
@@ -37,5 +49,13 @@ export default function CreateRunningNotificationPage() {
       backPath="/admin/runningNotifications"
       fields={runningNotificationFields}
     />
+  );
+}
+
+export default function CreateRunningNotificationPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <CreateRunningNotificationContent />
+    </Suspense>
   );
 }
