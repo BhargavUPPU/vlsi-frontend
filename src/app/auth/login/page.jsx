@@ -27,8 +27,8 @@ export default function LoginPage() {
         password,
       });
 
-      const { accessToken, refreshToken, user } = response.data;
-
+      const { accessToken, refreshToken, user } = response.data.data;
+      console.log("Login response:", response.data.data);
       // Store tokens and user data
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
@@ -37,7 +37,7 @@ export default function LoginPage() {
       toast.success("Login successful!");
 
       // Check if password change is required
-      if (user.requirePasswordChange) {
+      if (user.requiredPasswordChange) {
         toast.warning("You must change your password before continuing");
         router.push("/auth/change-password?required=true");
       } else {

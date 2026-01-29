@@ -1,6 +1,9 @@
 "use client";
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiClient } from "@/lib/api/client";
+import { API_ENDPOINTS } from "@/lib/api/config";
 import {
   Table,
   TableBody,
@@ -19,60 +22,72 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function StudentRole() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch("/api/users");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setUsers(data.users);
-      } catch (error) {
-        setError("Error fetching users");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUsers();
-  }, []);
+  // Fetch users with React Query
+  const {
+    data: usersData,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => apiClient.get(API_ENDPOINTS.USERS.GET_ALL),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: false,
+    retry: 2,
+  });
+
+  // Extract users from response data
+  const users = Array.isArray(usersData?.data) ? usersData.data : [];
+
+  // Mutation for updating user role
+  const updateUserRoleMutation = useMutation({
+    mutationFn: async ({ userId, role }) => {
+      const response = await apiClient.put(API_ENDPOINTS.USERS.BY_ID(userId), {
+        role,
+      });
+      return response.data;
+    },
+    onSuccess: (data, { userId, role }) => {
+      // Update the local state optimistically
+      queryClient.setQueryData(["users"], (oldData) => {
+        if (!oldData?.data) return oldData;
+        return {
+          ...oldData,
+          data: oldData.data.map((user) =>
+            user.id === userId ? { ...user, role } : user,
+          ),
+        };
+      });
+
+      toast.success("User role updated successfully");
+
+      // Optionally refetch to ensure data consistency
+      // queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+    onError: (error) => {
+      console.error("Error updating user role:", error);
+      const errorMessage =
+        error.response?.data?.message || "Failed to update user role";
+      toast.error(errorMessage);
+    },
+    onSettled: () => {
+      setUpdatingId(null);
+    },
+  });
 
   const handleRoleChange = async (userId, newRole) => {
     setUpdatingId(userId);
-    try {
-      const response = await fetch(`/api/users/${userId}`, {
-        method: "Put",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ role: newRole }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to update role");
-      }
-      await response.json();
-      setUsers((prevUsers) =>
-        prevUsers.map((user) =>
-          user.id === userId ? { ...user, role: newRole } : user,
-        ),
-      );
-    } catch (error) {
-      setError("Error updating role");
-    } finally {
-      setUpdatingId(null);
-    }
+    updateUserRoleMutation.mutate({ userId, role: newRole });
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <span className="text-gray-500">Loading users...</span>
@@ -83,8 +98,10 @@ export default function StudentRole() {
   if (error) {
     return (
       <div className="flex items-center justify-center h-64">
-        <span className="text-red-500">{error}</span>
-        <Button className="ml-4" onClick={() => window.location.reload()}>
+        <span className="text-red-500">
+          {error.message || "Error fetching users"}
+        </span>
+        <Button className="ml-4" onClick={() => refetch()}>
           Retry
         </Button>
       </div>
@@ -95,8 +112,12 @@ export default function StudentRole() {
     <div className="my-16 w-full max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <span className="text-lg font-semibold">Users</span>
-        <Button onClick={() => window.location.reload()} variant="outline">
-          Refresh
+        <Button
+          onClick={() => refetch()}
+          variant="outline"
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : "Refresh"}
         </Button>
       </div>
       <div className="overflow-hidden rounded-lg border shadow-sm bg-white">
@@ -122,7 +143,10 @@ export default function StudentRole() {
                       onValueChange={(newRole) =>
                         handleRoleChange(user.id, newRole)
                       }
-                      disabled={updatingId === user.id}
+                      disabled={
+                        updatingId === user.id ||
+                        updateUserRoleMutation.isPending
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue placeholder={user.role} />

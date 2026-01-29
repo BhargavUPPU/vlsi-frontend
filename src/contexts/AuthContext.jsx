@@ -23,11 +23,15 @@ const PUBLIC_ROUTES = [
   "/auth/login",
   "/register",
   "/",
+  "/about",
   "/events",
   "/projects",
   "/resources",
   "/team",
-  "/tests",
+  "/photogallery",
+  "/achievements",
+  "/resources/roadmap",
+  "/resources/softwaretools",
 ];
 
 export function AuthProvider({ children }) {

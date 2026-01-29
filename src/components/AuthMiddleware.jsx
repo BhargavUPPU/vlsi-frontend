@@ -5,7 +5,21 @@ import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 
-const PUBLIC_ROUTES = ["/auth/login", "/auth/change-password", "/"];
+  const PUBLIC_ROUTES = [
+            "/auth/login",
+            "/auth/change-password",
+            "/register",
+            "/",
+            "/about",
+            "/events",
+            "/projects",
+            "/resources",
+            "/team",
+            "/photogallery",
+            "/achievements",
+            "/resources/roadmap",
+            "/resources/softwaretools",
+          ];
 
 export function AuthMiddleware({ children }) {
   const router = useRouter();

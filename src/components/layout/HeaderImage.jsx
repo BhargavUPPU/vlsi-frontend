@@ -8,7 +8,7 @@ export default function HeaderImage() {
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex  items-center justify-center">
           <Image
-            src="/HeaderImage.png"
+            src="/HEADER.svg"
             alt="Header Image"
             width={200}
             height={50}

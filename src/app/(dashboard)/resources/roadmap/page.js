@@ -7,13 +7,13 @@ export default function RoadMap() {
     <div className="bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Header */}
-            <Link
-                href="/resources"
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
-              >
-                <ArrowLeft size={20} />
-                <span>RoadMap</span>
-              </Link>
+        <Link
+          href="/resources"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+        >
+          <ArrowLeft size={20} />
+          <span>RoadMap</span>
+        </Link>
         <header className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <span className="text-4xl" role="img" aria-label="roadmap">
@@ -468,9 +468,16 @@ export default function RoadMap() {
             Quick, concise guide covering key concepts, important questions, and
             must-know topics to ace your VLSI job interview confidently.
           </p>
-          <button className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-            Download Checklist
-          </button>
+          <a
+            href="https://whimsical.com/vlsi-interview-topics-cheatsheet-by-vlsi4freshers-CmqnfqJ7gCHAWEHmAvxAJH"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block"
+          >
+            <button className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              Download Checklist
+            </button>
+          </a>
         </section>
       </div>
     </div>

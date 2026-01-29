@@ -279,7 +279,7 @@ export default function TeamPage() {
         <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col">
             <h2 className="text-2xl font-bold text-slate-900 leading-tight">
-              VLSI:ID CLUB Core Members
+              VLSID CLUB Core Members
             </h2>
             <div className="flex items-center gap-2 text-slate-500 mt-1">
               <Calendar size={16} />

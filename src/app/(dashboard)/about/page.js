@@ -51,13 +51,15 @@ const AboutUs = () => {
 
   const developers = [
     {
-      name: "VENKATADINESH K",
-      role: "CORE MEMBER",
+      name: "UPPU BHARGAV SAI",
+      role: "WEB DEVELOPER",
+      roll_number: "21131A04T7",
       image: "/logo.png",
     },
     {
-      name: "SATHWIK KOLLIBOYINA",
-      role: "CORE MEMBER",
+      name: "ANVESH",
+      role: "WEB DESIGNER",
+      roll_number: "21131A04Q9",
       image: "/logo.png",
     },
   ];
@@ -127,9 +129,9 @@ const AboutUs = () => {
               <Image
                 src="/logo.png"
                 alt="VLSID Club Logo"
-                width={200}
-                height={200}
-                className="w-48 h-48 object-contain"
+                width={500}
+                height={500}
+                className="w-68 h-68 object-contain"
               />
             </div>
 
@@ -215,10 +217,10 @@ const AboutUs = () => {
                 <div className="w-56 h-56 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl mb-6 overflow-hidden shadow-lg border-4 border-white">
                   <div className="w-full h-full flex items-center justify-center">
                     <Image
-                      src="/faculty2.png"
+                      src="/faculty5.jpeg"
                       alt="Dr.J.Bhaskara Rao"
-                      width={200}
-                      height={200}
+                      width={500}
+                      height={500}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -285,7 +287,36 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
+        {/*Club Founders */}  
+        <div className="mb-16">
+          <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800">
+          VLSI Club Founders 
+          </h2>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {developers.map((developer, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center transform transition-all hover:shadow-xl hover:scale-105"
+              >
+                <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-[#1e40af] to-[#3b82f6] rounded-full flex items-center justify-center shadow-lg">
+                  <Image
+                    src={developer.image}
+                    alt={developer.name}
+                    width={100}
+                    height={100}
+                    className="w-24 h-24 object-contain"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  {developer.name}
+                </h3>
+                <p className="text-gray-600 mb-4">{developer.roll_number}</p>
+                <p className="text-[#2563eb] font-semibold">{developer.role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
         {/* Web Page Developers Section */}
         <div className="mb-16">
           <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800">
@@ -310,6 +341,7 @@ const AboutUs = () => {
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
                   {developer.name}
                 </h3>
+                <p className="text-gray-600 mb-4">{developer.roll_number}</p>
                 <p className="text-[#2563eb] font-semibold">{developer.role}</p>
               </div>
             ))}

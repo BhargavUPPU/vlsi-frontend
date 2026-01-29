@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   LayoutDashboard,
   Users,
@@ -47,88 +48,176 @@ const menuItems = [
     title: "Club Management",
     icon: Users,
     items: [
-      { title: "Club Members", url: "/admin/clubMembers", icon: Users, description: "Manage all club members" },
-      { title: "Core Members", url: "/admin/clubMembers/coreMembers", icon: UserCog, description: "Manage core team members" },
+      {
+        title: "Club Members",
+        url: "/admin/clubMembers",
+        icon: Users,
+        description: "Manage all club members",
+      },
+      {
+        title: "Core Members",
+        url: "/admin/clubMembers/coreMembers",
+        icon: UserCog,
+        description: "Manage core team members",
+      },
     ],
   },
   {
     title: "Content",
     icon: FileText,
     items: [
-      { title: "Events", url: "/admin/events", icon: Calendar, description: "Manage club events" },
-      { title: "Projects", url: "/admin/projects", icon: FolderOpen, description: "Manage club projects" },
-      { title: "Milestones", url: "/admin/milestones", icon: Clock, description: "Manage club milestones" },
-      { title: "Gallery", url: "/admin/team-photos", icon: Camera, description: "Manage photo gallery" },
+      {
+        title: "Events",
+        url: "/admin/events",
+        icon: Calendar,
+        description: "Manage club events",
+      },
+      {
+        title: "Projects",
+        url: "/admin/projects",
+        icon: FolderOpen,
+        description: "Manage club projects",
+      },
+      {
+        title: "Milestones",
+        url: "/admin/milestones",
+        icon: Clock,
+        description: "Manage club milestones",
+      },
+      {
+        title: "Gallery",
+        url: "/admin/team-photos",
+        icon: Camera,
+        description: "Manage photo gallery",
+      },
     ],
   },
   {
     title: "Academic Resources",
     icon: BookOpen,
     items: [
-      { title: "Text Books", url: "/admin/textBooks", icon: BookOpen, description: "Manage textbooks" },
-      { title: "VLSI Materials", url: "/admin/vlsiMaterials", icon: Cpu, description: "Manage VLSI materials" },
-      { title: "NPTEL Lectures", url: "/admin/nptelLectures", icon: FileText, description: "Manage NPTEL lectures" },
-      { title: "Question Bank", url: "/admin/questionBank", icon: FileText, description: "Manage question bank" },
+      {
+        title: "Text Books",
+        url: "/admin/textBooks",
+        icon: BookOpen,
+        description: "Manage textbooks",
+      },
+      {
+        title: "VLSI Materials",
+        url: "/admin/vlsiMaterials",
+        icon: Cpu,
+        description: "Manage VLSI materials",
+      },
+      {
+        title: "NPTEL Lectures",
+        url: "/admin/nptelLectures",
+        icon: FileText,
+        description: "Manage NPTEL lectures",
+      },
+      {
+        title: "Question Bank",
+        url: "/admin/questionBank",
+        icon: FileText,
+        description: "Manage question bank",
+      },
     ],
   },
   {
     title: "Exam Preparation",
     icon: GraduationCap,
     items: [
-      { title: "GATE PYQs", url: "/admin/gatePyqs", icon: FileText, description: "Manage GATE previous year questions" },
-      { title: "Placement Prep", url: "/admin/placementPrep", icon: GraduationCap, description: "Manage placement preparation" },
-      { title: "Tests", url: "/admin/test", icon: FileText, description: "Manage tests" },
+      {
+        title: "GATE PYQs",
+        url: "/admin/gatePyqs",
+        icon: FileText,
+        description: "Manage GATE previous year questions",
+      },
+      {
+        title: "Placement Prep",
+        url: "/admin/placementPrep",
+        icon: GraduationCap,
+        description: "Manage placement preparation",
+      },
+      {
+        title: "Tests",
+        url: "/admin/test",
+        icon: FileText,
+        description: "Manage tests",
+      },
     ],
   },
   {
     title: "Publications",
     icon: FileText,
     items: [
-      { title: "Magazine", url: "/admin/magazine", icon: FileText, description: "Manage club magazine" },
+      {
+        title: "Magazine",
+        url: "/admin/magazine",
+        icon: FileText,
+        description: "Manage club magazine",
+      },
     ],
   },
   {
     title: "System",
     icon: Shield,
     items: [
-      { title: "Notifications", url: "/admin/runningNotifications", icon: Bell, description: "Manage notifications" },
-      { title: "Student Roles", url: "/admin/StudentRole", icon: UserCog, description: "Manage student roles" },
-      { title: "Sign Up Requests", url: "/admin/signup", icon: UserPlus, description: "Manage signup requests" },
+      {
+        title: "Notifications",
+        url: "/admin/runningNotifications",
+        icon: Bell,
+        description: "Manage notifications",
+      },
+      {
+        title: "Student Roles",
+        url: "/admin/StudentRole",
+        icon: UserCog,
+        description: "Manage student roles",
+      },
+      {
+        title: "Sign Up Requests",
+        url: "/admin/signup",
+        icon: UserPlus,
+        description: "Manage signup requests",
+      },
     ],
   },
 ];
 
-const ListItem = React.forwardRef(({ className, title, children, icon: Icon, href, ...props }, ref) => {
-  const pathname = usePathname();
-  const isActive = pathname === href;
+const ListItem = React.forwardRef(
+  ({ className, title, children, icon: Icon, href, ...props }, ref) => {
+    const pathname = usePathname();
+    const isActive = pathname === href;
 
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <Link
-          ref={ref}
-          href={href}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            isActive && "bg-accent text-accent-foreground font-medium",
-            className
-          )}
-          {...props}
-        >
-          <div className="flex items-center gap-2">
-            {Icon && <Icon className="h-4 w-4" />}
-            <div className="text-sm font-medium leading-none">{title}</div>
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          <div
+            ref={ref}
+            className={cn(
+              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+              isActive && "bg-accent text-accent-foreground font-medium",
+              className,
+            )}
+            {...props}
+          >
+            <Link href={href}>
+              <div className="flex items-center gap-2">
+                {Icon && <Icon className="h-4 w-4" />}
+                <div className="text-sm font-medium leading-none">{title}</div>
+              </div>
+            </Link>
+            {children && (
+              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                {children}
+              </p>
+            )}
           </div>
-          {children && (
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-              {children}
-            </p>
-          )}
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  );
-});
+        </NavigationMenuLink>
+      </li>
+    );
+  },
+);
 ListItem.displayName = "ListItem";
 
 function DesktopNav() {
@@ -142,17 +231,18 @@ function DesktopNav() {
             const isActive = pathname === item.url;
             return (
               <NavigationMenuItem key={item.title}>
-                <Link href={item.url} legacyBehavior passHref>
-                  <NavigationMenuLink
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      isActive && "bg-accent text-accent-foreground font-medium"
-                    )}
-                  >
+                <NavigationMenuLink
+                  asChild
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    isActive && "bg-accent text-accent-foreground font-medium",
+                  )}
+                >
+                  <Link href={item.url}>
                     <item.icon className="h-4 w-4 mr-2" />
                     {item.title}
-                  </NavigationMenuLink>
-                </Link>
+                  </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
             );
           }
@@ -197,7 +287,10 @@ function MobileNav() {
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
+      <SheetContent
+        side="left"
+        className="w-[300px] sm:w-[400px] overflow-y-auto"
+      >
         <nav className="flex flex-col gap-4 mt-8">
           {menuItems.map((item) => {
             if (!item.items) {
@@ -209,7 +302,7 @@ function MobileNav() {
                   onClick={() => setOpen(false)}
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
-                    isActive && "bg-accent text-accent-foreground"
+                    isActive && "bg-accent text-accent-foreground",
                   )}
                 >
                   <item.icon className="h-5 w-5" />
@@ -234,7 +327,8 @@ function MobileNav() {
                         onClick={() => setOpen(false)}
                         className={cn(
                           "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
-                          isActive && "bg-accent text-accent-foreground font-medium"
+                          isActive &&
+                            "bg-accent text-accent-foreground font-medium",
                         )}
                       >
                         {subItem.icon && <subItem.icon className="h-4 w-4" />}
@@ -253,11 +347,21 @@ function MobileNav() {
 }
 
 export default function AdminNavbar() {
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/admin" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 shadow-lg ring-2 ring-blue-200">
             <Cpu className="h-6 w-6 text-white" />
           </div>
@@ -279,6 +383,7 @@ export default function AdminNavbar() {
           <Button
             variant="ghost"
             size="sm"
+            onClick={handleLogout}
             className="hidden sm:flex hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400"
           >
             <LogOut className="h-4 w-4 mr-2" />
@@ -287,6 +392,7 @@ export default function AdminNavbar() {
           <Button
             variant="ghost"
             size="icon"
+            onClick={handleLogout}
             className="sm:hidden hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400"
           >
             <LogOut className="h-4 w-4" />

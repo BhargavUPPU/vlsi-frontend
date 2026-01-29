@@ -1,86 +1,109 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, fadeIn } from "@/lib/animations";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
-
+import { useState } from "react";
 
 export default function HeroSection() {
+  const [showVideoModal, setShowVideoModal] = useState(false);
+
+  const openVideoModal = () => {
+    setShowVideoModal(true);
+  };
+
+  const closeVideoModal = () => {
+    setShowVideoModal(false);
+  };
   return (
-        <section className="py-5">
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between items-center gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-        <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
-        {/* Left Content */}
-        <div>
-          {/* Logo + Title */}
-          <div className="flex items-center gap-2 mb-6">
-            <div className="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 text-white text-sm font-bold">
-              V
-            </div>
-            <span className="text-sm font-medium text-gray-800">
-              VLSI Innovation Hub
-            </span>
-          </div>
+    <section className="py-5">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between items-center gap-12">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <div>
+                {/* Logo + Title */}
+                <div className="flex items-center gap-2 mb-6">
+                  <Image
+                             src="/FPGA.svg"
+                             alt="FPGA"
+                             width={8}
+                             height={8}
+                             className="h-8 w-auto"
+                           />
+                  <span className="text-sm font-medium text-gray-800">
+                    VLSI Innovation Hub
+                  </span>
+                </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-gray-900">
-            <span className="block">Shape the</span>
-            <span className="block text-blue-600 drop-shadow-sm">
-              Future of
-            </span>
-            <span className="block text-blue-600 drop-shadow-sm">
-              Semiconductor
-            </span>
-            <span className="block text-blue-600 drop-shadow-sm">
-              Technology
-            </span>
-          </h1>
+                {/* Heading */}
+                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-gray-900">
+                  <span className="block">Shape the</span>
+                  <span className="block text-blue-600 drop-shadow-sm">
+                    Future of
+                  </span>
+                  <span className="block text-blue-600 drop-shadow-sm">
+                    Semiconductor
+                  </span>
+                  <span className="block text-blue-600 drop-shadow-sm">
+                    Technology
+                  </span>
+                </h1>
 
-          {/* Description */}
-          <p className="mt-6 max-w-xl text-gray-500 text-sm md:text-base">
-            Join our community of aspiring engineers and unlock endless
-            opportunities in VLSI design, research, and innovation. From
-            beginner workshops to industry collaborations.
-          </p>
+                {/* Description */}
+                <p className="mt-6 max-w-xl text-gray-500 text-sm md:text-base">
+                  Join our community of aspiring engineers and unlock endless
+                  opportunities in VLSI design, research, and innovation. From
+                  beginner workshops to industry collaborations.
+                </p>
 
-          {/* CTA */}
-          <button className="mt-8 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-white text-sm font-semibold shadow-md hover:bg-blue-700 transition">
-            Join our Community
-            <span className="text-lg">→</span>
-          </button>
-        </div>
-      </section>
-            </motion.div>
+                {/* CTA */}
+                <button className="mt-8 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-white text-sm font-semibold shadow-md hover:bg-blue-700 transition">
+                  Join our Community
+                  <span className="text-lg">→</span>
+                </button>
+              </div>
+            </section>
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative my-13"
-            >
-              <div className="">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative my-13"
+          >
+            <div className="">
               <svg
-                width="547"
-                height="382"
+                width="650"
+                height="455"
                 viewBox="0 0 547 382"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
+                className="drop-shadow-lg"
               >
                 <circle cx="305" cy="171" r="90" fill="#F61262" />
-                <circle cx="304.5" cy="174.5" r="17.5" fill="#367CFF" />
+                <circle
+                  cx="304.5"
+                  cy="174.5"
+                  r="17.5"
+                  fill="#367CFF"
+                  className="cursor-pointer hover:fill-blue-600 transition-colors"
+                  onClick={openVideoModal}
+                />
                 <path
                   d="M316.524 175.06L299.303 185.005L299.31 165.104L316.524 175.06Z"
                   fill="white"
+                  className="cursor-pointer"
+                  onClick={openVideoModal}
+                  style={{ pointerEvents: "auto" }}
                 />
                 <circle
                   cx="302"
@@ -474,10 +497,62 @@ export default function HeroSection() {
                   />
                 </defs>
               </svg>
-              </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
-      </section>
+      </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {showVideoModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
+            onClick={closeVideoModal}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="relative w-11/12 max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={closeVideoModal}
+                className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              {/* Video iframe */}
+              <iframe
+                src="https://drive.google.com/file/d/1hUf4-cRQmXUkynz-KeQdCTWqug0O42Ar/preview"
+                width="100%"
+                height="100%"
+                allow="autoplay"
+                className="w-full h-full"
+                title="VLSI Video"
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }

@@ -49,15 +49,14 @@ export default function ProjectsPage() {
 
   // Separate ongoing and completed projects
   const ongoingProjects = allProjects.filter(
-    (p) => p.status?.toLowerCase() === "ongoing"
+    (p) => p.status?.toLowerCase() === "ongoing",
   );
   const completedProjects = allProjects.filter(
-    (p) => p.status?.toLowerCase() === "completed"
+    (p) => p.status?.toLowerCase() === "completed",
   );
 
   const currentProjects =
     activeTab === "ongoing" ? ongoingProjects : completedProjects;
-  console.log("Current Projects:", currentProjects);
 
   // Apply filters
   const filteredProjects = currentProjects.filter((project) => {
@@ -72,7 +71,7 @@ export default function ProjectsPage() {
   if (!Number.isFinite(totalPages) || totalPages < 1) totalPages = 1;
   const paginatedProjects = filteredProjects.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   // Get first image from project
@@ -102,7 +101,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex(
-        (prev) => (prev + 1) % Math.max(projectImages.length, 1)
+        (prev) => (prev + 1) % Math.max(projectImages.length, 1),
       );
     }, 3000);
     return () => clearInterval(interval);
@@ -113,7 +112,7 @@ export default function ProjectsPage() {
     if (carouselInterval.current) clearInterval(carouselInterval.current);
     carouselInterval.current = setInterval(() => {
       setCarouselIndex(
-        (prev) => (prev + 1) % Math.max(latestProjects.length, 1)
+        (prev) => (prev + 1) % Math.max(latestProjects.length, 1),
       );
     }, 3500);
     return () => clearInterval(carouselInterval.current);
@@ -135,7 +134,7 @@ export default function ProjectsPage() {
   const academicYears = [
     ...new Set(currentProjects.map((p) => p.academicYear).filter(Boolean)),
   ];
-  console.log("projects",projectsData)
+  console.log("projects", projectsData);
 
   // Card colors
   const cardColors = [
@@ -154,19 +153,17 @@ export default function ProjectsPage() {
         <ProjectsCarousel projects={allProjects.slice(0, 5)} />
       )} */}
 
-
-
       {/* Hero Section with Animated Blocks */}
       <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4"
-        >
-          <ArrowLeft size={20} />
-          <span>Home</span>
-        </Link>
-      </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4"
+          >
+            <ArrowLeft size={20} />
+            <span>Home</span>
+          </Link>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Animated '11' Symbol (two columns of 3 blocks), group floats up/down */}
@@ -224,41 +221,45 @@ export default function ProjectsPage() {
               >
                 {/* Left '1' (lower) - 3 static images */}
                 <div className="flex flex-col gap-6 translate-y-8">
-                  {["/projectIcon1.png", "/projectIcon2.jpg", "/projectIcon3.jpg"].map(
-                    (src, i) => (
-                      <div
-                        key={i}
-                        className="aspect-square w-24 md:w-28 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
-                      >
-                        <Image
-                          src={src}
-                          alt={`Static Image ${i + 1}`}
-                          width={112}
-                          height={112}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )
-                  )}
+                  {[
+                    "/projectIcon1.png",
+                    "/projectIcon2.jpg",
+                    "/projectIcon3.jpg",
+                  ].map((src, i) => (
+                    <div
+                      key={i}
+                      className="aspect-square w-24 md:w-28 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
+                    >
+                      <Image
+                        src={src}
+                        alt={`Static Image ${i + 1}`}
+                        width={112}
+                        height={112}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
                 {/* Right '1' (higher) - 3 static images */}
                 <div className="flex flex-col gap-6 -translate-y-8">
-                  {["/projectIcon4.jpg", "/projectIcon5.jpg", "/projectIcon6.jpg"].map(
-                    (src, i) => (
-                      <div
-                        key={i}
-                        className="aspect-square w-24 md:w-28 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
-                      >
-                        <Image
-                          src={src}
-                          alt={`Static Image ${i + 4}`}
-                          width={112}
-                          height={112}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )
-                  )}
+                  {[
+                    "/projectIcon4.jpg",
+                    "/projectIcon5.jpg",
+                    "/projectIcon6.jpg",
+                  ].map((src, i) => (
+                    <div
+                      key={i}
+                      className="aspect-square w-24 md:w-28 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
+                    >
+                      <Image
+                        src={src}
+                        alt={`Static Image ${i + 4}`}
+                        width={112}
+                        height={112}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
               </motion.div>
             </div>
@@ -281,7 +282,7 @@ export default function ProjectsPage() {
                 >
                   {latestProjects.length > 0
                     ? String(
-                        (carouselIndex % latestProjects.length) + 1
+                        (carouselIndex % latestProjects.length) + 1,
                       ).padStart(2, "0")
                     : "01"}
                 </span>
@@ -496,7 +497,7 @@ export default function ProjectsPage() {
                           <img
                             src={imageUrl}
                             alt={project.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             loading="lazy"
                           />
                         ) : (
@@ -575,7 +576,7 @@ export default function ProjectsPage() {
                     >
                       {String(page)}
                     </button>
-                  )
+                  ),
                 )}
 
                 <button

@@ -1,16 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Lock, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { toast } from "sonner";
 import { apiClient } from "@/lib/api/client";
 
-export default function ChangePasswordPage() {
+function ChangePasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isRequired = searchParams.get("required") === "true";
@@ -68,7 +74,8 @@ export default function ChangePasswordPage() {
       }, 1000);
     } catch (error) {
       console.error("Change password error:", error);
-      const message = error.response?.data?.message || "Failed to change password";
+      const message =
+        error.response?.data?.message || "Failed to change password";
       toast.error(message);
     } finally {
       setIsLoading(false);
@@ -76,7 +83,9 @@ export default function ChangePasswordPage() {
   };
 
   const RequirementItem = ({ met, text }) => (
-    <div className={`flex items-center gap-2 text-sm ${met ? "text-green-600" : "text-gray-500"}`}>
+    <div
+      className={`flex items-center gap-2 text-sm ${met ? "text-green-600" : "text-gray-500"}`}
+    >
       {met ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
       <span>{text}</span>
     </div>
@@ -124,7 +133,11 @@ export default function ChangePasswordPage() {
                   className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                   tabIndex={-1}
                 >
-                  {showOldPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showOldPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -149,7 +162,11 @@ export default function ChangePasswordPage() {
                   className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                   tabIndex={-1}
                 >
-                  {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showNewPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -174,20 +191,44 @@ export default function ChangePasswordPage() {
                   className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                   tabIndex={-1}
                 >
-                  {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Password Requirements */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-              <p className="text-sm font-medium text-gray-700 mb-2">Password Requirements:</p>
-              <RequirementItem met={passwordRequirements.minLength} text="At least 8 characters" />
-              <RequirementItem met={passwordRequirements.hasUppercase} text="One uppercase letter" />
-              <RequirementItem met={passwordRequirements.hasLowercase} text="One lowercase letter" />
-              <RequirementItem met={passwordRequirements.hasNumber} text="One number" />
-              <RequirementItem met={passwordRequirements.hasSpecial} text="One special character (!@#$%^&*)" />
-              <RequirementItem met={passwordRequirements.passwordsMatch} text="Passwords match" />
+              <p className="text-sm font-medium text-gray-700 mb-2">
+                Password Requirements:
+              </p>
+              <RequirementItem
+                met={passwordRequirements.minLength}
+                text="At least 8 characters"
+              />
+              <RequirementItem
+                met={passwordRequirements.hasUppercase}
+                text="One uppercase letter"
+              />
+              <RequirementItem
+                met={passwordRequirements.hasLowercase}
+                text="One lowercase letter"
+              />
+              <RequirementItem
+                met={passwordRequirements.hasNumber}
+                text="One number"
+              />
+              <RequirementItem
+                met={passwordRequirements.hasSpecial}
+                text="One special character (!@#$%^&*)"
+              />
+              <RequirementItem
+                met={passwordRequirements.passwordsMatch}
+                text="Passwords match"
+              />
             </div>
 
             <Button
@@ -208,5 +249,26 @@ export default function ChangePasswordPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function ChangePasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <div className="animate-pulse">
+                <div className="h-6 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded"></div>
+              </div>
+            </CardHeader>
+          </Card>
+        </div>
+      }
+    >
+      <ChangePasswordContent />
+    </Suspense>
   );
 }

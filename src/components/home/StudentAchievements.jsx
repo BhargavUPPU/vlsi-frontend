@@ -8,6 +8,7 @@ import {
 } from "@/lib/animations";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const achievements = [
   {
@@ -15,22 +16,26 @@ const achievements = [
     description:
       "A student-driven VLSI club fostering innovation through hands-on chip design and electronics projects.",
     image: "/student_achievements_1.png", // Placeholder for rocket image
+    href:"/projects"
   },
   {
     title: "Achievements",
     description:
       "A hub of excellence where students showcase talent, earning VLSI badges, alumni top-tech placements, and recognition for outstanding projects and innovative papers.",
     image: "/student_achievements_2.png", // Placeholder for trophy image
+    href:"/achievements"
   },
   {
     title: "Silicon Chronicles",
     description:
       "Our official VLSI club magazine, capturing breakthrough projects, student achievements, industry insights, and the inspiring success stories of chip design and electronics.",
     image: "/student_achievements_3.png", // Placeholder for magazine image
+    href:"/photogallery"
   },
 ];
 
 export default function StudentAchievements() {
+  const router=useRouter();
   return (
     <section className="py-20 bg-gradient-to-br from-gray-100 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -112,7 +117,7 @@ export default function StudentAchievements() {
 
               {/* Know More Button */}
               <div className="mt-auto text-center">
-                <button className="inline-flex items-center gap-1 text-blue-600 font-medium hover:text-blue-700 transition-colors text-sm sm:text-base">
+                <button className="inline-flex items-center gap-1 text-blue-600 font-medium hover:text-blue-700 transition-colors text-sm sm:text-base"  onClick={()=>{router.push(achievement.href)}}>
                   Know more
                   <ChevronRight size={16} />
                 </button>

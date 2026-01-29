@@ -48,14 +48,14 @@ export default function ResourcesPage() {
     {
       queryKey: ["questionBanks"],
       queryFn: () => apiClient.get(API_ENDPOINTS.QUESTION_BANKS.BASE),
-    }
+    },
   );
 
   const { data: placementPrepData, isLoading: loadingPlacementPrep } = useQuery(
     {
       queryKey: ["placementPrep"],
       queryFn: () => apiClient.get(API_ENDPOINTS.PLACEMENT_PREP.BASE),
-    }
+    },
   );
 
   const { data: magazinesData, isLoading: loadingMagazines } = useQuery({
@@ -70,8 +70,8 @@ export default function ResourcesPage() {
 
   const textbooks = Array.isArray(textbooksData?.data?.data)
     ? textbooksData.data.data
-    : Array.isArray(textbooksData?.data) 
-      ? textbooksData.data 
+    : Array.isArray(textbooksData?.data)
+      ? textbooksData.data
       : [];
   const nptelLectures = Array.isArray(nptelData?.data?.data)
     ? nptelData.data.data
@@ -124,7 +124,7 @@ export default function ResourcesPage() {
         <span>Resources</span>
       </Link>
       <Image
-        src="/resourceBanner.png"
+        src="/resourceBanner.svg"
         alt="Resources Hero Banner"
         width={1920}
         height={400}
@@ -230,11 +230,14 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               Silicon Chronicle Magazines
             </h3>
-            <Link 
-              href="/resources/explore?type=magazines" 
+            <Link
+              href="/resources/explore?type=magazines"
               className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
-              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+              Explore All{" "}
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
           {magazines.length > 0 ? (
@@ -250,11 +253,14 @@ export default function ResourcesPage() {
         <div id="textbooks-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">VLSI Textbooks</h3>
-            <Link 
-              href="/resources/explore?type=textbooks" 
+            <Link
+              href="/resources/explore?type=textbooks"
               className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
-              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+              Explore All{" "}
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
           {textbooks.length > 0 ? (
@@ -269,11 +275,14 @@ export default function ResourcesPage() {
         <div id="nptel-lectures-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">NPTEL Lectures</h3>
-            <Link 
-              href="/resources/explore?type=nptelLectures" 
+            <Link
+              href="/resources/explore?type=nptelLectures"
               className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
-              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+              Explore All{" "}
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
           {nptelLectures.length > 0 ? (
@@ -289,11 +298,14 @@ export default function ResourcesPage() {
         <div id="materials-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">VLSI Materials</h3>
-            <Link 
-              href="/resources/explore?type=vlsiMaterials" 
+            <Link
+              href="/resources/explore?type=vlsiMaterials"
               className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
-              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+              Explore All{" "}
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
           {vlsiMaterials.length > 0 ? (
@@ -311,11 +323,14 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Question Banks
             </h3>
-            <Link 
-              href="/resources/explore?type=questionBanks" 
+            <Link
+              href="/resources/explore?type=questionBanks"
               className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
-              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+              Explore All{" "}
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
           {questionBanks.length > 0 ? (
@@ -333,11 +348,14 @@ export default function ResourcesPage() {
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Recruitment PYQs
             </h3>
-            <Link 
-              href="/resources/explore?type=placementPrep" 
+            <Link
+              href="/resources/explore?type=placementPrep"
               className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
-              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+              Explore All{" "}
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
           {placementPrep.length > 0 ? (
@@ -353,11 +371,14 @@ export default function ResourcesPage() {
         <div id="gate-pyqs-section" className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">ECE Gate PYQs</h3>
-            <Link 
-              href="/resources/explore?type=gatePyqs" 
+            <Link
+              href="/resources/explore?type=gatePyqs"
               className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
-              Explore All <span className="group-hover:translate-x-1 transition-transform">→</span>
+              Explore All{" "}
+              <span className="group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </Link>
           </div>
           {gatePyqs.length > 0 ? (

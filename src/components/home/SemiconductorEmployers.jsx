@@ -10,11 +10,17 @@ import Image from "next/image";
 
 // Placeholder logos - in production, these would be actual company logos
 const employers = [
-  { name: "TEXS INSTRUMENT", logo: "/company1.png" },
-  { name: "Qualcomm", logo: "/company2.png" },
-  { name: "SIEMENS", logo: "/company3.png" },
-  { name: "BHEL", logo: "/company4.png" },
-  { name: "NVIDIA", logo: "/company5.png" },
+  { name: "TEXS INSTRUMENT", logo: "/TexasInstruments-01.png" },
+  { name: "Samsung", logo: "/SamsungElectronics-01.png" },
+  { name: "Qualcomm", logo: "/Qualcomm-Logo.png" },
+  { name: "TSM", logo: "/TSM.png" },
+  { name: "Capgemini", logo: "/Capgemini-Logo.png" },
+  { name: "NVIDIA", logo: "/NVIDIA-Logo.png" },
+  { name: "AMD", logo: "/AdvancedMicroDevices-Logo.png" },
+  { name: "ASML", logo: "/ASML-Logo.png" },
+  { name: "Broadcom", logo: "/Broadcom_Corporation.png" },
+  {name:"MosChip", logo:"/moschip.png"},
+  { name: "TATA", logo: "/tataelectronics.png" },
 ];
 
 export default function SemiconductorEmployers() {

@@ -28,58 +28,59 @@ export default function Navbar() {
     <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-200">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
-  
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center">
-                  <span className="text-xl font-bold ">VLSI</span>
-                <span className="text-xl font-bold text-indigo-600">D</span>
-              </Link>
-            </div>
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center">
+              <span className="text-xl font-bold ">VLSI</span>
+              <span className="text-xl font-bold text-indigo-600">D</span>
+            </Link>
+          </div>
 
           <div className="flex ">
-               {/* Desktop Navigation - Centered */}
-          <div className={`hidden md:flex items-center space-x-1 ${pathname === "/" ? "mx-auto" : ""}`}>
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`${
-                  isActive(item.href)
-                    ? "text-white bg-blue-600"
-                    : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                } px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md m-2`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* Auth Buttons - Desktop */}
-          <div className="hidden md:flex items-center space-x-3">
-            {user ? (
-              <>
-                <div className="flex items-center gap-2 text-gray-700 bg-gray-100 px-3 py-1.5 rounded-md">
-                  <User size={16} />
-                  <span className="text-sm font-medium">{user.name}</span>
-                </div>
-                <button
-                  onClick={logout}
-                  className="bg-red-600 text-white hover:bg-red-700 px-4 py-1.5 rounded-md text-sm font-medium transition inline-flex items-center gap-2"
-                >
-                  Sign out
-                </button>
-              </>
-            ) : (
-              <>
+            {/* Desktop Navigation - Centered */}
+            <div
+              className={`hidden md:flex items-center space-x-1 ${pathname === "/" ? "mx-auto" : ""}`}
+            >
+              {navigation.map((item) => (
                 <Link
-                  href="/auth/login"
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-5 py-1.5 rounded-md text-sm font-medium transition"
+                  key={item.name}
+                  href={item.href}
+                  className={`${
+                    isActive(item.href)
+                      ? "text-white bg-blue-600"
+                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                  } px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md m-2`}
                 >
-                Login
+                  {item.name}
                 </Link>
-              </>
-            )}
-          </div>
+              ))}
+            </div>
+
+            {/* Auth Buttons - Desktop */}
+            <div className="hidden md:flex items-center space-x-3">
+              {user ? (
+                <>
+                  <div className="flex items-center gap-2 text-gray-700 bg-gray-100 px-3 py-1.5 rounded-md">
+                    <User size={16} />
+                    <span className="text-sm font-medium">{user.name}</span>
+                  </div>
+                  <button
+                    onClick={logout}
+                    className="bg-red-600 text-white hover:bg-red-700 px-4 py-1.5 rounded-md text-sm font-medium transition inline-flex items-center gap-2"
+                  >
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/login"
+                    className="bg-blue-600 text-white hover:bg-blue-700 px-5 py-1.5 rounded-md text-sm font-medium transition"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Mobile menu button */}

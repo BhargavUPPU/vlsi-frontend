@@ -1,14 +1,9 @@
 "use client";
 
-import { useEffect, useCallback, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Quote, Megaphone } from "lucide-react";
-import {
-  staggerContainer,
-  staggerItem,
-  defaultViewport,
-} from "@/lib/animations";
 import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 function EmblaDots({ emblaApi, slidesCount, selectedIndex, setSelectedIndex }) {
   if (!emblaApi) return null;
   return (
@@ -27,52 +22,17 @@ function EmblaDots({ emblaApi, slidesCount, selectedIndex, setSelectedIndex }) {
   );
 }
 
-const voicesData = [
-  {
-    title: "VLSI Club Building India's Silicon Era",
-    description:
-      "Our students are at the forefront of India's semiconductor revolution, working on cutting-edge projects that will shape the future of chip design and manufacturing.",
-    icon: Megaphone,
-    gradient: "from-blue-500 to-cyan-500",
-  },
-  {
-    title: "From Classroom to Cleanroom",
-    description:
-      "We provide unparalleled hands-on experience with state-of-the-art tools and technologies, bridging the gap between theoretical knowledge and industry practice.",
-    icon: Quote,
-    gradient: "from-purple-500 to-pink-500",
-  },
-  {
-    title: "Innovation in Every Chip",
-    description:
-      "Our club fosters creativity and technical excellence, empowering students to design innovative solutions for tomorrow's technology challenges.",
-    icon: Megaphone,
-    gradient: "from-green-500 to-blue-500",
-  },
-  {
-    title: "Collaboration Drives Success",
-    description:
-      "Teamwork and mentorship are at the heart of our achievements, helping students grow into industry-ready professionals.",
-    icon: Quote,
-    gradient: "from-yellow-500 to-orange-500",
-  },
-  {
-    title: "Bridging Academia and Industry",
-    description:
-      "We connect students with industry leaders, providing exposure to real-world VLSI challenges and career opportunities.",
-    icon: Megaphone,
-    gradient: "from-pink-500 to-red-500",
-  },
-];
+// Generate image data for voice1 (1).svg to voice7 (1).svg
+const voiceImages = Array.from({ length: 7 }, (_, index) => ({
+  id: index + 1,
+  src: `/voice1 (${index+1}).svg`,
+  alt: `Voice ${index + 1}`,
+}));
 
 export default function VoicesSection() {
-  // Shuffle voices for random order
-  const [voices, setVoices] = useState([]);
+  // Use the voice images directly
+  const [voices, setVoices] = useState(voiceImages);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  useEffect(() => {
-    const shuffled = [...voicesData].sort(() => Math.random() - 0.5);
-    setVoices(shuffled);
-  }, []);
 
   // Embla Carousel setup
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -111,40 +71,20 @@ export default function VoicesSection() {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-8">
             {voices.map((voice, index) => {
-              const Icon = voice.icon;
               return (
                 <div
-                  key={index}
-                  className="min-w-0 w-full max-w-xl flex-shrink-0 relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg hover:shadow-2xl transition-all duration-300 m-2"
+                  key={voice.id}
+                  className="min-w-0 w-full max-w-7xl flex-shrink-0 relative overflow-hidden rounded-2xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 m-2"
                 >
-                  {/* Background Gradient */}
-                  <div
-                    className={`absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gradient-to-br ${voice.gradient} opacity-10 blur-3xl`}
-                  />
-
-                  {/* Content */}
-                  <div className="relative z-10">
-                    {/* Icon */}
-                    <div
-                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${voice.gradient} p-3 mb-6 shadow-lg`}
-                    >
-                      <Icon className="w-full h-full text-white" />
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      {voice.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-gray-600 leading-relaxed text-lg">
-                      {voice.description}
-                    </p>
-                  </div>
-
-                  {/* Decorative Quote Mark */}
-                  <div className="absolute bottom-4 right-4 opacity-5">
-                    <Quote className="w-32 h-32 text-gray-900" />
+                  {/* Image Container */}
+                  <div className="relative w-full h-96 flex items-center justify-center">
+                    <Image
+                      src={voice.src}
+                      alt={voice.alt}
+                      fill
+                      className="object-contain"
+                      priority={index < 3}
+                    />
                   </div>
                 </div>
               );

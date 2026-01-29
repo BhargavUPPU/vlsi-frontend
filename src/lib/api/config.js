@@ -19,6 +19,7 @@ export const API_ENDPOINTS = {
   USERS: {
     BASE: '/users',
     BY_ID: (id) => `/users/${id}`,
+    GET_ALL: '/users',
   },
   
   // Club Members
@@ -41,6 +42,12 @@ export const API_ENDPOINTS = {
     IMAGES: (id) => `/projects/${id}/images`,
   },
   
+  //Users
+  USERS: {
+    BASE: '/users',
+    GET_ALL: '/users',
+    BY_ID: (id) => `/users/${id}`,
+  },
   // Events
   EVENTS: {
     BASE: '/events',

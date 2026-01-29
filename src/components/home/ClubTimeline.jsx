@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS, API_BASE_URL } from "@/lib/api/config";
@@ -24,6 +24,7 @@ import {
 } from "@/lib/animations";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 // Icon mapping
 const iconMap = {
@@ -39,6 +40,7 @@ export default function ClubTimeline() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [lightboxImage, setLightboxImage] = useState(null);
   const [imageError, setImageError] = useState(false);
+  const [failedImages, setFailedImages] = useState(new Set());
 
   // Fetch milestones
   const {
@@ -84,9 +86,18 @@ export default function ClubTimeline() {
     },
   });
 
-  const milestones = Array.isArray(milestonesData) ? milestonesData : [];
-  const years = Array.isArray(yearsData) ? yearsData : [];
-  const categories = Array.isArray(categoriesData) ? categoriesData : [];
+  const milestones = useMemo(
+    () => (Array.isArray(milestonesData) ? milestonesData : []),
+    [milestonesData],
+  );
+  const years = useMemo(
+    () => (Array.isArray(yearsData) ? yearsData : []),
+    [yearsData],
+  );
+  const categories = useMemo(
+    () => (Array.isArray(categoriesData) ? categoriesData : []),
+    [categoriesData],
+  );
 
   // Loading skeleton
   const SkeletonLoader = () => (
@@ -286,7 +297,7 @@ export default function ClubTimeline() {
                   // Use hasImage flag from backend
                   const hasImage = milestone.hasImage === true;
                   const imageUrl = hasImage
-                    ? `${API_BASE_URL}/milestones/${milestone.id}/image`
+                    ? `${API_BASE_URL}/milestones/${milestone.id}/image?t=${Date.now()}`
                     : null;
 
                   return (
@@ -318,20 +329,59 @@ export default function ClubTimeline() {
                           whileHover={{ y: -2, scale: 1.01 }}
                           className={`${milestone.bgColor || "bg-blue-50"} rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-md hover:shadow-lg lg:hover:shadow-xl transition-all duration-300 border border-white/50 relative overflow-hidden`}
                         >
-                          {/* Image Background if available */}
-                          {hasImage && imageUrl && (
-                            <div
-                              className="absolute top-4 right-4 cursor-pointer group"
-                              onClick={() => {
-                                setLightboxImage(imageUrl);
-                                setImageError(false);
-                              }}
-                            >
-                              <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                                <Camera size={16} className="text-gray-700" />
+                          {/* Image Display if available */}
+                          {hasImage &&
+                            imageUrl &&
+                            !failedImages.has(milestone.id) && (
+                              <div className="mb-4 sm:mb-6">
+                                <div
+                                  className="relative w-full h-48 sm:h-56 rounded-lg overflow-hidden cursor-pointer group"
+                                  onClick={() => {
+                                    console.log(
+                                      "Opening lightbox for milestone:",
+                                      milestone.id,
+                                      imageUrl,
+                                    );
+                                    setLightboxImage(imageUrl);
+                                    setImageError(false);
+                                  }}
+                                >
+                                  <img
+                                    src={imageUrl}
+                                    alt={milestone.title}
+                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    onError={() => {
+                                      console.warn(
+                                        "Failed to load milestone image:",
+                                        milestone.id,
+                                        imageUrl,
+                                      );
+                                      setFailedImages(
+                                        (prev) =>
+                                          new Set([...prev, milestone.id]),
+                                      );
+                                    }}
+                                    onLoad={() => {
+                                      // Remove from failed images if it loads successfully
+                                      setFailedImages((prev) => {
+                                        const newSet = new Set(prev);
+                                        newSet.delete(milestone.id);
+                                        return newSet;
+                                      });
+                                    }}
+                                  />
+                                  {/* Overlay with camera icon */}
+                                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                    <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                      <Camera
+                                        size={20}
+                                        className="text-gray-700"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          )}
+                            )}
 
                           {/* Icon and Date */}
                           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
@@ -426,7 +476,19 @@ export default function ClubTimeline() {
                   src={lightboxImage}
                   alt="Milestone"
                   className="max-w-full max-h-[90vh] rounded-lg object-contain"
-                  onError={() => setImageError(true)}
+                  onError={(e) => {
+                    console.error(
+                      "Lightbox image failed to load:",
+                      lightboxImage,
+                    );
+                    setImageError(true);
+                  }}
+                  onLoad={() => {
+                    console.log(
+                      "Lightbox image loaded successfully:",
+                      lightboxImage,
+                    );
+                  }}
                 />
               )}
             </motion.div>

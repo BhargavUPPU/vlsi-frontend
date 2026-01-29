@@ -116,7 +116,10 @@ apiClient.interceptors.response.use(
             "/projects",
             "/resources",
             "/team",
-            "/tests",
+            "/photogallery",
+            "/achievements",
+            "/resources/roadmap",
+            "/resources/softwaretools",
           ];
           const isPublicPath = publicPaths.some(
             (path) =>

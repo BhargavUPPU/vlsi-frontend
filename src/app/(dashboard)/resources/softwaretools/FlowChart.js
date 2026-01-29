@@ -23,8 +23,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-
-
 const BASE_NODE_STYLE = {
   padding: 0,
   border: "none",
@@ -293,12 +291,12 @@ export default function VlsiFlowchart() {
         style: BASE_NODE_STYLE,
       },
     ],
-    []
+    [],
   );
 
   const EDGE_STYLE = {
-    stroke: "#000000",
-    strokeWidth: 2,
+    stroke: "#3B82F6", // Bright blue for visibility
+    strokeWidth: 3, // Thicker line
   };
 
   const initialEdges = useMemo(
@@ -308,19 +306,17 @@ export default function VlsiFlowchart() {
         id: "e1-2",
         source: "1",
         target: "2",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#000" },
+        type: "straight",
+        style: { stroke: "#3B82F6", strokeWidth: 4 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#3B82F6" },
       },
       {
         id: "e1-3",
         source: "1",
         target: "3",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#3B82F6", strokeWidth: 4 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#3B82F6" },
       },
 
       // Open Source Tools
@@ -328,46 +324,41 @@ export default function VlsiFlowchart() {
         id: "e2-4",
         source: "2",
         target: "4",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#10B981", strokeWidth: 3 }, // Bright green
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#10B981" },
       },
       {
         id: "e2-5",
         source: "2",
         target: "5",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#10B981", strokeWidth: 3 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#10B981" },
       },
       {
         id: "e2-6",
         source: "2",
         target: "6",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#10B981", strokeWidth: 3 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#10B981" },
       },
       {
         id: "e2-7",
         source: "2",
         target: "7",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#10B981", strokeWidth: 3 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#10B981" },
       },
       {
         id: "e2-8",
         source: "2",
         target: "8",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#10B981", strokeWidth: 3 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#10B981" },
       },
 
       // EDA Vendor Tools
@@ -375,40 +366,36 @@ export default function VlsiFlowchart() {
         id: "e3-9",
         source: "3",
         target: "9",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#F59E0B", strokeWidth: 3 }, // Bright orange
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#F59E0B" },
       },
       {
         id: "e3-10",
         source: "3",
         target: "10",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#F59E0B", strokeWidth: 3 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#F59E0B" },
       },
       {
         id: "e3-11",
         source: "3",
         target: "11",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#F59E0B", strokeWidth: 3 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#F59E0B" },
       },
       {
         id: "e3-12",
         source: "3",
         target: "12",
-        type: "smoothstep",
-        animated: true,
-        style: EDGE_STYLE,
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#fff" },
+        type: "straight",
+        style: { stroke: "#F59E0B", strokeWidth: 3 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: "#F59E0B" },
       },
     ],
-    []
+    [],
   );
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -419,19 +406,22 @@ export default function VlsiFlowchart() {
         setEdges((eds) => addEdge(params, eds));
       }
     },
-    [setEdges]
+    [setEdges],
   );
 
   // small UI wrapper for consistent spacing and height
   return (
-    <div className="w-full h-205 bg-gray-900 text-white p-6 rounded-lg shadow-xl">
+    <div className="w-full h-[800px] bg-gray-900 text-white p-6 rounded-lg shadow-xl">
       <header className="mb-4">
         <h2 className="text-2xl font-semibold text-center text-gray-100">
           VLSI Software Tools Flowchart
         </h2>
+        <p className="text-center text-gray-400 text-sm mt-2">
+          Interactive flowchart showing VLSI design tools categorized by type
+        </p>
       </header>
 
-      <main className="w-full h-205 rounded-md overflow-hidden border border-gray-800">
+      <main className="w-full h-[720px] rounded-md overflow-hidden border border-gray-700 shadow-inner">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -448,14 +438,18 @@ export default function VlsiFlowchart() {
           <MiniMap
             nodeStrokeWidth={2}
             nodeColor={(n) => {
-              if (n.type === "categoryNode") return "#4A5568";
-              if (n.type === "vendorToolNode") return "#1A202C";
-              return "#2D3748";
+              if (n.type === "categoryNode") return "#3B82F6";
+              if (n.type === "vendorToolNode") return "#F59E0B";
+              return "#10B981";
             }}
-            maskColor="rgba(0,0,0,0.4)"
+            maskColor="rgba(0,0,0,0.6)"
+            className="bg-gray-800 border border-gray-600 rounded"
           />
-          <Controls showInteractive={true} />
-          <Background color="#374151" gap={16} />
+          <Controls
+            showInteractive={true}
+            className="bg-gray-800 border border-gray-600 rounded"
+          />
+          <Background color="#4B5563" gap={20} size={1} variant="dots" />
         </ReactFlow>
       </main>
     </div>

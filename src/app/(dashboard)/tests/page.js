@@ -57,7 +57,7 @@ export default function TestsPage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen mt-5">
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto bg-gray-100 p-8 rounded-lg flex flex-col md:flex-row items-center">
         <div className="flex-grow mb-4 md:mb-0">
@@ -176,7 +176,7 @@ export default function TestsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                     whileHover={{ y: -4 }}
-                    className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6"
+                    className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col h-full"
                   >
                     {/* Status Badge */}
                     <div className="flex items-center gap-2 mb-4">
@@ -231,15 +231,7 @@ export default function TestsPage() {
                     )}
 
                     {/* Action Buttons */}
-                    <div className="flex gap-2">
-                      <Link
-                        href={test.examLink || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-center text-sm"
-                      >
-                        View Questions
-                      </Link>
+                    <div className="mt-auto w-full flex justify-between items-center">
                       <Link
                         href={test.examLink || "#"}
                         target="_blank"
