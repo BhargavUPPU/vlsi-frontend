@@ -39,11 +39,11 @@ export default function RoadMap() {
           </p>
         </header>
         {/* Types of Semiconductor Companies */}
-        <section className="mb-16">
+        <section className="mb-16 items-center">
           <h3 className="text-2xl font-bold mb-8 text-gray-800">
             First, you should know the types of Semiconductors companies
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 title: "IDC",
@@ -74,6 +74,15 @@ export default function RoadMap() {
                 <p className="text-sm text-center text-gray-600">{item.desc}</p>
               </div>
             ))}
+          </div> */}
+          <div className="flex justify-center">
+              <Image
+              src="/roadmapflow.png"
+              alt="Road Map Flow"
+              className="rounded-lg"
+              width={700}
+              height={700}
+            />
           </div>
         </section>
         {/* VLSI Division */}
@@ -277,173 +286,193 @@ export default function RoadMap() {
             </svg>
           </div>
         </section>
-        {/* Fundamentals */}
-        <section className="mb-16">
-          <h3 className="text-2xl font-bold mb-10 text-gray-800">
-            Fundamental topics which is essential for every{" "}
-            <a
-              href="https://en.wikipedia.org/wiki/VLSI"
-              className="text-blue-600 underline hover:text-blue-700"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              VLSI
-            </a>{" "}
-            profile
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              {
-                title: "Theory",
-                icon: "📚",
-                color: "from-blue-400 to-blue-600",
-                items: [
-                  "Digital Electronics",
-                  "Analog Electronics",
-                  "Semiconductor devices physics and technology",
-                  "Aptitude",
-                  "CMOS VLSI DESIGN",
-                  "CMOS Fabrication",
-                  "RC circuits and Network theory",
-                ],
-              },
-              {
-                title: "VERILOG",
-                icon: "💻",
-                color: "from-purple-400 to-purple-600",
-                items: [
-                  "Verilog/VHDL",
-                  "SystemVerilog",
-                  "Basic C/C++ programming",
-                  "Scripting (Perl, TCL, Python)",
-                ],
-              },
-              {
-                title: "Projects",
-                icon: "⚙️",
-                color: "from-pink-400 to-pink-600",
-                items: [
-                  "RTL Projects",
-                  "FPGA Implementation",
-                  "Digital Design Projects",
-                  "Tool-specific Projects",
-                ],
-              },
-            ].map((category, i) => (
-              <div
-                key={i}
-                className="relative bg-white rounded-2xl shadow-xl p-8 pt-16 hover:shadow-2xl transition-shadow"
+       { /* Fundamentals */}
+          <section className="mb-16">
+            <h3 className="text-2xl font-bold mb-10 text-gray-800">
+              Fundamental topics which is essential for every{" "}
+              <a
+                href="https://en.wikipedia.org/wiki/VLSI"
+                className="text-blue-600 underline hover:text-blue-700"
+                target="_blank"
+                rel="noopener noreferrer"
               >
+                VLSI
+              </a>{" "}
+              profile
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {[
+                {
+            title: "Theory",
+            icon: "/BooksStreamline.svg",
+            color: "from-blue-400 to-blue-600",
+            items: [
+              "Digital Electronics",
+              "Analog Electronics",
+              "Semiconductor devices physics and technology",
+              "Aptitude",
+              "CMOS VLSI DESIGN",
+              "CMOS Fabrication",
+              "RC circuits and Network theory",
+            ],
+                },
+                {
+            title: "VERILOG",
+            icon: "/CodingBooksStreamline.svg",
+            color: "from-purple-400 to-purple-600",
+            items: [
+              "Verilog/VHDL",
+              "SystemVerilog",
+              "Basic C/C++ programming",
+              "Scripting (Perl, TCL, Python)",
+            ],
+                },
+                {
+            title: "Projects",
+            icon: "/CodingFlagStreamline.svg",
+            color: "from-pink-400 to-pink-600",
+            items: [
+              "RTL Projects",
+              "FPGA Implementation",
+              "Digital Design Projects",
+              "Tool-specific Projects",
+            ],
+                },
+              ].map((category, i) => (
                 <div
-                  className={`absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-to-br ${category.color} rounded-full shadow-lg flex items-center justify-center text-3xl`}
+            key={i}
+            className="relative bg-white rounded-2xl shadow-xl p-8 pt-16 hover:shadow-2xl transition-shadow"
                 >
-                  {category.icon}
+            <div
+              className={`absolute -top-8 left-1/2 -translate-x-1/2 w-20 h-20 bg-gradient-to-br ${category.color} rounded-full shadow-lg flex items-center justify-center`}
+            >
+              <Image
+                src={category.icon}
+                alt={category.title + " icon"}
+                width={58}
+                height={58}
+              />
+            </div>
+            <h5 className="font-bold text-2xl mb-6 text-center text-gray-800">
+              {category.title}
+            </h5>
+            <ul className="space-y-2 text-sm text-gray-700">
+              {category.items.map((item, idx) => (
+                <li key={idx} className="flex items-start">
+                  <span className="mr-2 text-blue-600">•</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
                 </div>
-                <h5 className="font-bold text-2xl mb-6 text-center text-gray-800">
-                  {category.title}
-                </h5>
-                <ul className="space-y-2 text-sm text-gray-700">
-                  {category.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="mr-2 text-blue-600">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-        {/* Job Roles */}
-        <section className="mb-16">
-          <h3 className="text-2xl font-bold mb-8 text-gray-800">
-            All present VLSI Domain Job roles
-          </h3>
-          <div className="space-y-6">
-            {[
-              {
-                title: "For RTL Design and Verification Profile",
-                items: [
-                  "Good understanding of digital design along with advanced topics like metastability, CDC basics and STA",
-                  "Knowledge of ASIC design flow and FPGA flow",
-                  "Good knowledge of Verilog/VHDL/SystemVerilog",
-                  "Good knowledge of computer architecture",
-                  "Understanding of SystemVerilog basics",
-                ],
-              },
-              {
-                title: "For DFT Profile",
-                items: [
-                  "Good understanding of digital design along with advanced topics like metastability, CDC basics and STA",
-                  "Knowledge of ASIC design flow",
-                  "Good knowledge of Verilog/VHDL",
-                  "Knowledge of scripting language such as TCL and Perl",
-                  "Good understanding of CMOS design",
-                  "Knowledge of scan DFT, BIST related topic: Fault models, Fault coverage, Scan chain insertion, ATPG tool, MBIST and boundary scan",
-                ],
-              },
-              {
-                title: "For PD/STA/PV profile",
-                items: [
-                  "Good understanding of digital design along with advanced topics like metastability, CDC basics",
-                  "Knowledge of ASIC design flow",
-                  "Good knowledge of Verilog/VHDL",
-                  "Knowledge of scripting language such as TCL and Perl",
-                  "Good understanding of CMOS design",
-                  "Good understanding of DRC, ESD, MOSFET, OpAmp, comparators, Oscillators/VCO, PLL",
-                  "Basic knowledge of timing analysis (STA)",
-                  "Knowledge of floor planning, Placement, CTS, routing, signal integrity, IR drop, EM analysis",
-                ],
-              },
-              {
-                title: "For Analog design and layout profile",
-                items: [
-                  "Good understanding of digital design and analog design",
-                  "Knowledge of ASIC design flow",
-                  "Good knowledge of Verilog/VHDL",
-                  "Knowledge of scripting language such as TCL and Perl",
-                  "Good understanding of CMOS design",
-                  "Good understanding of DRC, ESD, MOSFET, OpAmp, comparators, Oscillators/VCO, PLL",
-                  "Knowledge of layout design and voltage and current reference circuits",
-                  "Knowledge of analog IC design, DRC checks, antenna checks, parasitic extraction and IR drop",
-                ],
-              },
-              {
-                title: "For Memory Design profile",
-                items: [
-                  "Good understanding of digital design along with advanced topics like metastability, CDC basics",
-                  "Knowledge of ASIC design flow",
-                  "Good knowledge of Verilog/VHDL",
-                  "Knowledge of scripting language such as TCL and Perl",
-                  "Good understanding of CMOS design",
-                  "Good understanding of SRAM and DRAM memory read/write operation and FIFO depth",
-                  "Basic knowledge of DRC checks, LVS checks, parasitic extraction",
-                ],
-              },
-            ].map((role, i) => (
-              <div
-                key={i}
-                className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-md border-l-4 border-blue-600"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
+              ))}
+            </div>
+          </section>
+              {/* Job Roles */}
+      <section className="mb-16">
+        <h3 className="text-2xl font-bold mb-8 text-gray-800">
+          All present VLSI Domain Job roles
+        </h3>
+        <div className="space-y-6">
+          {[
+            {
+              title: "For RTL Design and Verification Profile",
+              subTitle: "Key Requirements For This Job Role",
+              items: [
+                "Good understanding of digital design along with advanced topics like metastability, CDC basics and STA",
+                "Knowledge of ASIC design flow and FPGA flow",
+                "Good knowledge of Verilog/VHDL/SystemVerilog",
+                "Good knowledge of computer architecture",
+                "Understanding of SystemVerilog basics",
+              ],
+            },
+            {
+              title: "For DFT Profile",
+              subTitle: "Key Requirements For This Job Role",
+              items: [
+                "Good understanding of digital design along with advanced topics like metastability, CDC basics and STA",
+                "Knowledge of ASIC design flow",
+                "Good knowledge of Verilog/VHDL",
+                "Knowledge of scripting language such as TCL and Perl",
+                "Good understanding of CMOS design",
+                "Knowledge of scan DFT, BIST related topic: Fault models, Fault coverage, Scan chain insertion, ATPG tool, MBIST and boundary scan",
+              ],
+            },
+            {
+              title: "For PD/STA/PV profile",
+              subTitle: "Key Requirements For This Job Role",
+              items: [
+                "Good understanding of digital design along with advanced topics like metastability, CDC basics",
+                "Knowledge of ASIC design flow",
+                "Good knowledge of Verilog/VHDL",
+                "Knowledge of scripting language such as TCL and Perl",
+                "Good understanding of CMOS design",
+                "Good understanding of DRC, ESD, MOSFET, OpAmp, comparators, Oscillators/VCO, PLL",
+                "Basic knowledge of timing analysis (STA)",
+                "Knowledge of floor planning, Placement, CTS, routing, signal integrity, IR drop, EM analysis",
+              ],
+            },
+            {
+              title: "For Analog design and layout profile",
+              subTitle: "Key Requirements For This Job Role",
+              items: [
+                "Good understanding of digital design and analog design",
+                "Knowledge of ASIC design flow",
+                "Good knowledge of Verilog/VHDL",
+                "Knowledge of scripting language such as TCL and Perl",
+                "Good understanding of CMOS design",
+                "Good understanding of DRC, ESD, MOSFET, OpAmp, comparators, Oscillators/VCO, PLL",
+                "Knowledge of layout design and voltage and current reference circuits",
+                "Knowledge of analog IC design, DRC checks, antenna checks, parasitic extraction and IR drop",
+              ],
+            },
+            {
+              title: "For Memory Design profile",
+              subTitle: "Key Requirements For This Job Role",
+              items: [
+                "Good understanding of digital design along with advanced topics like metastability, CDC basics",
+                "Knowledge of ASIC design flow",
+                "Good knowledge of Verilog/VHDL",
+                "Knowledge of scripting language such as TCL and Perl",
+                "Good understanding of CMOS design",
+                "Good understanding of SRAM and DRAM memory read/write operation and FIFO depth",
+                "Basic knowledge of DRC checks, LVS checks, parasitic extraction",
+              ],
+            },
+          ].map((role, i) => (
+            <div
+              key={i}
+              className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-md border-l-4 border-blue-600"
+            >
+              <div className="flex flex-row items-center gap-5 mb-4">
+                <div className="w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_10px_4px_rgba(37,99,235,0.5)]"></div>
+                <div>
                   <h4 className="font-bold text-lg text-blue-700">
                     {role.title}
                   </h4>
+                  <h6 className="font-semibold text-sm text-gray-600">
+                    {role.subTitle}
+                  </h6>
                 </div>
-                <ul className="space-y-2 text-sm text-gray-700">
-                  {role.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="mr-2 text-blue-600">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
-            ))}
-          </div>
-        </section>
-        {/* Semicore Value Chain */}
+              <ul className="space-y-2 text-sm text-gray-700">
+                {role.items.map((item, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="flex items-center justify-center mr-2 w-6 h-6 bg-green-500 rounded-full text-white text-xs font-bold">
+                      {/* Tick SVG */}
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M4 8.5L7 11.5L12 5.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+      {/* Semicore Value Chain */}
         <section className="mb-16">
           <h3 className="text-2xl font-bold mb-6 text-gray-800">
             Semicore Value Chain

@@ -194,7 +194,7 @@ export default function VlsiToolsPage() {
 
         {/* Section 2: Flowchart Diagram */}
         <section className="mb-16">
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl p-8 mb-8">
+          <div className=" p-6 mb-6">
             <h2 className="text-3xl font-bold mb-2">VLSI Design Flow</h2>
             <p className="opacity-90">
               Comprehensive EDA tools ecosystem for chip design
@@ -207,7 +207,7 @@ export default function VlsiToolsPage() {
 
         {/* Section 3: Application & Tools Table */}
         <section>
-          <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl p-8 mb-8">
+          <div className="p-6 mb-6">
             <h2 className="text-3xl font-bold mb-2">Application & Tools</h2>
             <p className="opacity-90">
               Comprehensive comparison of EDA tools from major vendors

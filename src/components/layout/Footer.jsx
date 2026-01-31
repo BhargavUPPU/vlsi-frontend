@@ -33,7 +33,7 @@ export default function Footer() {
     { name: "About", href: "/about" },
     { name: "Events", href: "/events" },
     { name: "Resources", href: "/resources" },
-    { name: "Team", href: "/team" },
+    { name: "Our Team", href: "/team" },
     { name: "Test Portal", href: "/tests" },
   ];
 
@@ -47,7 +47,7 @@ export default function Footer() {
     {
       name: "WhatsApp",
       icon: WhatsAppIcon,
-      href: "https://wa.me/1234567890",
+      href: "https://chat.whatsapp.com/DDrFF6wO70s2WQ0sOPq5nO",
       color: "hover:bg-green-600",
     },
     {
@@ -66,8 +66,9 @@ export default function Footer() {
 
   // Google Maps embed URL - Replace with actual college coordinates
   const mapEmbedUrl =
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3799.8384!2d83.3778!3d17.7826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a39431389e6b0ff%3A0x8c5e0f8b0b0b0b0b!2sGayatri%20Vidya%20Parishad%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1234567890";
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3798.3875222255047!2d83.33972007494528!3d17.820459683142488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a395bedc7efb603%3A0x87c06caab54e902a!2sGayatri%20Vidya%20Parishad%20College%20of%20Engineering%20(Autonomous)%20(GVP)%20(GVPCE)!5e0!3m2!1sen!2sin!4v1769667547411!5m2!1sen!2sin";
 
+  const year = new Date().getFullYear();
   return (
     <footer className="relative  text-white overflow-hidden " style={bgStyle}>
       {/* Background Pattern - User can replace this with actual background image */}
@@ -88,7 +89,7 @@ export default function Footer() {
       {/* Main Footer Content */}
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Logo & Social Media */}
             <motion.div
               initial="hidden"
@@ -104,7 +105,7 @@ export default function Footer() {
                   alt="VLSID Logo"
                   width={48}
                   height={48}
-                  className="w-12 h-12"
+                  className="w-18 h-18 object-contain"
                 />
                 <div>
                   <h3 className="text-2xl font-bold">VLSID</h3>
@@ -224,7 +225,7 @@ export default function Footer() {
         <div className="bg-black/50 backdrop-blur-sm border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <p className="text-center text-sm text-blue-200">
-              Copy Rights © VLSID Gayatri Vidya Parishad College of Engineering
+              Copyright © {year} VLSID Gayatri Vidya Parishad College of Engineering
               (Autonomous).
             </p>
           </div>

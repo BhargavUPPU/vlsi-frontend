@@ -18,33 +18,33 @@ export default function HeroSection() {
     setShowVideoModal(false);
   };
   return (
-    <section className="py-5">
+    <section className="py-8">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between items-center gap-12">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-between gap-8 sm:gap-8 lg:gap-8">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <section className="max-w-9xl mx-auto px-4 grid grid-cols-1 gap-2 items-center ">
               {/* Left Content */}
-              <div>
+             
                 {/* Logo + Title */}
-                <div className="flex items-center gap-2 mb-6">
+                <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
                   <Image
                              src="/FPGA.svg"
                              alt="FPGA"
                              width={8}
                              height={8}
-                             className="h-8 w-auto"
+                             className="h-6 sm:h-8 w-auto"
                            />
-                  <span className="text-sm font-medium text-gray-800">
+                  <span className="text-xs sm:text-sm font-medium text-gray-800">
                     VLSI Innovation Hub
                   </span>
                 </div>
 
                 {/* Heading */}
-                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-gray-900">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold leading-tight text-gray-900">
                   <span className="block">Shape the</span>
                   <span className="block text-blue-600 drop-shadow-sm">
                     Future of
@@ -58,18 +58,20 @@ export default function HeroSection() {
                 </h1>
 
                 {/* Description */}
-                <p className="mt-6 max-w-xl text-gray-500 text-sm md:text-base">
+                <p className="mt-4 sm:mt-6 max-w-full text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed italic">
                   Join our community of aspiring engineers and unlock endless
                   opportunities in VLSI design, research, and innovation. From
                   beginner workshops to industry collaborations.
                 </p>
 
                 {/* CTA */}
-                <button className="mt-8 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-white text-sm font-semibold shadow-md hover:bg-blue-700 transition">
-                  Join our Community
-                  <span className="text-lg">→</span>
+                <button className="mt-6 sm:mt-8 inline-flex max-w-1/3 items-center gap-2  rounded-2xl bg-blue-600 px-4 sm:px-6 py-2.5 sm:py-3 text-white text-sm sm:text-base font-bold shadow-md hover:bg-blue-700 transition-colors duration-200 drop-shadow-xl drop-shadow-black">
+                  <span className="text-center">
+    Join our <br className="hidden sm:block" /> Community
+  </span>
+  <span className="text-lg sm:text-xl">→</span>
                 </button>
-              </div>
+              
             </section>
           </motion.div>
 
@@ -77,17 +79,17 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative my-13"
+            className="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto lg:mx-0"
           >
-            <div className="">
+            <div className="w-full">
               <svg
-                width="650"
-                height="455"
+                width="100%"
+                height="auto"
                 viewBox="0 0 547 382"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
-                className="drop-shadow-lg"
+                className="drop-shadow-lg w-full h-auto max-w-full"
               >
                 <circle cx="305" cy="171" r="90" fill="#F61262" />
                 <circle
@@ -509,24 +511,25 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
             onClick={closeVideoModal}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="relative w-11/12 max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl"
+              className="relative w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
               <button
                 onClick={closeVideoModal}
-                className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 text-white hover:text-gray-300 transition-colors p-1 sm:p-2 rounded-full hover:bg-black hover:bg-opacity-50"
               >
                 <svg
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
+                  className="sm:w-6 sm:h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

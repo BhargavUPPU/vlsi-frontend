@@ -13,9 +13,7 @@ const features = [
   {
     icon: (
       // Open book SVG icon
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-        <path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h6.75a2.75 2.75 0 0 1 2.75 2.75V20a.75.75 0 0 1-1.06.67L12 19.25l-0.94.42A.75.75 0 0 1 10 20V6.75A.75.75 0 0 0 9.25 6H4.5A.5.5 0 0 0 4 6.5v11.25c0 .41.34.75.75.75h5.5a.75.75 0 0 1 0 1.5h-5.5A2.25 2.25 0 0 1 2 17.75V6.5zm20 0A2.5 2.5 0 0 0 19.5 4h-6.75A2.75 2.75 0 0 0 10 6.75V20a.75.75 0 0 0 1.06.67l0.94-.42 0.94.42A.75.75 0 0 0 14 20V6.75A.75.75 0 0 1 14.75 6h4.75a.5.5 0 0 1 .5.5v11.25c0 .41-.34.75-.75.75h-5.5a.75.75 0 0 0 0 1.5h5.5A2.25 2.25 0 0 0 22 17.75V6.5z" />
-      </svg>
+      <img src="/INDUSTRYCONNECTIONS.svg" alt="Industry Connections" className="w-12 h-12" />
     ),
     title: "Hands-on learning",
     bgColor: "bg-teal-500",
@@ -28,19 +26,7 @@ const features = [
   },
   {
     icon: (
-      <>
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-        </svg>
-        <svg viewBox="0 0 64 64" fill="none" className="w-8 h-8">
-          <g>
-            <circle cx="32" cy="36" r="14" fill="#2563eb" />
-            <circle cx="14" cy="28" r="8" fill="#60a5fa" />
-            <circle cx="50" cy="28" r="8" fill="#60a5fa" />
-            <circle cx="32" cy="20" r="10" fill="#2563eb" />
-          </g>
-        </svg>
-      </>
+          <img src="/INDUSTRYCONNECTIONS.svg" alt="Industry Connections" className="w-12 h-12" />
     ),
     title: "Industry Connections",
     bgColor: "bg-yellow-500",
@@ -52,9 +38,7 @@ const features = [
   },
   {
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-      </svg>
+          <img src="/INDUSTRYCONNECTIONS.svg" alt="Industry Connections" className="w-12 h-12" />
     ),
     title: "Competition Excellence",
     bgColor: "bg-pink-500",
@@ -76,7 +60,7 @@ function FeatureCard({ feature, index, isExpanded }) {
       {/* Header with Icon and Title */}
       <div className="flex items-center gap-4 mb-4">
         <div
-          className={`${feature.bgColor} rounded-lg p-3 text-white flex-shrink-0`}
+          className={` text-white flex-shrink-0`}
         >
           {feature.icon}
         </div>

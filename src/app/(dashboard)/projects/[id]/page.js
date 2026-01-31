@@ -413,7 +413,7 @@ export default function ProjectDetailsPage() {
                     <div key={index} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0">
                       <motion.div
                         whileHover={{ scale: 1.05 }}
-                        className="relative aspect-video rounded-xl overflow-hidden shadow-lg group cursor-pointer"
+                        className="relative aspect-video  overflow-hidden  group cursor-pointer"
                       >
                         <img
                           src={image}

@@ -28,8 +28,8 @@ export function middleware(request) {
     return NextResponse.next();
   }
   
-  // For admin routes, we'll handle auth in client-side middleware
-  // This is because we need to check localStorage which isn't available in server middleware
+  // For protected routes (admin, tests), we'll handle auth in client-side AuthContext
+  // This is because we need to check localStorage and user roles which aren't available in server middleware
   return NextResponse.next();
 }
 

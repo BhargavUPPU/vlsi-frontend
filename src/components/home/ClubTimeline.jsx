@@ -336,15 +336,15 @@ export default function ClubTimeline() {
                               <div className="mb-4 sm:mb-6">
                                 <div
                                   className="relative w-full h-48 sm:h-56 rounded-lg overflow-hidden cursor-pointer group"
-                                  onClick={() => {
-                                    console.log(
-                                      "Opening lightbox for milestone:",
-                                      milestone.id,
-                                      imageUrl,
-                                    );
-                                    setLightboxImage(imageUrl);
-                                    setImageError(false);
-                                  }}
+                                  // onClick={() => {
+                                  //   console.log(
+                                  //     "Opening lightbox for milestone:",
+                                  //     milestone.id,
+                                  //     imageUrl,
+                                  //   );
+                                  //   setLightboxImage(imageUrl);
+                                  //   setImageError(false);
+                                  // }}
                                 >
                                   <img
                                     src={imageUrl}
@@ -371,14 +371,14 @@ export default function ClubTimeline() {
                                     }}
                                   />
                                   {/* Overlay with camera icon */}
-                                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                  {/* <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                                     <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                       <Camera
                                         size={20}
                                         className="text-gray-700"
                                       />
                                     </div>
-                                  </div>
+                                  </div> */}
                                 </div>
                               </div>
                             )}

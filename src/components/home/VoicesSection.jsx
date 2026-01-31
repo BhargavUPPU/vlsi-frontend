@@ -56,7 +56,7 @@ export default function VoicesSection() {
 
   return (
     <section className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w- mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -74,7 +74,7 @@ export default function VoicesSection() {
               return (
                 <div
                   key={voice.id}
-                  className="min-w-0 w-full max-w-7xl flex-shrink-0 relative overflow-hidden rounded-2xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 m-2"
+                  className="min-w-0 w-full max-w-full flex-shrink-0 relative overflow-hidden p-4"
                 >
                   {/* Image Container */}
                   <div className="relative w-full h-96 flex items-center justify-center">

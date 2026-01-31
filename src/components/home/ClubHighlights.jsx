@@ -24,26 +24,8 @@ export default function ClubHighlights() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  // Fetch events with caching
-  const { data: events } = useQuery({
-    queryKey: ["public-events"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.EVENTS.GET_ALL),
-    staleTime: 5 * 60 * 1000,
-    cacheTime: 15 * 60 * 1000,
-    refetchOnWindowFocus: false,
-  });
-
-  // Fetch projects with caching
-  const { data: projects } = useQuery({
-    queryKey: ["public-projects"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.PROJECTS.GET_ALL),
-    staleTime: 5 * 60 * 1000,
-    cacheTime: 15 * 60 * 1000,
-    refetchOnWindowFocus: false,
-  });
-
   // Fetch photo gallery items for club highlights with caching
-  const { data: photoGalleries } = useQuery({
+  const { data: photoGalleries, error: photoGalleriesError } = useQuery({
     queryKey: ["photo-gallery-highlights"],
     queryFn: async () => {
       // Fetch galleries with CLUB_HIGHLIGHTS or BOTH category
@@ -63,12 +45,15 @@ export default function ClubHighlights() {
   // Memoize processed images to avoid recalculation
   const images = useMemo(() => {
     return combineHighlightImages(
-      events?.data || [],
-      projects?.data || [],
+      [],
+      [],
       photoGalleries || [],
       12,
     );
-  }, [events?.data, projects?.data, photoGalleries]);
+  }, [photoGalleries]);
+
+  // Check for errors
+  const hasError = photoGalleriesError;
 
   // Carousel navigation
   const scrollPrev = useCallback(
@@ -132,7 +117,11 @@ export default function ClubHighlights() {
           variants={fadeIn}
           className="relative"
         >
-          {images.length > 0 ? (
+          {hasError ? (
+            <div className="text-center py-20 text-red-500">
+              <p>Failed to load highlights. Please try again later.</p>
+            </div>
+          ) : images.length > 0 ? (
             <>
               {/* Carousel Viewport */}
               <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
@@ -200,7 +189,7 @@ export default function ClubHighlights() {
             </>
           ) : (
             <div className="text-center py-20 text-gray-500">
-              <p>Loading highlights...</p>
+              <p>No highlights available at the moment.</p>
             </div>
           )}
         </motion.div>

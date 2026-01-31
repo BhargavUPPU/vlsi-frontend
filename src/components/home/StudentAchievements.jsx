@@ -26,9 +26,9 @@ const achievements = [
     href:"/achievements"
   },
   {
-    title: "Silicon Chronicles",
+    title: "Photo Gallery",
     description:
-      "Our official VLSI club magazine, capturing breakthrough projects, student achievements, industry insights, and the inspiring success stories of chip design and electronics.",
+      "Moments from the VLSI Club, capturing innovation, collaboration, and hands-on excellence in chip design and electronics",
     image: "/student_achievements_3.png", // Placeholder for magazine image
     href:"/photogallery"
   },
@@ -117,7 +117,7 @@ export default function StudentAchievements() {
 
               {/* Know More Button */}
               <div className="mt-auto text-center">
-                <button className="inline-flex items-center gap-1 text-blue-600 font-medium hover:text-blue-700 transition-colors text-sm sm:text-base"  onClick={()=>{router.push(achievement.href)}}>
+                <button className="inline-flex items-center gap-1 text-blue-600 font-medium hover:text-blue-700 transition-colors text-sm sm:text-base hover:cursor-pointer"  onClick={()=>{router.push(achievement.href)}}>
                   Know more
                   <ChevronRight size={16} />
                 </button>

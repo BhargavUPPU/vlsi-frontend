@@ -69,13 +69,13 @@ export default function SemiconductorEmployers() {
             >
               <div className="text-center">
                 {/* Company logo using Next.js Image */}
-                <div className="w-20 h-20 mx-auto mb-2 rounded-lg bg-white flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden border border-gray-200">
+                <div className="w-30h-30 mx-auto mb-2 rounded-lg bg-white flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden border border-gray-200">
                   <Image
                     src={employer.logo}
                     alt={employer.name + " logo"}
-                    width={64}
-                    height={64}
-                    className="object-contain w-16 h-16"
+                    width={96}
+                    height={96}
+                    className="object-contain w-24 h-24"
                     sizes="(max-width: 768px) 40vw, 64px"
                   />
                 </div>

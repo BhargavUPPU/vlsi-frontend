@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   LayoutDashboard,
@@ -23,6 +23,7 @@ import {
   UserCog,
   UserPlus,
   ChevronDown,
+  User,
 } from "lucide-react";
 
 import {
@@ -35,9 +36,15 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetFooter } from "@/components/ui/sheet";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
+// Production-level menu configuration
 const menuItems = [
   {
     title: "Dashboard",
@@ -45,50 +52,56 @@ const menuItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "Club Management",
+    title: "User Management",
     icon: Users,
     items: [
       {
         title: "Club Members",
         url: "/admin/clubMembers",
         icon: Users,
-        description: "Manage all club members",
+        description: "View and manage all club members",
       },
       {
         title: "Core Members",
         url: "/admin/clubMembers/coreMembers",
         icon: UserCog,
-        description: "Manage core team members",
+        description: "Manage core team members and leadership",
+      },
+      {
+        title: "Create User",
+        url: "/admin/signup",
+        icon: UserPlus,
+        description: "Create new user accounts",
       },
     ],
   },
   {
-    title: "Content",
+    title: "Content Management",
     icon: FileText,
     items: [
       {
         title: "Events",
         url: "/admin/events",
         icon: Calendar,
-        description: "Manage club events",
+        description: "Organize and manage club events",
       },
       {
         title: "Projects",
         url: "/admin/projects",
         icon: FolderOpen,
-        description: "Manage club projects",
+        description: "Showcase and manage club projects",
       },
       {
         title: "Milestones",
         url: "/admin/milestones",
         icon: Clock,
-        description: "Manage club milestones",
+        description: "Track and manage club achievements",
       },
       {
-        title: "Gallery",
+        title: "Photo Gallery",
         url: "/admin/team-photos",
         icon: Camera,
-        description: "Manage photo gallery",
+        description: "Manage photo gallery and media",
       },
     ],
   },
@@ -97,28 +110,28 @@ const menuItems = [
     icon: BookOpen,
     items: [
       {
-        title: "Text Books",
+        title: "Textbooks",
         url: "/admin/textBooks",
         icon: BookOpen,
-        description: "Manage textbooks",
+        description: "Manage academic textbooks library",
       },
       {
         title: "VLSI Materials",
         url: "/admin/vlsiMaterials",
         icon: Cpu,
-        description: "Manage VLSI materials",
+        description: "Specialized VLSI learning materials",
       },
       {
         title: "NPTEL Lectures",
         url: "/admin/nptelLectures",
         icon: FileText,
-        description: "Manage NPTEL lectures",
+        description: "Curated NPTEL lecture collection",
       },
       {
         title: "Question Bank",
         url: "/admin/questionBank",
         icon: FileText,
-        description: "Manage question bank",
+        description: "Comprehensive question repository",
       },
     ],
   },
@@ -130,19 +143,19 @@ const menuItems = [
         title: "GATE PYQs",
         url: "/admin/gatePyqs",
         icon: FileText,
-        description: "Manage GATE previous year questions",
+        description: "GATE previous year questions archive",
       },
       {
         title: "Placement Prep",
         url: "/admin/placementPrep",
         icon: GraduationCap,
-        description: "Manage placement preparation",
+        description: "Placement preparation resources",
       },
       {
-        title: "Tests",
+        title: "Tests & Quizzes",
         url: "/admin/test",
         icon: FileText,
-        description: "Manage tests",
+        description: "Create and manage assessments",
       },
     ],
   },
@@ -151,39 +164,34 @@ const menuItems = [
     icon: FileText,
     items: [
       {
-        title: "Magazine",
+        title: "Club Magazine",
         url: "/admin/magazine",
         icon: FileText,
-        description: "Manage club magazine",
+        description: "Manage club publications and articles",
       },
     ],
   },
   {
-    title: "System",
+    title: "System Settings",
     icon: Shield,
     items: [
       {
         title: "Notifications",
         url: "/admin/runningNotifications",
         icon: Bell,
-        description: "Manage notifications",
+        description: "Manage system-wide notifications",
       },
       {
         title: "Student Roles",
         url: "/admin/StudentRole",
         icon: UserCog,
-        description: "Manage student roles",
-      },
-      {
-        title: "Sign Up Requests",
-        url: "/admin/signup",
-        icon: UserPlus,
-        description: "Manage signup requests",
+        description: "Configure student role permissions",
       },
     ],
   },
 ];
 
+// Enhanced ListItem component for better navigation
 const ListItem = React.forwardRef(
   ({ className, title, children, icon: Icon, href, ...props }, ref) => {
     const pathname = usePathname();
@@ -192,27 +200,36 @@ const ListItem = React.forwardRef(
     return (
       <li>
         <NavigationMenuLink asChild>
-          <div
+          <Link
             ref={ref}
+            href={href}
             className={cn(
-              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-              isActive && "bg-accent text-accent-foreground font-medium",
+              "group block select-none space-y-1 rounded-lg p-4 leading-none no-underline outline-none transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:shadow-sm",
+              isActive && "bg-accent text-accent-foreground font-semibold shadow-sm ring-1 ring-accent",
               className,
             )}
             {...props}
           >
-            <Link href={href}>
-              <div className="flex items-center gap-2">
-                {Icon && <Icon className="h-4 w-4" />}
+            <div className="flex items-center gap-3">
+              {Icon && (
+                <div className={cn(
+                  "flex h-8 w-8 items-center justify-center rounded-md bg-muted transition-colors",
+                  isActive && "bg-primary text-primary-foreground",
+                  "group-hover:bg-primary group-hover:text-primary-foreground"
+                )}>
+                  <Icon className="h-4 w-4" />
+                </div>
+              )}
+              <div className="space-y-1">
                 <div className="text-sm font-medium leading-none">{title}</div>
+                {children && (
+                  <div className="line-clamp-2 text-xs leading-snug text-muted-foreground">
+                    {children}
+                  </div>
+                )}
               </div>
-            </Link>
-            {children && (
-              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                {children}
-              </p>
-            )}
-          </div>
+            </div>
+          </Link>
         </NavigationMenuLink>
       </li>
     );
@@ -220,186 +237,193 @@ const ListItem = React.forwardRef(
 );
 ListItem.displayName = "ListItem";
 
-function DesktopNav() {
-  const pathname = usePathname();
-
-  return (
-    <NavigationMenu className="hidden lg:flex">
-      <NavigationMenuList>
-        {menuItems.map((item) => {
-          if (!item.items) {
-            const isActive = pathname === item.url;
-            return (
-              <NavigationMenuItem key={item.title}>
-                <NavigationMenuLink
-                  asChild
-                  className={cn(
-                    navigationMenuTriggerStyle(),
-                    isActive && "bg-accent text-accent-foreground font-medium",
-                  )}
-                >
-                  <Link href={item.url}>
-                    <item.icon className="h-4 w-4 mr-2" />
-                    {item.title}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            );
-          }
-
-          return (
-            <NavigationMenuItem key={item.title}>
-              <NavigationMenuTrigger>
-                <item.icon className="h-4 w-4 mr-2" />
-                {item.title}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  {item.items.map((subItem) => (
-                    <ListItem
-                      key={subItem.title}
-                      title={subItem.title}
-                      href={subItem.url}
-                      icon={subItem.icon}
-                    >
-                      {subItem.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          );
-        })}
-      </NavigationMenuList>
-    </NavigationMenu>
-  );
-}
-
-function MobileNav() {
+// Unified Navigation Sheet for all devices
+function NavigationSheet() {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
+  const { user, logout, isAdmin, isSuperAdmin } = useAuth();
+  
+  const handleLogout = async () => {
+    try {
+      toast.loading("Signing out...");
+      await logout();
+      toast.success("Successfully signed out");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Failed to sign out. Please try again.");
+    }
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild className="lg:hidden">
-        <Button variant="ghost" size="icon" className="h-9 w-9">
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 hover:bg-accent hover:text-accent-foreground transition-colors"
+        >
           <Menu className="h-5 w-5" />
-          <span className="sr-only">Toggle menu</span>
+          <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent
-        side="left"
-        className="w-[300px] sm:w-[400px] overflow-y-auto"
-      >
-        <nav className="flex flex-col gap-4 mt-8">
-          {menuItems.map((item) => {
-            if (!item.items) {
-              const isActive = pathname === item.url;
-              return (
-                <Link
-                  key={item.title}
-                  href={item.url}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
-                    isActive && "bg-accent text-accent-foreground",
-                  )}
-                >
-                  <item.icon className="h-5 w-5" />
-                  {item.title}
-                </Link>
-              );
-            }
+      <SheetContent side="right" className="w-[320px] sm:w-95 overflow-y-auto p-0">
+        <VisuallyHidden>
+          <SheetTitle>Admin Navigation Menu</SheetTitle>
+        </VisuallyHidden>
 
-            return (
-              <div key={item.title} className="space-y-2">
-                <div className="flex items-center gap-3 px-3 py-2 text-sm font-semibold text-muted-foreground">
-                  <item.icon className="h-5 w-5" />
-                  {item.title}
-                </div>
-                <div className="ml-6 space-y-1">
-                  {item.items.map((subItem) => {
-                    const isActive = pathname === subItem.url;
-                    return (
-                      <Link
-                        key={subItem.title}
-                        href={subItem.url}
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
-                          isActive &&
-                            "bg-accent text-accent-foreground font-medium",
-                        )}
-                      >
-                        {subItem.icon && <subItem.icon className="h-4 w-4" />}
-                        {subItem.title}
-                      </Link>
-                    );
-                  })}
-                </div>
+        <div className="flex h-full flex-col">
+          <div className="border-b bg-muted/50 px-6 py-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-18 w-18 items-center justify-center rounded-lg bg-white shadow-md">
+                <Image
+                               src="/logo.png"
+                               alt="VLSID Logo"
+                               width={48}
+                               height={48}
+                               className="w-16 h-16 object-contain"
+                             />
               </div>
-            );
-          })}
-        </nav>
+              <div>
+                <p className="font-semibold text-sm">VLSI Admin Panel</p>
+                <p className="text-xs text-muted-foreground">GVPCE(A)</p>
+              </div>
+            </div>
+          </div>
+
+          <nav className="flex-1 px-4 py-6 space-y-2">
+            {menuItems.map((item) => {
+              if (!item.items) {
+                const isActive = pathname === item.url;
+                return (
+                  <Link
+                    key={item.title}
+                    href={item.url}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground",
+                      isActive && "bg-accent text-accent-foreground shadow-sm font-semibold"
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "flex h-8 w-8 items-center justify-center rounded-md bg-muted transition-colors",
+                        isActive && "bg-primary text-primary-foreground"
+                      )}
+                    >
+                      <item.icon className="h-4 w-4" />
+                    </div>
+                    {item.title}
+                  </Link>
+                );
+              }
+
+              return (
+                <div key={item.title} className="space-y-2">
+                  <div className="flex items-center gap-3 px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <item.icon className="h-4 w-4" />
+                    {item.title}
+                  </div>
+                  <div className="ml-6 space-y-1 border-l border-muted pl-4">
+                    {item.items.map((subItem) => {
+                      const isActive = pathname === subItem.url;
+                      return (
+                        <Link
+                          key={subItem.title}
+                          href={subItem.url}
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 hover:bg-accent hover:text-accent-foreground",
+                            isActive && "bg-accent text-accent-foreground font-semibold shadow-sm"
+                          )}
+                        >
+                          {subItem.icon && (
+                            <div
+                              className={cn(
+                                "flex h-6 w-6 items-center justify-center rounded bg-muted transition-colors",
+                                isActive && "bg-primary text-primary-foreground"
+                              )}
+                            >
+                              <subItem.icon className="h-3 w-3" />
+                            </div>
+                          )}
+                          <div>
+                            <div className="font-medium">{subItem.title}</div>
+                            <div className="text-xs text-muted-foreground line-clamp-1">
+                              {subItem.description}
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </nav>
+        </div>
       </SheetContent>
     </Sheet>
   );
 }
 
+// Production-optimized Admin Navbar
 export default function AdminNavbar() {
-  const { logout } = useAuth();
+  const { user, logout, isAdmin, isSuperAdmin } = useAuth();
+  const router = useRouter();
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
-  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 shadow-lg ring-2 ring-blue-200">
-            <Cpu className="h-6 w-6 text-white" />
-          </div>
-          <div className="hidden sm:block">
-            <span className="block font-bold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              VLSI Admin
-            </span>
-            <span className="block text-xs text-muted-foreground font-medium">
-              GVPCE(A)
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <DesktopNav />
-
-        {/* Right Side Actions */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleLogout}
-            className="hidden sm:flex hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400"
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
+      <div className="flex h-26 items-center justify-between px-4 lg:px-6">
+        <div className="flex items-center gap-3">  
+          <Link 
+            href="/" 
+            className="flex items-center gap-3 transition-all duration-200 hover:opacity-80"
           >
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleLogout}
-            className="sm:hidden hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400"
-          >
-            <LogOut className="h-4 w-4" />
-          </Button>
+            <div className="relative flex h-18 w-18 items-center justify-center rounded-xl bg-white shadow-lg ring-2 ring-blue-100 dark:ring-blue-900/20 transition-all duration-200 hover:shadow-xl hover:scale-105">
+                <Image
+                               src="/logo.png"
+                               alt="VLSID Logo"
+                               width={48}
+                               height={48}
+                               className="w-16 h-16 object-contain"
+                             />
+              <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-green-500 ring-2 ring-background animate-pulse" />
+            </div>
+            <div className="hidden sm:block">
+              <span className="block font-bold text-base tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                VLSI Admin
+              </span>
+              <span className="block text-xs text-muted-foreground font-medium">
+                GVPCE(A) • Management
+              </span>
+            </div>
+          </Link>
+        </div>
 
-          {/* Mobile Menu */}
-          <MobileNav />
+        <div className="flex items-center gap-3 shrink-0">
+          {user && (
+            <div className="hidden md:flex items-center gap-3 rounded-lg bg-muted/50 px-3 py-2 border border-border/50">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white text-xs font-semibold ring-2 ring-background">
+                {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-green-500 ring-1 ring-background" />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-medium leading-none">{user.name}</p>
+                <div className="flex items-center gap-1 mt-1">
+                  <Badge 
+                    variant={user.role === 'SUPERADMIN' ? 'default' : 'secondary'} 
+                    className="text-xs h-4 px-1.5 font-medium"
+                  >
+                    {user.role}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <Separator orientation="vertical" className="h-6 hidden md:block" />
+            <NavigationSheet />
         </div>
       </div>
     </header>

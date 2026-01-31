@@ -1,0 +1,182 @@
+/* Production-level styles for VLSI Flowchart */
+
+.vlsi-flowchart {
+  /* Smooth transitions for all interactions */
+  transition: all 0.2s ease-in-out;
+}
+
+.react-flow-dark .react-flow__node {
+  /* Enhanced node shadows and interactions */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: all 0.2s ease-in-out;
+}
+
+.react-flow-dark .react-flow__node:hover {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+  transform: scale(1.02);
+}
+
+.react-flow-dark .react-flow__node.selected {
+  filter: drop-shadow(0 0 0 2px #3B82F6) drop-shadow(0 6px 12px rgba(59, 130, 246, 0.3));
+}
+
+.react-flow-dark .react-flow__edge {
+  /* Enhanced edge visibility with strong contrast */
+  transition: all 0.2s ease-in-out;
+  opacity: 1 !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.react-flow-dark .react-flow__edge:hover {
+  stroke-width: 4 !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+}
+
+.react-flow-dark .react-flow__edge.animated {
+  stroke-dasharray: 0 !important;
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+.react-flow-dark .react-flow__edge-path {
+  /* Ensure edge paths are always visible with strong contrast */
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  stroke: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+/* Enhanced arrow markers for better visibility */
+.react-flow__arrowhead {
+  fill: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+  stroke-width: 1;
+  opacity: 1 !important;
+}
+
+/* Remove any edge labels that might interfere */
+.react-flow__edge-text {
+  display: none;
+}
+
+@keyframes dashdraw {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Control panel enhancements */
+.react-flow__controls {
+  background: rgba(55, 65, 81, 0.95) !important;
+  border: 1px solid rgba(75, 85, 99, 0.6) !important;
+  border-radius: 0.5rem !important;
+  backdrop-filter: blur(8px);
+}
+
+.react-flow__controls button {
+  background: rgba(75, 85, 99, 0.8) !important;
+  border: 1px solid rgba(107, 114, 128, 0.6) !important;
+  color: white !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.react-flow__controls button:hover {
+  background: rgba(107, 114, 128, 0.9) !important;
+  transform: scale(1.05);
+}
+
+/* MiniMap enhancements */
+.react-flow__minimap {
+  background: rgba(31, 41, 55, 0.95) !important;
+  border: 1px solid rgba(75, 85, 99, 0.6) !important;
+  border-radius: 0.5rem !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Loading animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  }
+}
+
+.loading-node {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .vlsi-flowchart {
+    height: 600px !important;
+  }
+  
+  .vlsi-flowchart header h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  .vlsi-flowchart .react-flow__controls {
+    scale: 0.8;
+  }
+  
+  .vlsi-flowchart .react-flow__minimap {
+    width: 120px !important;
+    height: 80px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .vlsi-flowchart {
+    padding: 1rem !important;
+    height: 500px !important;
+  }
+  
+  .vlsi-flowchart .react-flow__controls {
+    scale: 0.7;
+  }
+}
+
+/* Accessibility improvements */
+.react-flow__node:focus {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .react-flow-dark .react-flow__node {
+    border: 2px solid white !important;
+  }
+  
+  .react-flow-dark .react-flow__edge {
+    stroke-width: 3px !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .react-flow-dark .react-flow__node,
+  .react-flow-dark .react-flow__edge,
+  .react-flow__controls button {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .vlsi-flowchart {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .react-flow__controls,
+  .react-flow__minimap {
+    display: none !important;
+  }
+}

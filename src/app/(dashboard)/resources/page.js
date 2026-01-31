@@ -12,6 +12,7 @@ import {
   Download,
   ExternalLink,
   GraduationCap,
+
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
@@ -131,36 +132,68 @@ export default function ResourcesPage() {
         className="w-full h-64 md:h-96 "
       />
       {/* Quick Access Cards */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          <Link
-            href="/resources/roadmap"
-            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block"
-          >
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-              <BookOpen className="w-6 h-6 text-blue-600" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">VLSI RoadMap</h3>
-            <p className="text-gray-600 text-sm">
-              Comprehensive guide to VLSI design and development
-            </p>
-          </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <Link
+          href="/resources/roadmap"
+          className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+            >
+          <Image
+            src="/Resource1.jpg"
+            alt="VLSI RoadMap Background"
+            fill
+            className="object-cover opacity-100 absolute inset-0 pointer-events-none"
+          />
+          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
+            <BookOpen className="w-6 h-6 text-blue-600" />
+          </div>
+          <h3 className="text-lg  text-white font-semibold mb-2 relative z-10">VLSI RoadMap</h3>
+          <p className="text-white text-sm relative z-10">
+            Comprehensive guide to VLSI design and development
+          </p>
+            </Link>
 
-          <Link
-            href="/resources/softwaretools"
-            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block"
-          >
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-              <Video className="w-6 h-6 text-purple-600" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">VLSI TOOLS</h3>
-            <p className="text-gray-600 text-sm">
-              Industry-standard design and simulation tools
-            </p>
-          </Link>
+            <Link
+          href="/resources/softwaretools"
+          className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+            >
+          <Image
+            src="/Resource2.png"
+            alt="VLSI Tools Background"
+            fill
+            className="object-cover opacity-100 absolute inset-0 pointer-events-none"
+          />
+          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
+            <Video className="w-6 h-6 text-purple-600" />
+          </div>
+          <h3 className="text-lg text-white font-semibold mb-2 relative z-10">VLSI TOOLS</h3>
+          <p className="text-white text-sm relative z-10">
+            Industry-standard design and simulation tools
+          </p>
+            </Link>
+            <Link
+          href="https://drive.google.com/drive/folders/1Msf9FVMu2H0qN3IbELHT1YiYDrSlLWI_?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+            >
+          <Image
+            src="/Resource2.png"
+            alt="Placement Preparation Background"
+            fill
+            className="object-cover opacity-100 absolute inset-0 pointer-events-none"
+          />
+          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
+            <GraduationCap className="w-6 h-6 text-purple-600" />
+          </div>
+          <h3 className="text-lg text-white font-semibold mb-2 relative z-10">Placement Preparation</h3>
+          <p className="text-white text-sm relative z-10">
+            Resources to ace your VLSI placements
+          </p>
+            </Link>
+          </div>
         </div>
-      </div>
-      {/* Resources Section */}
+        {/* Resources Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Resources</h2>

@@ -5,10 +5,12 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
+  console.log("Current User in Navbar:", user);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -28,7 +30,14 @@ export default function Navbar() {
     <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-200">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
+               <Image
+                              src="/logo.png"
+                              alt="VLSID Logo"
+                              width={48}
+                              height={48}
+                              className="w-10 h-10 object-contain"
+                            />
             <Link href="/" className="flex items-center">
               <span className="text-xl font-bold ">VLSI</span>
               <span className="text-xl font-bold text-indigo-600">D</span>
@@ -63,6 +72,14 @@ export default function Navbar() {
                     <User size={16} />
                     <span className="text-sm font-medium">{user.name}</span>
                   </div>
+                  {user.role === "ADMIN" || user.role === "SUPERADMIN" ? (
+                    <Link
+                      href="/admin"
+                      className="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-1.5 rounded-md text-sm font-medium transition"
+                    >
+                      ADMIN Login
+                    </Link>
+                  ) : null}
                   <button
                     onClick={logout}
                     className="bg-red-600 text-white hover:bg-red-700 px-4 py-1.5 rounded-md text-sm font-medium transition inline-flex items-center gap-2"
@@ -147,16 +164,9 @@ export default function Navbar() {
                   <Link
                     href="/auth/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md"
-                  >
-                    Student Login
-                  </Link>
-                  <Link
-                    href="/admin/login"
-                    onClick={() => setMobileMenuOpen(false)}
                     className="block px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md"
                   >
-                    ADMIN Login
+                    Login
                   </Link>
                 </>
               )}

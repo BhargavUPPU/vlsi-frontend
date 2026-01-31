@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, ChevronUp, Eye, Briefcase } from "lucide-react";
+import { ChevronDown, ChevronUp, Eye, Briefcase ,ArrowLeft} from "lucide-react";
+import Link from "next/link";
 
 const AboutUs = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -46,6 +47,21 @@ const AboutUs = () => {
       description:
         "Foster comprehensive understanding of VLSI design methodologies and industry best practices among students and enthusiasts.",
       icon: "📚",
+    },
+  ];
+
+    const founders = [
+    {
+      name: "Pragada Sai Manohar",
+      role: "WEB DEVELOPER",
+      roll_number: "19131A04J4",
+      image: "/Sai_Manohar.jpg",
+    },
+    {
+      name: "Pujari Thrinadh Sai",
+      role: "WEB DESIGNER",
+      roll_number: "19131A04J5",
+      image: "/Trinadh.jpg",
     },
   ];
 
@@ -114,11 +130,19 @@ const AboutUs = () => {
   
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="max-w-full min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Header Section */}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* About VLSID Club Section */}
-        <div className="mb-16">
+          <Link
+                  href="/"
+                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-6"
+                >
+                  <ArrowLeft size={20} />
+                  <span>Home</span>
+                </Link>
+        <div className="mb-16 max-w-7xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-12 text-center">
             About <span className="text-[#2563eb]">VLSID</span> Club
           </h1>
@@ -139,20 +163,11 @@ const AboutUs = () => {
             <div className="lg:col-span-2 space-y-4">
               <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
                 <p className="text-gray-700 text-justify leading-relaxed">
-                  The VLSID (Very Large Scale Integration Design) Club is a
-                  vibrant community of students passionate about semiconductor
-                  technology and chip design. The VLSID Club was formed on
-                  January 5, 2023, with a vision to create a collaborative
-                  platform for students interested in VLSI and IC design. The
-                  founding members, led by Deepank Maralwar and Trinath from the
-                  2019-2023 batch, presented a paper at prestigious VLSI
-                  conferences. Inspired by their efforts, our respected HOD
-                  encouraged them to build a community that would continue this
-                  spirit of innovation and ensure such contributions would not
-                  end with a single batch.
+                 The VLSID (VLSI Design) Club is a student-driven technical community committed to exploring and advancing the field of VLSI and semiconductor technology. Under the guidance of experienced faculty, the club aims to bridge the gap between academic learning and industry expectations by providing a strong foundation in both core concepts and practical skills.The club promotes peer-to-peer learning and mentorship, enabling effective knowledge transfer from seniors to juniors through structured classes, hands-on training with industry-standard EDA tools, collaborative projects, and regular assessments. Through workshops, industrial talks, alumni interactions, and technical conferences, members gain exposure to real-world challenges, emerging technologies, and career opportunities in the semiconductor domain.By encouraging innovation, teamwork, and continuous learning, the VLSID Club nurtures technically competent and industry-ready engineers, empowering students to design and shape the future of silicon technology.
+Think Silicon. Design the Future.
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
+              {/* <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
                 <p className="text-gray-700 text-justify leading-relaxed">
                   Along with their batchmates, they laid the foundation of what
                   became the VLSID Club. Today, the VLSID Club stands as a
@@ -164,13 +179,13 @@ const AboutUs = () => {
                   technologies, share knowledge, and contribute to the
                   semiconductor industry.
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
 
         {/* Vision and Mission Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className=" max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {/* Vision */}
           <div className="bg-white rounded-xl p-8 shadow-lg border-t-4 border-[#2563eb] transform transition-all hover:shadow-xl hover:scale-105">
             <div className="flex items-center mb-6">
@@ -180,10 +195,7 @@ const AboutUs = () => {
               <h2 className="text-3xl font-bold text-gray-800">Vision</h2>
             </div>
             <p className="text-gray-700 leading-relaxed text-justify">
-              To create a community of innovative and skilled individuals who
-              are passionate about VLSI and semiconductor technology, empowering
-              them to become future leaders in chip design and hardware
-              innovation.
+             To create a community of innovative and skilled individuals who are passionate about VLSI and semiconductor technology, empowering them to become future leaders in chip design and hardware innovation
             </p>
           </div>
 
@@ -196,10 +208,7 @@ const AboutUs = () => {
               <h2 className="text-3xl font-bold text-gray-800">Mission</h2>
             </div>
             <p className="text-gray-700 leading-relaxed text-justify">
-              To provide hands-on learning opportunities in VLSI design,
-              verification, and fabrication through workshops, projects, and
-              competitions. Foster industry collaboration and prepare students
-              for successful careers in semiconductor technology.
+              To provide hands-on learning opportunities in VLSI design, verification, and fabrication through workshops, projects, and competitions.
             </p>
           </div>
         </div>
@@ -234,18 +243,12 @@ const AboutUs = () => {
               </div>
 
               {/* Faculty Details */}
-              <div className="md:w-2/3 p-8 bg-white">
-                <div className="prose prose-sm max-w-none">
-                  <p className="text-gray-700 leading-relaxed text-justify">
-                    Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID
-                    Club, is an accomplished academician and researcher in the
-                    field of Electronics and Communication Engineering with a
-                    PhD in Approximate Computing. With 12 years of teaching, 4
-                    years of research, and 3 years of industry experience, he
-                    has guided students towards excellence in Electronics and
-                    Communication Engineering.
+              <div className="md:w-2/3 p-4 bg-white">
+                <div className=" max-w-none">
+                  <p className="text-gray-700  text-xl leading-relaxed ">
+                  Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID Club,  holds a Ph.D. in ECE from NIT Rourkela, M.Tech. in Digital Systems from NIT Allahabad, and B.E. in ECE from Sir C.R. Reddy College, Eluru. With 18 years of experience - including 11 years in teaching, 4 years in research, and 3 years in industry - his expertise spans VLSI Design, Hardware Accelerators, and Approximate Computing. He has 13 international journal papers, 6 conference papers, 2 patents, and a book chapter with CRC Press. He has guided 8 M.Tech dissertations and currently supervises 2 Ph.D. scholars, consistently inspiring innovation and excellence in VLSI education and research.
                   </p>
-                  <p className="text-gray-700 leading-relaxed text-justify mt-4">
+                  {/* <p className="text-gray-700 leading-relaxed text-justify mt-4">
                     Dr. Rao has earned his M.Tech in VLSI System Design and
                     Embedded Systems from NIT Allahabad, and B.E in ECE from Sir
                     C.R. Reddy College of Engineering, Eluru. His research
@@ -253,7 +256,7 @@ const AboutUs = () => {
                     international conference papers, 3 patents published, and 1
                     book chapter. He has successfully guided 6 M.Tech.
                     dissertations and is currently supervising 2 Ph.D. scholars.
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
@@ -262,29 +265,100 @@ const AboutUs = () => {
 
         {/* Our Objectives Section */}
         <div className="mb-16">
-          <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800">
-            Our Objectives
+          <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800 flex items-center justify-center gap-2">
+            <span role="img" aria-label="Objectives">📋</span> Our Objectives
           </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {objectives.map((objective, index) => (
-              <div
-                key={index}
-                className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-xl transition-all duration-300 hover:border-[#2563eb] transform hover:-translate-y-1"
-              >
-                <div className="flex items-start mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl flex items-center justify-center mr-4 text-3xl shadow-sm">
-                    {objective.icon}
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800 flex-1">
-                    {objective.title}
-                  </h3>
-                </div>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {objective.description}
-                </p>
+            {/* 1 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">1</span>
+                <span className="font-bold text-gray-800">Knowledge Transfer from Seniors to Juniors</span>
               </div>
-            ))}
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Organizing Classes for 2nd-Year Students</li>
+                <li>Providing Training to 3rd-Year Students</li>
+                <li>Conducting Mock-Tests</li>
+              </ul>
+            </div>
+            {/* 2 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">2</span>
+                <span className="font-bold text-gray-800">Updating and Practicing Question Banks</span>
+              </div>
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Collecting and Organizing Questions</li>
+                <li>Practicing Questions</li>
+              </ul>
+            </div>
+            {/* 3 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">3</span>
+                <span className="font-bold text-gray-800">Interacting with Alumni</span>
+              </div>
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Networking Opportunities</li>
+                <li>Career Advice</li>
+              </ul>
+            </div>
+            {/* 4 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">4</span>
+                <span className="font-bold text-gray-800">Conducting Industrial Talks</span>
+              </div>
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Expert Talks</li>
+                <li>Industry Insights</li>
+              </ul>
+            </div>
+            {/* 5 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">5</span>
+                <span className="font-bold text-gray-800">Including Juniors in Senior's Projects</span>
+              </div>
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Project Participation</li>
+                <li>Mentorship</li>
+              </ul>
+            </div>
+            {/* 6 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">6</span>
+                <span className="font-bold text-gray-800">Attending or Applying for Workshops in IITs/NITs</span>
+              </div>
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Workshop Participation</li>
+                <li>Application Support</li>
+              </ul>
+            </div>
+            {/* 7 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">7</span>
+                <span className="font-bold text-gray-800">Conducting Conferences</span>
+              </div>
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Student Presentations</li>
+                <li>Industry Insights</li>
+              </ul>
+            </div>
+            {/* 8 */}
+            <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col shadow-sm">
+              <div className="flex items-center mb-2">
+                <span className="w-8 h-8 bg-gray-100 rounded text-xl font-bold flex items-center justify-center mr-3 text-gray-400 border border-gray-300">8</span>
+                <span className="font-bold text-gray-800">Coordinating Juniors</span>
+              </div>
+              <ul className="list-disc pl-8 text-gray-700 text-sm mt-2 space-y-1">
+                <li>Bridge Communication & Foster Engagement</li>
+                <li>Promote Participation & Talent Development</li>
+                <li>Mentorship & Onboarding Support</li>
+              </ul>
+            </div>
           </div>
         </div>
         {/*Club Founders */}  
@@ -294,18 +368,19 @@ const AboutUs = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {developers.map((developer, index) => (
+            {founders.map((developer, index) => (
               <div
                 key={index}
                 className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center transform transition-all hover:shadow-xl hover:scale-105"
               >
-                <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-[#1e40af] to-[#3b82f6] rounded-full flex items-center justify-center shadow-lg">
+                <div className="flex items-center justify-center ">
                   <Image
                     src={developer.image}
                     alt={developer.name}
                     width={100}
                     height={100}
-                    className="w-24 h-24 object-contain"
+                    
+                    className=" object-cover rounded-full"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">

@@ -25,31 +25,26 @@ const TEAM_DESCRIPTIONS = {
   "Executive Team":
     "The strategic core of VLSID, responsible for vision, leadership, and overall club governance.",
   "Events Organising Team":
-    "The creative minds behind our workshops, webinars, and signature events, ensuring seamless execution.",
+    "Plans and manages logistics for workshops, webinars, and events, ensuring smooth and professional execution.",
   "Knowledge Transfer Team":
-    "Dedicated to bridging the gap between theory and practice through peer-to-peer learning and mentorship.",
+    "Conducts technical sessions, mentors juniors, and builds structured learning modules on VLSI concepts and tools.",
   "Question Bank & Resource Collection Team":
-    "Curating high-quality study materials, past papers, and technical resources for the community.",
+    "Curates academic resources, interview questions, tool manuals, and organizes them into a systematic repository.",
   "Alumni Interaction With Junior Team":
-    "Building strong bonds between current students and our successful alumni network for guidance and opportunities.",
+    "Connects with alumni, coordinates interactions, and facilitates sessions that help members learn from real industry experiences.",
   "Juniors Recruitment Team":
-    "Finding and onboarding the next generation of passionate VLSI enthusiasts to join our journey.",
+    "Identifies, evaluates, and recruits enthusiastic juniors while helping build a strong incoming talent pipeline.",
   "Juniors Coordinator Team":
-    "Mentoring and guiding our junior members as they transition into core roles within the club.",
+    "Guides junior members, supports their skill development, and ensures smooth participation in all club activities.",
   "Designing Team":
-    "The visual architects who craft our brand identity, social media graphics, and event aesthetics.",
+    "Creates posters, certificates, and visual content for events, ensuring clean and professional design output.",
   "Promotion & Insta Handling Team":
-    "Amplifying our voice across digital platforms and managing our vibrant social media presence.",
+    "Maintains the club’s digital presence, creates campaigns, and designs posts to represent the club creatively.",
   "Documentation Team":
-    "The record-keepers who preserve our legacy through detailed reports, blogs, and archival management.",
+    "Prepares event reports, maintains records, and supports all official communication and documentation.",
   "Web Handling Team":
-    "The technical wizards maintaining and enhancing our digital home and web-based tools.",
-  "Central Coordinating Team":
-    "The operational backbone that synchronizes different departments for unified progress.",
-  "Outreach Team":
-    "Expanding our horizons through collaborations and industry connect programs.",
-  "Translation & Data Handling Team":
-    "Specialized in multilingual content and efficient data management for club operations.",
+    "Updates and maintains the club website, publishes announcements, and ensures a professional online presence.",
+ 
 };
 
 export default function TeamPage() {
