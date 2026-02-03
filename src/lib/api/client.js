@@ -116,6 +116,7 @@ apiClient.interceptors.response.use(
             "/projects",
             "/resources",
             "/team",
+            "/club-members",
             "/photogallery",
             "/achievements",
             "/resources/roadmap",

@@ -37,38 +37,38 @@ const achievements = [
 export default function StudentAchievements() {
   const router=useRouter();
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-100 to-blue-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-100 to-blue-50">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={staggerContainer}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
           <motion.div
             variants={staggerItem}
-            className="flex items-center justify-center gap-2 mb-4"
+            className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4"
           >
-            <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">🏆</span>
+            <div className="w-7 sm:w-8 md:w-9 h-7 sm:h-8 md:h-9 bg-gray-800 rounded-full flex items-center justify-center">
+              <span className="text-white text-xs sm:text-sm font-bold">🏆</span>
             </div>
-            <span className="text-gray-600 font-medium">
+            <span className="text-gray-600 font-medium text-xs sm:text-sm md:text-base">
               Student Excellence
             </span>
           </motion.div>
 
           <motion.h2
             variants={staggerItem}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6"
           >
             Student Achievements
           </motion.h2>
 
           <motion.p
             variants={staggerItem}
-            className="text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            className="text-gray-600 max-w-3xl mx-auto leading-relaxed text-sm sm:text-base md:text-lg"
           >
             Celebrating the remarkable accomplishments of our talented students
             in VLSI design, research, and innovation across various competitions
@@ -82,7 +82,7 @@ export default function StudentAchievements() {
           whileInView="visible"
           viewport={defaultViewport}
           variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           {achievements.map((achievement, index) => (
             <motion.div

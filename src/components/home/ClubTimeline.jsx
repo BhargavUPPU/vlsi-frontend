@@ -165,25 +165,25 @@ export default function ClubTimeline() {
   );
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={staggerContainer}
-          className="text-center mb-8 sm:mb-12 lg:mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
           <motion.h2
             variants={staggerItem}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8"
           >
             Our Journey
           </motion.h2>
           <motion.p
             variants={staggerItem}
-            className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4"
+            className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4"
           >
             Milestones that shaped our path to excellence in VLSI design and
             innovation
@@ -192,11 +192,11 @@ export default function ClubTimeline() {
           {/* Filters */}
           <motion.div
             variants={staggerItem}
-            className="mt-8 flex flex-wrap gap-3 justify-center items-center"
+            className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap gap-2 sm:gap-3 justify-center items-center"
           >
             <div className="flex items-center gap-2">
               <Filter size={18} className="text-gray-500" />
-              <span className="text-sm font-semibold text-gray-600">
+              <span className="text-xs sm:text-sm font-semibold text-gray-600">
                 Filters:
               </span>
             </div>

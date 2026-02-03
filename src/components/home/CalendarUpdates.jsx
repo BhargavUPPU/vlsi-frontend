@@ -23,19 +23,19 @@ export default function CalendarUpdates() {
   const displayAnnouncements = announcements?.filter(a => a.isActive) || [];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">
             Calendar & Updates Hub
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed">
             Your central hub for events, deadlines, and important announcements.
             Stay connected with everything happening in our VLSI community.
           </p>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-8 shadow-md flex flex-col items-center">
+        <div className="bg-gray-50 rounded-xl p-4 sm:p-6 md:p-8 shadow-md flex flex-col items-center">
           <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
             Announcements
           </h3>

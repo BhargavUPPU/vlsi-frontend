@@ -14,6 +14,7 @@ export function middleware(request) {
             "/projects",
             "/resources",
             "/team",
+            "/club-members",
             "/photogallery",
             "/achievements",
             "/resources/roadmap",

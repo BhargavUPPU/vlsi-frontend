@@ -122,7 +122,6 @@ function CreateCoreMemberContent() {
               <SelectContent>
                 {[
                   "Executive Team",
-                  "Central Coordinating Team",
                   "Knowledge Transfer Team",
                   "Alumni Managing & Hero Team",
                   "Oracthon Exec & Research Outreach Team",

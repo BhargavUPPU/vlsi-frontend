@@ -18,27 +18,27 @@ export default function HeroSection() {
     setShowVideoModal(false);
   };
   return (
-    <section className="py-8">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-between gap-8 sm:gap-8 lg:gap-8">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <section className="max-w-9xl mx-auto px-4 grid grid-cols-1 gap-2 items-center ">
+            <section className="w-full grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 items-center">
               {/* Left Content */}
              
                 {/* Logo + Title */}
-                <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="flex items-center gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
                   <Image
                              src="/FPGA.svg"
                              alt="FPGA"
                              width={8}
                              height={8}
-                             className="h-6 sm:h-8 w-auto"
+                             className="h-5 sm:h-6 md:h-8 lg:h-9 w-auto"
                            />
-                  <span className="text-xs sm:text-sm font-medium text-gray-800">
+                  <span className="text-xs sm:text-sm md:text-base font-medium text-gray-800">
                     VLSI Innovation Hub
                   </span>
                 </div>
@@ -65,11 +65,11 @@ export default function HeroSection() {
                 </p>
 
                 {/* CTA */}
-                <button className="mt-6 sm:mt-8 inline-flex max-w-1/3 items-center gap-2  rounded-2xl bg-blue-600 px-4 sm:px-6 py-2.5 sm:py-3 text-white text-sm sm:text-base font-bold shadow-md hover:bg-blue-700 transition-colors duration-200 drop-shadow-xl drop-shadow-black">
-                  <span className="text-center">
-    Join our <br className="hidden sm:block" /> Community
-  </span>
-  <span className="text-lg sm:text-xl">→</span>
+                <button className="mt-3 sm:mt-4 md:mt-5 lg:mt-6 inline-flex w-full sm:w-1/3 items-center justify-center sm:justify-start gap-2 sm:gap-3 rounded-2xl bg-blue-600 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 text-white text-sm sm:text-base md:text-lg font-bold shadow-md hover:bg-blue-700 transition-colors duration-200 drop-shadow-xl drop-shadow-black">
+                  <span className="text-center sm:text-left">
+                    Join our <br className="hidden sm:block" /> Community
+                  </span>
+                  <span className="text-lg sm:text-xl md:text-2xl">→</span>
                 </button>
               
             </section>
@@ -79,9 +79,9 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl mx-auto lg:mx-0"
+            className="relative w-full h-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto lg:mx-0 flex items-center justify-center lg:justify-end"
           >
-            <div className="w-full">
+            <div className="w-full h-auto">
               <svg
                 width="100%"
                 height="auto"
@@ -89,6 +89,7 @@ export default function HeroSection() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
+                preserveAspectRatio="xMidYMid meet"
                 className="drop-shadow-lg w-full h-auto max-w-full"
               >
                 <circle cx="305" cy="171" r="90" fill="#F61262" />
@@ -511,25 +512,25 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-3 sm:p-4 md:p-6"
             onClick={closeVideoModal}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="relative w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl"
+              className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-2xl xl:max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
               <button
                 onClick={closeVideoModal}
-                className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 text-white hover:text-gray-300 transition-colors p-1 sm:p-2 rounded-full hover:bg-black hover:bg-opacity-50"
+                className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 z-10 text-white hover:text-gray-300 transition-colors p-1 sm:p-1.5 md:p-2 rounded-full hover:bg-black hover:bg-opacity-50"
               >
                 <svg
                   width="20"
                   height="20"
-                  className="sm:w-6 sm:h-6"
+                  className="w-5 sm:w-6 md:w-7"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

@@ -9,98 +9,67 @@ export default function RoadMap() {
         {/* Header */}
         <Link
           href="/resources"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-2 sm:p-4"
         >
           <ArrowLeft size={20} />
-          <span>RoadMap</span>
+          <span className="text-sm sm:text-base">RoadMap</span>
         </Link>
-        <header className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-4xl" role="img" aria-label="roadmap">
+        <header className="mb-8 sm:mb-12">
+          <div className="flex items-center gap-2 sm:gap-3 mb-4">
+            <span className="text-2xl sm:text-4xl" role="img" aria-label="roadmap">
               🗺️
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-800">
               VLSI Roadmap
             </h1>
           </div>
-          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed">
             A beginner-friendly roadmap for VLSI engineers introducing frontend
             (design, Verilog, simulation) and backend (synthesis, placement,
             routing) concepts to build strong fundamentals in chip design and
             physical implementation workflows.
           </p>
-          <h2 className="text-2xl font-bold mb-3 text-gray-800">
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 text-gray-800">
             How to prepare for a VLSI profile from scratch?
           </h2>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
             If you are a fresher and want to start your career in VLSI and don't
             know where to start, follow this roadmap to understand the VLSI
             domain.
           </p>
         </header>
         {/* Types of Semiconductor Companies */}
-        <section className="mb-16 items-center">
-          <h3 className="text-2xl font-bold mb-8 text-gray-800">
+        <section className="mb-12 sm:mb-16 items-center">
+          <h3 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-gray-800">
             First, you should know the types of Semiconductors companies
           </h3>
-          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "IDC",
-                desc: "Integrated Device Companies - Design and manufacture their own chips",
-                icon: "🏭",
-              },
-              {
-                title: "Design Based",
-                desc: "Companies focused purely on chip design without manufacturing",
-                icon: "✏️",
-              },
-              {
-                title: "Fabrication",
-                desc: "IC manufacturing and fabrication foundries",
-                icon: "🔬",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="flex flex-col items-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 shadow-md hover:shadow-xl transition-shadow"
-              >
-                <div className="w-20 h-20 rounded-full bg-white shadow-lg flex items-center justify-center mb-4 text-4xl">
-                  {item.icon}
-                </div>
-                <h4 className="font-bold text-xl mb-2 text-gray-800">
-                  {item.title}
-                </h4>
-                <p className="text-sm text-center text-gray-600">{item.desc}</p>
-              </div>
-            ))}
-          </div> */}
-          <div className="flex justify-center">
+          <div className="flex justify-center overflow-x-auto">
               <Image
               src="/roadmapflow.png"
               alt="Road Map Flow"
-              className="rounded-lg"
+              className="rounded-lg w-full h-auto max-w-xs sm:max-w-md md:max-w-2xl"
               width={700}
               height={700}
+              priority
             />
           </div>
         </section>
         {/* VLSI Division */}
-        <section className="mb-16">
-          <h3 className="text-2xl font-bold mb-4 text-gray-800">
+        <section className="mb-12 sm:mb-16">
+          <h3 className="text-lg sm:text-2xl font-bold mb-4 text-gray-800">
             VLSI is mainly divided into two parts
           </h3>
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-lg">
-            <ul className="space-y-2 text-gray-700">
+          <div className="bg-blue-50 border-l-4 border-blue-600 p-4 sm:p-6 rounded-lg">
+            <ul className="space-y-2 text-sm sm:text-base text-gray-700">
               <li className="flex items-start">
-                <span className="mr-2 mt-1">•</span>
+                <span className="mr-2 mt-1 flex-shrink-0">•</span>
                 <span>
                   There are specific job roles in front-end design and backend
                   design listed below.
                 </span>
               </li>
               <li className="flex items-start">
-                <span className="mr-2 mt-1">•</span>
+                <span className="mr-2 mt-1 flex-shrink-0">•</span>
                 <span>
                   All stages from logic synthesis to GDS2 are considered as
                   backend design.
@@ -110,16 +79,16 @@ export default function RoadMap() {
           </div>
         </section>
         {/* Front End Roadmap */}
-        <section className="mb-16">
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl p-8 mb-6">
-            <h2 className="text-3xl font-bold mb-2">Front End Roadmap</h2>
-            <p className="opacity-90">
+        <section className="mb-12 sm:mb-16">
+          <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl p-4 sm:p-8 mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2">Front End Roadmap</h2>
+            <p className="text-sm sm:text-base opacity-90">
               Focuses on designing and verifying digital circuits using HDL
               (Hardware Description Languages).
             </p>
           </div>
-          <div className="bg-gray-50 rounded-2xl p-8 shadow-md overflow-x-auto">
-            <svg className="w-full min-w-6xl h-96" viewBox="0 0 900 200">
+          <div className="bg-gray-50 rounded-2xl p-4 sm:p-8 shadow-md overflow-x-auto">
+            <svg className="w-full h-auto min-h-96" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
               <line
                 x1="60"
                 y1="80"
@@ -229,16 +198,16 @@ export default function RoadMap() {
           </div>
         </section>
         {/* Back End Roadmap */}
-        <section className="mb-16">
-          <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl p-8 mb-6">
-            <h2 className="text-3xl font-bold mb-2">Back End Roadmap</h2>
-            <p className="opacity-90">
+        <section className="mb-12 sm:mb-16">
+          <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl p-4 sm:p-8 mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2">Back End Roadmap</h2>
+            <p className="text-sm sm:text-base opacity-90">
               Focuses on physical implementation, verification, and layout of
               digital/analog circuits.
             </p>
           </div>
-          <div className="bg-gray-50 rounded-2xl p-8 shadow-md overflow-x-auto">
-            <svg className="w-full min-w-[800px] h-48" viewBox="0 0 900 120">
+          <div className="bg-gray-50 rounded-2xl p-4 sm:p-8 shadow-md overflow-x-auto">
+            <svg className="w-full h-auto min-h-48" viewBox="0 0 900 120" preserveAspectRatio="xMidYMid meet">
               <line
                 x1="60"
                 y1="60"
@@ -287,8 +256,8 @@ export default function RoadMap() {
           </div>
         </section>
        { /* Fundamentals */}
-          <section className="mb-16">
-            <h3 className="text-2xl font-bold mb-10 text-gray-800">
+          <section className="mb-12 sm:mb-16">
+            <h3 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-10 text-gray-800">
               Fundamental topics which is essential for every{" "}
               <a
                 href="https://en.wikipedia.org/wiki/VLSI"
@@ -300,7 +269,7 @@ export default function RoadMap() {
               </a>{" "}
               profile
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-12">
               {[
                 {
             title: "Theory",
@@ -341,25 +310,26 @@ export default function RoadMap() {
               ].map((category, i) => (
                 <div
             key={i}
-            className="relative bg-white rounded-2xl shadow-xl p-8 pt-16 hover:shadow-2xl transition-shadow"
+            className="relative bg-white rounded-2xl shadow-xl p-6 sm:p-8 pt-14 sm:pt-16 hover:shadow-2xl transition-shadow"
                 >
             <div
-              className={`absolute -top-8 left-1/2 -translate-x-1/2 w-20 h-20 bg-gradient-to-br ${category.color} rounded-full shadow-lg flex items-center justify-center`}
+              className={`absolute -top-8 left-1/2 -translate-x-1/2 w-16 sm:w-20 h-16 sm:h-20 bg-gradient-to-br ${category.color} rounded-full shadow-lg flex items-center justify-center`}
             >
               <Image
                 src={category.icon}
                 alt={category.title + " icon"}
-                width={58}
-                height={58}
+                width={48}
+                height={48}
+                className="sm:w-14 sm:h-14"
               />
             </div>
-            <h5 className="font-bold text-2xl mb-6 text-center text-gray-800">
+            <h5 className="font-bold text-xl sm:text-2xl mb-4 sm:mb-6 text-center text-gray-800">
               {category.title}
             </h5>
-            <ul className="space-y-2 text-sm text-gray-700">
+            <ul className="space-y-2 text-xs sm:text-sm text-gray-700">
               {category.items.map((item, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="mr-2 text-blue-600">•</span>
+                  <span className="mr-2 text-blue-600 flex-shrink-0">•</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -369,11 +339,11 @@ export default function RoadMap() {
             </div>
           </section>
               {/* Job Roles */}
-      <section className="mb-16">
-        <h3 className="text-2xl font-bold mb-8 text-gray-800">
+      <section className="mb-12 sm:mb-16">
+        <h3 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-gray-800">
           All present VLSI Domain Job roles
         </h3>
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {[
             {
               title: "For RTL Design and Verification Profile",
@@ -442,25 +412,25 @@ export default function RoadMap() {
           ].map((role, i) => (
             <div
               key={i}
-              className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-md border-l-4 border-blue-600"
+              className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 sm:p-6 shadow-md border-l-4 border-blue-600"
             >
-              <div className="flex flex-row items-center gap-5 mb-4">
-                <div className="w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_10px_4px_rgba(37,99,235,0.5)]"></div>
-                <div>
-                  <h4 className="font-bold text-lg text-blue-700">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 mb-4">
+                <div className="w-3 h-3 bg-blue-600 rounded-full shadow-[0_0_10px_4px_rgba(37,99,235,0.5)] flex-shrink-0"></div>
+                <div className="min-w-0">
+                  <h4 className="font-bold text-base sm:text-lg text-blue-700 break-words">
                     {role.title}
                   </h4>
-                  <h6 className="font-semibold text-sm text-gray-600">
+                  <h6 className="font-semibold text-xs sm:text-sm text-gray-600">
                     {role.subTitle}
                   </h6>
                 </div>
               </div>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <ul className="space-y-2 text-xs sm:text-sm text-gray-700">
                 {role.items.map((item, idx) => (
-                  <li key={idx} className="flex items-start">
-                    <span className="flex items-center justify-center mr-2 w-6 h-6 bg-green-500 rounded-full text-white text-xs font-bold">
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="flex items-center justify-center flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full text-white text-xs font-bold">
                       {/* Tick SVG */}
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                         <path d="M4 8.5L7 11.5L12 5.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </span>
@@ -473,27 +443,28 @@ export default function RoadMap() {
         </div>
       </section>
       {/* Semicore Value Chain */}
-        <section className="mb-16">
-          <h3 className="text-2xl font-bold mb-6 text-gray-800">
+        <section className="mb-12 sm:mb-16">
+          <h3 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">
             Semicore Value Chain
           </h3>
-          <div className=" flex flex-col justify-center items-center  bg-gray-100 rounded-2xl p-8  overflow-x-auto">
-            <p className="text-center text-gray-600 mb-4">
+          <div className="flex flex-col justify-center items-center bg-gray-100 rounded-2xl p-4 sm:p-8 overflow-x-auto">
+            <p className="text-center text-xs sm:text-sm text-gray-600 mb-4 px-2">
               Comprehensive diagram showing the semiconductor value chain from
               design to manufacturing
             </p>
             <Image
               src="/roadmap.png"
               alt="Semicore Value Chain Diagram"
-              className="rounded-lg"
+              className="rounded-lg w-full h-auto max-w-xs sm:max-w-md md:max-w-2xl"
               width={600}
               height={220}
+              priority
             />
           </div>
         </section>
-        <section className="bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-2xl p-8">
-          <h3 className="text-2xl font-bold mb-4">VLSI Interview Checklist</h3>
-          <p className="text-lg opacity-90 mb-4">
+        <section className="bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-2xl p-4 sm:p-8">
+          <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">VLSI Interview Checklist</h3>
+          <p className="text-sm sm:text-lg opacity-90 mb-4">
             Quick, concise guide covering key concepts, important questions, and
             must-know topics to ace your VLSI job interview confidently.
           </p>
@@ -503,7 +474,7 @@ export default function RoadMap() {
             rel="noopener noreferrer"
             className="inline-block"
           >
-            <button className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            <button className="bg-white text-green-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold text-sm sm:text-base hover:bg-gray-100 transition-colors">
               Download Checklist
             </button>
           </a>

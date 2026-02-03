@@ -55,26 +55,26 @@ function FeatureCard({ feature, index, isExpanded }) {
   return (
     <motion.div
       variants={staggerItem}
-      className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300"
+      className="bg-white rounded-lg border border-gray-200 p-4 sm:p-5 md:p-6 hover:shadow-lg transition-shadow duration-300"
     >
       {/* Header with Icon and Title */}
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5 md:mb-6">
         <div
           className={` text-white flex-shrink-0`}
         >
           {feature.icon}
         </div>
-        <h3 className="text-xl font-bold text-gray-900">{feature.title}</h3>
+        <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">{feature.title}</h3>
       </div>
 
       {/* Content */}
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3 md:space-y-4">
         {feature.points
           .slice(0, isExpanded ? feature.points.length : 2)
           .map((point, idx) => (
-            <div key={idx} className="flex items-start gap-2">
-              <span className="text-gray-400 mt-1">•</span>
-              <p className="text-gray-600 text-sm leading-relaxed">{point}</p>
+            <div key={idx} className="flex items-start gap-2 sm:gap-3">
+              <span className="text-gray-400 mt-1 flex-shrink-0">•</span>
+              <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed">{point}</p>
             </div>
           ))}
       </div>
@@ -86,19 +86,19 @@ export default function WhyJoinUs() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section id="why-join" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="why-join" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={staggerContainer}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
           <motion.h2
             variants={staggerItem}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6"
           >
             Why Join US?
           </motion.h2>
@@ -110,7 +110,7 @@ export default function WhyJoinUs() {
           whileInView="visible"
           viewport={defaultViewport}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           {features.map((feature, index) => (
             <FeatureCard

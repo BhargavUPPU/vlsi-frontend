@@ -31,6 +31,7 @@ const PUBLIC_ROUTES = [
   "/events",
   "/projects",
   "/resources",
+  "/club-members",
   "/team",
   "/photogallery",
   "/achievements",

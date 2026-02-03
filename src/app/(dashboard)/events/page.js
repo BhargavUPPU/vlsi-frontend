@@ -175,44 +175,44 @@ export default function EventsPage() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
-          <div className="flex flex-col md:flex-row items-end justify-end gap-4">
-            {/* Event Type */}
-            <select
-              value={filters.eventType}
-              onChange={(e) => handleFilterChange("eventType", e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Event Type</option>
-              {eventTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
+          <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm mb-8">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-end justify-between sm:justify-end gap-3 md:gap-4">
+              {/* Event Type */}
+              <select
+                value={filters.eventType}
+                onChange={(e) => handleFilterChange("eventType", e.target.value)}
+                className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              >
+                <option value="">Event Type</option>
+                {eventTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+                ))}
+              </select>
 
-            {/* Year */}
-            <select
-              value={filters.year}
-              onChange={(e) => handleFilterChange("year", e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Year</option>
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
-            {/* Filter Button */}
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2">
-              <FilterIcon size={18} />
-              Filter
-            </button>
+              {/* Year */}
+              <select
+                value={filters.year}
+                onChange={(e) => handleFilterChange("year", e.target.value)}
+                className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              >
+                <option value="">Year</option>
+                {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+                ))}
+              </select>
+              {/* Filter Button */}
+              <button className="w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2 text-sm md:text-base">
+                <FilterIcon size={18} />
+                Filter
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Loading State */}
+          {/* Loading State */}
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (

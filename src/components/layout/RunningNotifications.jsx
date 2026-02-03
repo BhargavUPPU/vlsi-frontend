@@ -19,9 +19,9 @@ export default function RunningNotifications() {
 
   return (
     <div className="bg-linear-to-r from-red-600 via-red-500 to-orange-500 text-white border-y border-orange-600">
-      <div className="flex items-center">
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* Latest Updates Label */}
-        <div className="shrink-0 bg-blue-700 px-4 py-4 font-semibold text-sm">
+        <div className="shrink-0 bg-blue-700 px-3 sm:px-4 py-2 sm:py-3 md:py-4 font-semibold text-xs sm:text-sm">
           Latest Updates
         </div>
 
@@ -29,8 +29,8 @@ export default function RunningNotifications() {
         <div className="flex-1 overflow-hidden">
           {notificationList.length === 0 ? (
             <Marquee gradient={false} speed={40}>
-              <div className="py-2 px-8">
-                <span className="text-white text-sm font-medium">
+              <div className="py-2 px-6 sm:px-8">
+                <span className="text-white text-xs sm:text-sm font-medium">
                   No notifications at the moment
                 </span>
               </div>
@@ -49,22 +49,22 @@ export default function RunningNotifications() {
                       href={notification.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white hover:text-blue-200 hover:underline transition-colors inline-flex items-center gap-2 px-8"
+                      className="text-white hover:text-blue-200 hover:underline transition-colors inline-flex items-center gap-1 sm:gap-2 px-4 sm:px-6 md:px-8"
                     >
-                      <span className="text-sm font-medium">
+                      <span className="text-xs sm:text-sm font-medium">
                         {notification.message}
                       </span>
-                      <ExternalLink size={14} className="flex-shrink-0" />
+                      <ExternalLink size={12} className="flex-shrink-0 sm:w-3.5 sm:h-3.5" />
                     </a>
                   ) : (
-                    <span className="text-white text-sm font-medium px-8">
+                    <span className="text-white text-xs sm:text-sm font-medium px-4 sm:px-6 md:px-8">
                       {notification.message}
                     </span>
                   )}
 
                   {/* Separator */}
                   {index < notificationList.length - 1 && (
-                    <span className="text-white mx-4">•</span>
+                    <span className="text-white mx-2 sm:mx-4">•</span>
                   )}
                 </div>
               ))}

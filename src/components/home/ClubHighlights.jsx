@@ -82,19 +82,19 @@ export default function ClubHighlights() {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={staggerContainer}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20"
         >
           <motion.h2
             variants={staggerItem}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8"
           >
             Club{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
@@ -103,7 +103,7 @@ export default function ClubHighlights() {
           </motion.h2>
           <motion.p
             variants={staggerItem}
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4"
           >
             Glimpses from our events, projects, and achievements
           </motion.p>
@@ -161,27 +161,27 @@ export default function ClubHighlights() {
               {/* Navigation Buttons */}
               <button
                 onClick={scrollPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center hover:bg-gray-50 transition-all hover:scale-110 z-10"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl flex items-center justify-center hover:bg-gray-50 transition-all hover:scale-110 z-10"
               >
-                <ChevronLeft className="w-6 h-6 text-gray-700" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
               </button>
               <button
                 onClick={scrollNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center hover:bg-gray-50 transition-all hover:scale-110 z-10"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl flex items-center justify-center hover:bg-gray-50 transition-all hover:scale-110 z-10"
               >
-                <ChevronRight className="w-6 h-6 text-gray-700" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
               </button>
 
               {/* Dots Navigation */}
-              <div className="flex items-center justify-center gap-2 mt-8">
+              <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8 md:mt-10">
                 {scrollSnaps.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => scrollTo(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
+                    className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
                       index === selectedIndex
-                        ? "w-8 bg-blue-600"
-                        : "w-2 bg-gray-300 hover:bg-gray-400"
+                        ? "w-6 sm:w-8 bg-blue-600"
+                        : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-400"
                     }`}
                   />
                 ))}

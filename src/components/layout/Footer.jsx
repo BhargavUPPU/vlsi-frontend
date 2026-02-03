@@ -88,8 +88,8 @@ export default function Footer() {
 
       {/* Main Footer Content */}
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8 py-12 sm:py-16 md:py-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
             {/* Logo & Social Media */}
             <motion.div
               initial="hidden"
@@ -225,8 +225,8 @@ export default function Footer() {
         <div className="bg-black/50 backdrop-blur-sm border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <p className="text-center text-sm text-blue-200">
-              Copyright © {year} VLSID Gayatri Vidya Parishad College of
-              Engineering (Autonomous).
+              Copyright © {year} VLSID Gayatri Vidya Parishad College of Engineering
+              (Autonomous).
             </p>
           </div>
         </div>
