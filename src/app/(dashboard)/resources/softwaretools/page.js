@@ -123,26 +123,26 @@ const otherData = [
 export default function VlsiToolsPage() {
   return (
     <main className="bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         {/* Section 1: Introduction */}
             <Link
                         href="/resources"
-                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-2 sm:p-4 mb-4"
                       >
                         <ArrowLeft size={20} />
-                        <span>Software Tools</span>
+                        <span className="text-sm sm:text-base">Software Tools</span>
                       </Link>
-        <section className="mb-16">
-          <div className="flex items-center gap-3 mb-8">
-            <span className="text-4xl">🛠️</span>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+        <section className="mb-8 sm:mb-12 lg:mb-16">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+            <span className="text-3xl sm:text-4xl">🛠️</span>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 leading-tight">
               VLSI Software Tools
             </h1>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div className="space-y-6">
-              <p className="text-gray-700 leading-relaxed">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
+            <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
                 We work on a whole gamut of VLSI tools from opensource to
                 commercial. We provide our clients with a bunch of services,
                 ranging from custom scripting and tools to design, simulation,
@@ -150,12 +150,12 @@ export default function VlsiToolsPage() {
                 design projects. These tools reduce design time, and ensure
                 accuracy, performance, and reliability of the final IC.
               </p>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
                 Our teams are well-trained, and can work on any set of EDA tools
                 and flows to make your IC design journey from idea to chip
                 design feasible.
               </p>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
                 We work on tools like{" "}
                 <span className="font-semibold text-blue-600">
                   NGSPICE, LTspice, eSim, OpenTimer,
@@ -180,58 +180,121 @@ export default function VlsiToolsPage() {
               </p>
             </div>
 
-            <div className="w-full rounded-2xl overflow-hidden shadow-2xl border-4 border-gray-200">
+            <div className="w-full rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-2xl border-2 sm:border-4 border-gray-200 order-1 lg:order-2">
               <Image
                 src="/Chip.png"
                 alt="VLSI Chip Die Shot"
                 width={600}
                 height={400}
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-48 sm:h-64 md:h-80 lg:h-full"
+                priority
               />
             </div>
           </div>
         </section>
 
         {/* Section 2: Flowchart Diagram */}
-        <section className="mb-16">
-          <div className=" p-6 mb-6">
-            <h2 className="text-3xl font-bold mb-2">VLSI Design Flow</h2>
-            <p className="opacity-90">
+        <section className="mb-8 sm:mb-12 lg:mb-16">
+          <div className="p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2">VLSI Design Flow</h2>
+            <p className="text-sm sm:text-base opacity-90">
               Comprehensive EDA tools ecosystem for chip design
             </p>
           </div>
-          <div className="bg-gray-50 rounded-2xl p-8 shadow-lg">
-            <VlsiFlowChart />
+          <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg overflow-hidden">
+            <div className="w-full overflow-x-auto">
+              <VlsiFlowChart />
+            </div>
           </div>
         </section>
 
         {/* Section 3: Application & Tools Table */}
         <section>
-          <div className="p-6 mb-6">
-            <h2 className="text-3xl font-bold mb-2">Application & Tools</h2>
-            <p className="opacity-90">
+          <div className="p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2">Application & Tools</h2>
+            <p className="text-sm sm:text-base opacity-90">
               Comprehensive comparison of EDA tools from major vendors
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-xl border overflow-hidden">
-            <div className="overflow-x-auto">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl border overflow-hidden">
+            {/* Mobile Card View */}
+            <div className="block lg:hidden">
+              <div className="p-4 sm:p-6 space-y-6">
+                {designData.map((section) => (
+                  <div key={section.category} className="space-y-4">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-800 bg-blue-50 px-4 py-2 rounded-lg">
+                      {section.category}
+                    </h3>
+                    {section.tools.map((tool) => (
+                      <div key={tool.name} className="bg-gray-50 rounded-lg p-4 space-y-3">
+                        <h4 className="font-semibold text-gray-800 text-base">{tool.name}</h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="font-medium text-gray-600">Cadence:</span>
+                            <span className="text-gray-800">{tool.cadence}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="font-medium text-gray-600">Synopsys:</span>
+                            <span className="text-gray-800">{tool.synopsys}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="font-medium text-gray-600">Open Source:</span>
+                            <span className="text-gray-800">{tool.openSource}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+                
+                {/* Other Data for Mobile */}
+                <div className="space-y-4">
+                  {otherData.map((row) => (
+                    <div key={row.category} className="bg-gray-100 rounded-lg p-4">
+                      <h4 className="font-bold text-gray-800 mb-3">{row.category}</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="font-medium text-gray-600">Cadence:</span>
+                          <span className="text-gray-800">{row.cadence}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium text-gray-600">Synopsys:</span>
+                          <span className="text-gray-800">{row.synopsys}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-gray-600">Open Source:</span>
+                          <Badge
+                            className={row.openSource.includes("Free") ? "bg-green-500 text-white" : "bg-gray-500 text-white"}
+                          >
+                            {row.openSource}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden lg:block overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gradient-to-r from-blue-50 to-purple-50">
-                    <TableHead className="w-[180px] font-bold text-gray-800">
+                    <TableHead className="w-[180px] font-bold text-gray-800 text-sm xl:text-base">
                       Digital IC Design
                     </TableHead>
-                    <TableHead className="w-[200px] font-bold text-gray-800">
+                    <TableHead className="w-[200px] font-bold text-gray-800 text-sm xl:text-base">
                       Stage
                     </TableHead>
-                    <TableHead className="font-bold text-gray-800">
+                    <TableHead className="font-bold text-gray-800 text-sm xl:text-base">
                       Cadence
                     </TableHead>
-                    <TableHead className="font-bold text-gray-800">
+                    <TableHead className="font-bold text-gray-800 text-sm xl:text-base">
                       Synopsys
                     </TableHead>
-                    <TableHead className="font-bold text-gray-800">
+                    <TableHead className="font-bold text-gray-800 text-sm xl:text-base">
                       Open-Source EDA
                     </TableHead>
                   </TableRow>
@@ -245,22 +308,22 @@ export default function VlsiToolsPage() {
                       >
                         {index === 0 && (
                           <TableCell
-                            className="font-bold text-gray-800 align-top bg-blue-50"
+                            className="font-bold text-gray-800 align-top bg-blue-50 text-sm xl:text-base"
                             rowSpan={section.tools.length}
                           >
                             {section.category}
                           </TableCell>
                         )}
-                        <TableCell className="font-medium text-gray-700">
+                        <TableCell className="font-medium text-gray-700 text-sm xl:text-base">
                           {tool.name}
                         </TableCell>
-                        <TableCell className="text-gray-600">
+                        <TableCell className="text-gray-600 text-sm xl:text-base">
                           {tool.cadence}
                         </TableCell>
-                        <TableCell className="text-gray-600">
+                        <TableCell className="text-gray-600 text-sm xl:text-base">
                           {tool.synopsys}
                         </TableCell>
-                        <TableCell className="text-gray-600">
+                        <TableCell className="text-gray-600 text-sm xl:text-base">
                           {tool.openSource}
                         </TableCell>
                       </TableRow>
@@ -273,22 +336,22 @@ export default function VlsiToolsPage() {
                     >
                       <TableCell
                         colSpan={2}
-                        className="font-bold text-gray-800"
+                        className="font-bold text-gray-800 text-sm xl:text-base"
                       >
                         {row.category}
                       </TableCell>
-                      <TableCell className="text-gray-700">
+                      <TableCell className="text-gray-700 text-sm xl:text-base">
                         {row.cadence}
                       </TableCell>
-                      <TableCell className="text-gray-700">
+                      <TableCell className="text-gray-700 text-sm xl:text-base">
                         {row.synopsys}
                       </TableCell>
                       <TableCell>
                         <Badge
                           className={
                             row.openSource.includes("Free")
-                              ? "bg-green-500 text-white"
-                              : "bg-gray-500 text-white"
+                              ? "bg-green-500 text-white text-xs"
+                              : "bg-gray-500 text-white text-xs"
                           }
                         >
                           {row.openSource}
