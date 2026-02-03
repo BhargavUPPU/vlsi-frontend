@@ -15,7 +15,7 @@ const employers = [
   { name: "Qualcomm", logo: "/Qualcomm-Logo.png" },
   { name: "TSM", logo: "/TSM.png" },
   { name: "Capgemini", logo: "/Capgemini-Logo.png" },
-  { name: "NVIDIA", logo: "/NVIDIA-Logo.png" },
+  { name: "NVIDIA", logo: "/Nvidia-Logo.png" },
   { name: "AMD", logo: "/AdvancedMicroDevices-Logo.png" },
   { name: "ASML", logo: "/ASML-Logo.png" },
   { name: "Broadcom", logo: "/Broadcom_Corporation.png" },

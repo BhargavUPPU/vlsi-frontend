@@ -98,11 +98,17 @@ const menuItems = [
         description: "Track and manage club achievements",
       },
       {
-        title: "Photo Gallery",
+        title: "Team Photos Gallery",
         url: "/admin/team-photos",
         icon: Camera,
         description: "Manage photo gallery and media",
       },
+      {
+        title:"Photo Gallery",
+        url:"/admin/photo-gallery",
+        icon:Camera,
+        description:"Manage event photo galleries",
+      }
     ],
   },
   {
@@ -169,6 +175,18 @@ const menuItems = [
         icon: FileText,
         description: "Manage club publications and articles",
       },
+      {
+        title:"Announcements",
+        url:"/admin/announcements",
+        icon:FileText,
+        description:"Post and manage club announcements",
+      },
+      {
+        title:"Achievements",
+        url:"/admin/achievements",
+        icon:FileText,
+        description:"Document and showcase club achievements",
+      }
     ],
   },
   {

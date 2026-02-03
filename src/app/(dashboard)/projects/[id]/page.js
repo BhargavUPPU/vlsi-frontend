@@ -123,7 +123,7 @@ export default function ProjectDetailsPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Title & Meta */}
-            <div className="bg-white rounded-lg shadow-sm p-8">
+            <div className=" p-8">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 {project.title}
               </h1>
@@ -151,7 +151,14 @@ export default function ProjectDetailsPage() {
                 )}
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Status</p>
-                  <p className="text-sm font-semibold text-gray-900 capitalize">{project.status}</p>
+                    <p className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                    project.status.toLowerCase() === "completed"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-yellow-100 text-yellow-700"
+                  }`}>
+                    {project.status}
+                  </p>
+                
                 </div>
               </div>
 

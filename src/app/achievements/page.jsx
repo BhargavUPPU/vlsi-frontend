@@ -18,7 +18,7 @@ import { useActiveAchievements } from "@/lib/hooks/useAdmin";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
 
 const SectionHeader = ({ title, subtitle }) => (
   <div className="text-center mb-12">
@@ -55,12 +55,12 @@ const AchievementCard = ({ achievement }) => {
       className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow"
     >
       <div className="relative h-48 w-full bg-gray-100">
-        {!imageError ? (
+        {!imageError && achievement.images?.[0]?.id ? (
           <Image
-            src={`${API_BASE_URL}/achievements/${achievement.id}/main-image`}
+            src={`${API_BASE_URL}/achievements/image/${achievement.images[0].id}`}
             alt={achievement.title || "Achievement"}
             fill
-            className="object-cover"
+            className="object-contain bg-white"
             unoptimized
             onError={() => setImageError(true)}
           />
@@ -111,6 +111,9 @@ export default function AchievementsPage() {
     isLoading: galleryLoading,
     error: galleryError,
   } = useActiveAchievements("GALLERY_IMAGE");
+  console.log("Gallery Data:", galleryData);
+  console.log("Gallery Error:", galleryError);
+  console.log("API_BASE_URL:", API_BASE_URL);
 
   const [activeHero, setActiveHero] = useState(0);
   const [heroImageErrors, setHeroImageErrors] = useState({});
@@ -181,12 +184,12 @@ export default function AchievementsPage() {
                 className="absolute inset-0"
               >
                 <div className="absolute inset-0 bg-black/40 z-10" />
-                {!heroImageErrors[hero.id] ? (
+                {!heroImageErrors[hero.id] && hero.images?.[0]?.id ? (
                   <Image
-                    src={`${API_BASE_URL}/achievements/${hero.id}/main-image`}
+                    src={`${API_BASE_URL}/achievements/image/${hero.images[0].id}`}
                     alt={hero.title || "Hero"}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     priority={index === 0}
                     unoptimized
                     onError={() =>
@@ -318,10 +321,10 @@ export default function AchievementsPage() {
                     )}
                   </div>
                   <span className="text-5xl font-extrabold text-[#3b82f6] mb-2">
-                    {stat.value}
+                    {stat.title}
                   </span>
                   <span className="text-gray-600 font-medium">
-                    No of {stat.title}
+                    No of {stat.value}
                   </span>
                 </motion.div>
               ))}
@@ -366,13 +369,13 @@ export default function AchievementsPage() {
                   viewport={{ once: true }}
                   className="bg-white rounded-3xl p-8 md:p-12 shadow-md flex flex-col md:flex-row gap-12 items-center"
                 >
-                  <div className="w-full md:w-1/2 relative h-[300px] rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                    {!proudImageErrors[moment.id] ? (
+                  <div className="w-full md:w-1/2 relative h-[300px]  overflow-hidden">
+                    {!proudImageErrors[moment.id] && moment.images?.[0]?.id ? (
                       <Image
-                        src={`${API_BASE_URL}/achievements/${moment.id}/main-image`}
+                        src={`${API_BASE_URL}/achievements/image/${moment.images[0].id}`}
                         alt={moment.title || "Proud Moment"}
                         fill
-                        className="object-contain bg-white"
+                        className="object-contain"
                         unoptimized
                         onError={() =>
                           setProudImageErrors((prev) => ({
@@ -472,41 +475,47 @@ export default function AchievementsPage() {
             </div>
           ) : galleryData?.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {galleryData.map((photo) => (
-                <motion.div
-                  key={photo.id}
-                  whileHover={{ scale: 1.03, y: -5 }}
-                  className="group relative h-64 rounded-2xl overflow-hidden shadow-lg"
-                >
-                  {!galleryImageErrors[photo.id] ? (
-                    <Image
-                      src={`${API_BASE_URL}/achievements/${photo.id}/main-image`}
-                      alt={photo.title || "Gallery Image"}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      unoptimized
-                      onError={() =>
-                        setGalleryImageErrors((prev) => ({
-                          ...prev,
-                          [photo.id]: true,
-                        }))
-                      }
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                      <Layers className="w-16 h-16 text-gray-400" />
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                    <h4 className="text-white font-bold text-lg">
-                      {photo.title}
-                    </h4>
-                    <p className="text-white/80 text-sm mt-1">
-                      {photo.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+              {galleryData.flatMap(
+                (gallery) =>
+                  gallery.images?.map((image, index) => (
+                    <motion.div
+                      key={`${gallery.id}-${image.id}`}
+                      whileHover={{ scale: 1.03, y: -5 }}
+                      className="group relative h-64 rounded-2xl overflow-hidden shadow-lg"
+                    >
+                      {!galleryImageErrors[image.id] ? (
+                        <Image
+                          src={`${API_BASE_URL}/achievements/image/${image.id}`}
+                          alt={
+                            `${gallery.title} - Image ${index + 1}` ||
+                            "Gallery Image"
+                          }
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          unoptimized
+                          onError={() =>
+                            setGalleryImageErrors((prev) => ({
+                              ...prev,
+                              [image.id]: true,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                          <Layers className="w-16 h-16 text-gray-400" />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h4 className="text-white font-bold text-lg">
+                          {gallery.title}
+                        </h4>
+                        <p className="text-white/80 text-sm mt-1">
+                          {gallery.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )) || [],
+              )}
             </div>
           ) : (
             <div className="text-center py-12 text-gray-400">

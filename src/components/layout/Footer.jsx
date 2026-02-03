@@ -41,7 +41,7 @@ export default function Footer() {
     {
       name: "Instagram",
       icon: Instagram,
-      href: "https://instagram.com",
+      href: "https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=v5l8ldo",
       color: "hover:bg-pink-600",
     },
     {
@@ -225,8 +225,8 @@ export default function Footer() {
         <div className="bg-black/50 backdrop-blur-sm border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <p className="text-center text-sm text-blue-200">
-              Copyright © {year} VLSID Gayatri Vidya Parishad College of Engineering
-              (Autonomous).
+              Copyright © {year} VLSID Gayatri Vidya Parishad College of
+              Engineering (Autonomous).
             </p>
           </div>
         </div>

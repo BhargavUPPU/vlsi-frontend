@@ -26,7 +26,7 @@ export default function EventDetailsPage() {
   const eventId = params.id;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start" },
+    { loop: true, align: "start", slidesToScroll: 1 },
     [Autoplay({ delay: 3000, stopOnInteraction: true })],
   );
 
@@ -503,23 +503,33 @@ export default function EventDetailsPage() {
 
                 <div className="relative group">
                   {/* Carousel Container */}
-                  <div className="overflow-hidden rounded-xl" ref={emblaRef}>
+                  <div
+                    className="overflow-hidden rounded-xl"
+                    ref={emblaRef}
+                    aria-label="Event Highlights Carousel"
+                  >
                     <div className="flex">
                       {carouselImages.map((image, index) => (
                         <div
                           key={index}
-                          className="flex-[0_0_100%] min-w-0 px-2"
+                          className="flex-[0_0_calc(33.333%-1rem)] min-w-0 px-2"
+                          role="group"
+                          aria-roledescription="slide"
+                          aria-label={`Slide ${index + 1} of ${carouselImages.length}`}
                         >
                           <div
-                            className="relative w-full bg-gray-100 rounded-lg overflow-hidden"
-                            style={{ minHeight: "400px" }}
+                            className="relative w-full"
+                            style={{ minHeight: "300px" }}
                           >
                             <img
                               src={image}
                               alt={`Event highlight ${index + 1}`}
                               className="w-full h-full object-contain"
-                              style={{ maxHeight: "600px" }}
+                              style={{ maxHeight: "300px" }}
                               loading="lazy"
+                              onError={(e) => {
+                                e.target.src = "/fallback-image.jpg"; // Fallback image
+                              }}
                             />
                           </div>
                         </div>
@@ -532,14 +542,14 @@ export default function EventDetailsPage() {
                     <>
                       <button
                         onClick={scrollPrev}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         aria-label="Previous image"
                       >
                         <ChevronLeft size={24} className="text-gray-800" />
                       </button>
                       <button
                         onClick={scrollNext}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         aria-label="Next image"
                       >
                         <ChevronRight size={24} className="text-gray-800" />
@@ -554,7 +564,7 @@ export default function EventDetailsPage() {
                         <button
                           key={index}
                           onClick={() => scrollTo(index)}
-                          className={`h-2.5 rounded-full transition-all duration-300 ${
+                          className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 ${
                             index === selectedIndex
                               ? "w-8 bg-blue-600"
                               : "w-2.5 bg-gray-300 hover:bg-gray-400"
