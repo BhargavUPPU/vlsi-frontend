@@ -19,6 +19,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import ResourceCarousel from "@/components/resources/ResourceCarousel";
+import ContentLoading from "@/app/content-loading";
 
 export default function ResourcesPage() {
   // Scroll to section function
@@ -105,14 +106,7 @@ export default function ResourcesPage() {
       ? gatePyqsData.data
       : [];
 
-  const isLoading =
-    loadingTextbooks ||
-    loadingNptel ||
-    loadingMaterials ||
-    loadingQuestionBanks ||
-    loadingPlacementPrep ||
-    loadingMagazines ||
-    loadingGatePyqs;
+
 
   return (
     <div className="min-h-screen">
@@ -122,78 +116,78 @@ export default function ResourcesPage() {
         className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
       >
         <ArrowLeft size={20} />
-        <span>Resources</span>
+        <span>Home</span>
       </Link>
       <Image
         src="/resourceBanner.svg"
         alt="Resources Hero Banner"
         width={1920}
         height={400}
-        className="w-full h-64 md:h-96 "
+        className="w-full h-full"
       />
       {/* Quick Access Cards */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <Link
-          href="/resources/roadmap"
-          className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
-            >
-          <Image
-            src="/Resource1.jpg"
-            alt="VLSI RoadMap Background"
-            fill
-            className="object-cover opacity-100 absolute inset-0 pointer-events-none"
-          />
-          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
-            <BookOpen className="w-6 h-6 text-blue-600" />
-          </div>
-          <h3 className="text-lg  text-white font-semibold mb-2 relative z-10">VLSI RoadMap</h3>
-          <p className="text-white text-sm relative z-10">
-            Comprehensive guide to VLSI design and development
-          </p>
-            </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 static md:relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <Link
+            href="/resources/roadmap"
+            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+          >
+            <Image
+              src="/Resource1.jpg"
+              alt="VLSI RoadMap Background"
+              fill
+              className="object-cover opacity-100 absolute inset-0 pointer-events-none"
+            />
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
+              <BookOpen className="w-6 h-6 text-blue-600" />
+            </div>
+            <h3 className="text-lg  text-white font-semibold mb-2 relative z-10">VLSI RoadMap</h3>
+            <p className="text-white text-sm relative z-10">
+              Comprehensive guide to VLSI design and development
+            </p>
+          </Link>
 
-            <Link
-          href="/resources/softwaretools"
-          className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
-            >
-          <Image
-            src="/Resource2.png"
-            alt="VLSI Tools Background"
-            fill
-            className="object-cover opacity-100 absolute inset-0 pointer-events-none"
-          />
-          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
-            <Video className="w-6 h-6 text-purple-600" />
-          </div>
-          <h3 className="text-lg text-white font-semibold mb-2 relative z-10">VLSI TOOLS</h3>
-          <p className="text-white text-sm relative z-10">
-            Industry-standard design and simulation tools
-          </p>
-            </Link>
-            <Link
-          href="https://drive.google.com/drive/folders/1Msf9FVMu2H0qN3IbELHT1YiYDrSlLWI_?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
-            >
-          <Image
-            src="/Resource2.png"
-            alt="Placement Preparation Background"
-            fill
-            className="object-cover opacity-100 absolute inset-0 pointer-events-none"
-          />
-          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
-            <GraduationCap className="w-6 h-6 text-purple-600" />
-          </div>
-          <h3 className="text-lg text-white font-semibold mb-2 relative z-10">Placement Preparation</h3>
-          <p className="text-white text-sm relative z-10">
-            Resources to ace your VLSI placements
-          </p>
-            </Link>
-          </div>
+          <Link
+            href="/resources/softwaretools"
+            className="bg-white rounded-xl p-2 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+          >
+            <Image
+              src="/Resource2.png"
+              alt="VLSI Tools Background"
+              fill
+              className="object-cover opacity-100 absolute inset-0 pointer-events-none"
+            />
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
+              <Video className="w-6 h-6 text-purple-600" />
+            </div>
+            <h3 className="text-lg text-white font-semibold mb-2 relative z-10">VLSI TOOLS</h3>
+            <p className="text-white text-sm relative z-10">
+              Industry-standard design and simulation tools
+            </p>
+          </Link>
+          <Link
+            href="https://drive.google.com/drive/folders/1Msf9FVMu2H0qN3IbELHT1YiYDrSlLWI_?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+          >
+            <Image
+              src="/Resource2.png"
+              alt="Placement Preparation Background"
+              fill
+              className="object-cover opacity-100 absolute inset-0 pointer-events-none"
+            />
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
+              <GraduationCap className="w-6 h-6 text-purple-600" />
+            </div>
+            <h3 className="text-lg text-white font-semibold mb-2 relative z-10">Placement Preparation</h3>
+            <p className="text-white text-sm relative z-10">
+              Resources to ace your VLSI placements
+            </p>
+          </Link>
         </div>
-        {/* Resources Section */}
+      </div>
+      {/* Resources Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Resources</h2>
@@ -273,7 +267,11 @@ export default function ResourcesPage() {
               </span>
             </Link>
           </div>
-          {magazines.length > 0 ? (
+          {loadingMagazines ? (
+            <div className="flex justify-center py-8">
+              <ContentLoading message="Loading magazines..." />
+            </div>
+          ) : magazines.length > 0 ? (
             <ResourceCarousel items={magazines} type="magazines" />
           ) : (
             <div className="text-gray-500 text-center py-8">
@@ -296,7 +294,11 @@ export default function ResourcesPage() {
               </span>
             </Link>
           </div>
-          {textbooks.length > 0 ? (
+          {loadingTextbooks ? (
+            <div className="flex justify-center py-8">
+              <ContentLoading message="Loading textbooks..." />
+            </div>
+          ) : textbooks.length > 0 ? (
             <ResourceCarousel items={textbooks} type="textbooks" />
           ) : (
             <div className="text-gray-500 text-center py-8">
@@ -318,7 +320,11 @@ export default function ResourcesPage() {
               </span>
             </Link>
           </div>
-          {nptelLectures.length > 0 ? (
+          {loadingNptel ? (
+            <div className="flex justify-center py-8">
+              <ContentLoading message="Loading NPTEL lectures..." />
+            </div>
+          ) : nptelLectures.length > 0 ? (
             <ResourceCarousel items={nptelLectures} type="nptelLectures" />
           ) : (
             <div className="text-gray-500 text-center py-8">
@@ -341,7 +347,11 @@ export default function ResourcesPage() {
               </span>
             </Link>
           </div>
-          {vlsiMaterials.length > 0 ? (
+          {loadingMaterials ? (
+            <div className="flex justify-center py-8">
+              <ContentLoading message="Loading VLSI materials..." />
+            </div>
+          ) : vlsiMaterials.length > 0 ? (
             <ResourceCarousel items={vlsiMaterials} type="materials" />
           ) : (
             <div className="text-gray-500 text-center py-8">
@@ -366,7 +376,11 @@ export default function ResourcesPage() {
               </span>
             </Link>
           </div>
-          {questionBanks.length > 0 ? (
+          {loadingQuestionBanks ? (
+            <div className="flex justify-center py-8">
+              <ContentLoading message="Loading question banks..." />
+            </div>
+          ) : questionBanks.length > 0 ? (
             <ResourceCarousel items={questionBanks} type="questionBanks" />
           ) : (
             <div className="text-gray-500 text-center py-8">
@@ -391,7 +405,11 @@ export default function ResourcesPage() {
               </span>
             </Link>
           </div>
-          {placementPrep.length > 0 ? (
+          {loadingPlacementPrep ? (
+            <div className="flex justify-center py-8">
+              <ContentLoading message="Loading placement preparation..." />
+            </div>
+          ) : placementPrep.length > 0 ? (
             <ResourceCarousel items={placementPrep} type="placement" />
           ) : (
             <div className="text-gray-500 text-center py-8">
@@ -414,7 +432,11 @@ export default function ResourcesPage() {
               </span>
             </Link>
           </div>
-          {gatePyqs.length > 0 ? (
+          {loadingGatePyqs ? (
+            <div className="flex justify-center py-8">
+              <ContentLoading message="Loading GATE PYQs..." />
+            </div>
+          ) : gatePyqs.length > 0 ? (
             <ResourceCarousel items={gatePyqs} type="gatePyqs" />
           ) : (
             <div className="text-gray-500 text-center py-8">
@@ -423,11 +445,7 @@ export default function ResourcesPage() {
           )}
         </div>
 
-        {isLoading && (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
-        )}
+
       </div>
     </div>
   );

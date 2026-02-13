@@ -18,6 +18,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { bufferToDataURL } from "@/lib/utils/imageUtils";
+import ContentLoading from "@/app/content-loading";
 
 const RESOURCE_TYPES = [
   { id: "magazines", label: "Magazines" },
@@ -298,10 +299,8 @@ export default function ResourcesExplorePage() {
           {/* Main Content */}
           <main className="flex-1">
             {isLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-pulse">
-                {[1, 2, 3, 4, 5, 6].map(i => (
-                  <div key={i} className="bg-gray-100 rounded-2xl h-[400px]" />
-                ))}
+              <div className="flex justify-center items-center h-64">
+                <ContentLoading message={`Loading ${RESOURCE_TYPES.find(t => t.id === selectedType)?.label}...`} />
               </div>
             ) : resources.length > 0 ? (
               <>

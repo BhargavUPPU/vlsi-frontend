@@ -52,17 +52,36 @@ const FLOWCHART_CONFIG = {
 const COLORS = {
   PRIMARY: "#3B82F6",
   PRIMARY_HOVER: "#2563EB",
-  SUCCESS: "#10B981", 
-  WARNING: "#F59E0B",
+  SUCCESS: "#059669", 
+  WARNING: "#D97706",
+  INFO: "#0891B2",
   BACKGROUND: "#0F172A",
   SURFACE: "#1E293B",
   SURFACE_HOVER: "#334155",
+  SURFACE_ELEVATED: "#475569",
   TEXT: "#F8FAFC",
+  TEXT_SECONDARY: "#E2E8F0",
   TEXT_MUTED: "#94A3B8",
   BORDER: "#475569",
   BORDER_HOVER: "#60A5FA",
-  SHADOW: "rgba(0, 0, 0, 0.25)",
-  SHADOW_HOVER: "rgba(59, 130, 246, 0.25)",
+  BORDER_ACTIVE: "#3B82F6",
+  SHADOW: "rgba(0, 0, 0, 0.3)",
+  SHADOW_HOVER: "rgba(59, 130, 246, 0.4)",
+  SHADOW_ELEVATED: "rgba(0, 0, 0, 0.5)",
+  GRADIENT_START: "#1E293B",
+  GRADIENT_END: "#0F172A",
+};
+
+// Enhanced status indicator with better color semantics - utility function
+const getStatusColor = (type) => {
+  switch (type) {
+    case 'root': return COLORS.PRIMARY;
+    case 'category': return COLORS.INFO;
+    case 'vendor': return COLORS.WARNING;
+    case 'tool': return COLORS.SUCCESS;
+    case 'toolset': return COLORS.PRIMARY;
+    default: return COLORS.TEXT_MUTED;
+  }
 };
 
 // Enhanced software tools data with comprehensive metadata
@@ -241,34 +260,34 @@ const TOOLS_DATA = {
   }
 };
 
-// Node positions with much better spacing and proper centering
+// Optimized node positions for production-level layout
 const NODE_POSITIONS = {
-  // Root node - centered in viewport
-  "vlsi-tools": { x: 200, y: 500 },
+  // Root node - perfectly centered
+  "vlsi-tools": { x: 180, y: 500 },
   
-  // Main categories - much better spacing
-  "open-source": { x: 520, y: 250 },
-  "eda": { x: 520, y: 750 },
+  // Main categories - symmetrical positioning
+  "open-source": { x: 520, y: 280 },
+  "eda": { x: 520, y: 720 },
   
-  // Open source tools - significantly improved spacing
-  "ngspice": { x: 900, y: 100 },
-  "esim": { x: 1120, y: 150 },
-  "opentimer": { x: 900, y: 200 },
-  "magic": { x: 1120, y: 250 },
-  "ltspice": { x: 900, y: 300 },
+  // Open source tools - improved symmetrical grid layout
+  "ngspice": { x: 880, y: 120 },
+  "esim": { x: 1150, y: 120 },
+  "opentimer": { x: 880, y: 260 },
+  "magic": { x: 1150, y: 260 },
+  "ltspice": { x: 1015, y: 400 },
   
-  // EDA vendors - much better vertical distribution
-  "cadence": { x: 900, y: 600 },
-  "synopsys": { x: 900, y: 740 },
-  "siemens": { x: 900, y: 880 },
-  "xilinx": { x: 900, y: 1020 },
+  // EDA vendors - perfectly spaced vertical alignment
+  "cadence": { x: 880, y: 580 },
+  "synopsys": { x: 880, y: 720 },
+  "siemens": { x: 880, y: 860 },
+  "xilinx": { x: 880, y: 1000 },
   
-  // Vendor toolsets - properly aligned with good spacing
-  "virtuoso": { x: 1300, y: 600 },
-  "primetime": { x: 1300, y: 710 },
-  "dft": { x: 1300, y: 820 },
-  "tessent": { x: 1300, y: 930 },
-  "vivado": { x: 1300, y: 1040 }
+  // Vendor toolsets - aligned in clean vertical stack
+  "virtuoso": { x: 1280, y: 580 },
+  "primetime": { x: 1280, y: 680 },
+  "dft": { x: 1280, y: 780 },
+  "tessent": { x: 1280, y: 880 },
+  "vivado": { x: 1280, y: 1000 }
 };
 
 // Connection paths
@@ -350,21 +369,21 @@ const SVGNode = React.memo(function SVGNode({
   const isHovered = hoveredTool === tool.id;
   const hasInteraction = Boolean(tool.downloadLink || tool.website || tool.tools);
   
-  // Node dimensions based on type with better proportions
+  // Production-level node dimensions with golden ratio proportions
   const getNodeDimensions = (type) => {
     switch (type) {
       case 'root':
-        return { width: 220, height: 180, borderRadius: 20 };
+        return { width: 240, height: 190, borderRadius: 24 };
       case 'category':
-        return { width: 260, height: 160, borderRadius: 18 };
+        return { width: 280, height: 170, borderRadius: 20 };
       case 'vendor':
-        return { width: 200, height: 140, borderRadius: 16 };
+        return { width: 220, height: 150, borderRadius: 18 };
       case 'tool':
-        return { width: 180, height: 125, borderRadius: 14 };
+        return { width: 200, height: 135, borderRadius: 16 };
       case 'toolset':
-        return { width: 300, height: 160, borderRadius: 18 };
+        return { width: 320, height: 170, borderRadius: 20 };
       default:
-        return { width: 180, height: 125, borderRadius: 14 };
+        return { width: 200, height: 135, borderRadius: 16 };
     }
   };
 
@@ -384,19 +403,21 @@ const SVGNode = React.memo(function SVGNode({
     rx: borderRadius,
     ry: borderRadius,
     filter: isHovered 
-      ? `drop-shadow(0 12px 24px ${COLORS.SHADOW_HOVER}) drop-shadow(0 4px 12px ${COLORS.SHADOW})`
-      : `drop-shadow(0 6px 12px ${COLORS.SHADOW})`
+      ? `drop-shadow(0 16px 32px ${COLORS.SHADOW_HOVER}) drop-shadow(0 8px 16px ${COLORS.SHADOW_ELEVATED})`
+      : `drop-shadow(0 8px 16px ${COLORS.SHADOW}) drop-shadow(0 2px 8px ${COLORS.SHADOW})`,
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
   };
 
-  // Status indicator based on tool type
-  const getStatusColor = (type) => {
+  // Get gradient background for node types
+  const getNodeGradient = (type, isHovered) => {
+    const baseOpacity = isHovered ? 0.15 : 0.08;
     switch (type) {
-      case 'root': return COLORS.PRIMARY;
-      case 'category': return COLORS.SUCCESS;
-      case 'vendor': return COLORS.WARNING;
-      case 'tool': return COLORS.SUCCESS;
-      case 'toolset': return COLORS.PRIMARY;
-      default: return COLORS.TEXT_MUTED;
+      case 'root': return `linear-gradient(135deg, ${COLORS.PRIMARY}${Math.round(baseOpacity * 255).toString(16).padStart(2, '0')}, transparent)`;
+      case 'category': return `linear-gradient(135deg, ${COLORS.INFO}${Math.round(baseOpacity * 255).toString(16).padStart(2, '0')}, transparent)`;
+      case 'vendor': return `linear-gradient(135deg, ${COLORS.WARNING}${Math.round(baseOpacity * 255).toString(16).padStart(2, '0')}, transparent)`;
+      case 'tool': return `linear-gradient(135deg, ${COLORS.SUCCESS}${Math.round(baseOpacity * 255).toString(16).padStart(2, '0')}, transparent)`;
+      case 'toolset': return `linear-gradient(135deg, ${COLORS.PRIMARY}${Math.round(baseOpacity * 255).toString(16).padStart(2, '0')}, transparent)`;
+      default: return 'transparent';
     }
   };
 
@@ -416,28 +437,57 @@ const SVGNode = React.memo(function SVGNode({
         style={rectStyle}
       />
       
-      {/* Status indicator */}
-      <circle
-        cx={width - 15}
-        cy={15}
-        r={6}
-        fill={getStatusColor(tool.type)}
-        opacity={0.8}
+      {/* Enhanced gradient overlay */}
+      <rect
+        width={width}
+        height={height}
+        rx={borderRadius}
+        ry={borderRadius}
+        fill={`url(#nodeGradient-${tool.type})`}
+        opacity={isHovered ? 0.15 : 0.08}
+        style={{ transition: 'opacity 0.3s ease' }}
       />
       
-      {/* Interaction indicator */}
+      {/* Enhanced status indicator with glow */}
+      <g>
+        <circle
+          cx={width - 18}
+          cy={18}
+          r={8}
+          fill={getStatusColor(tool.type)}
+          opacity={0.3}
+          filter="blur(4px)"
+        />
+        <circle
+          cx={width - 18}
+          cy={18}
+          r={6}
+          fill={getStatusColor(tool.type)}
+          opacity={0.9}
+        />
+      </g>
+      
+      {/* Enhanced interaction indicator */}
       {hasInteraction && (
-        <g opacity={isHovered ? 1 : 0.6}>
+        <g opacity={isHovered ? 1 : 0.7} style={{ transition: 'opacity 0.3s ease' }}>
           <circle
-            cx={15}
-            cy={15}
+            cx={18}
+            cy={18}
+            r={10}
+            fill={COLORS.PRIMARY}
+            opacity={0.2}
+            filter="blur(3px)"
+          />
+          <circle
+            cx={18}
+            cy={18}
             r={8}
             fill={COLORS.PRIMARY}
-            opacity={0.8}
+            opacity={0.9}
           />
           <MousePointerClickIcon
-            x={11}
-            y={11}
+            x={14}
+            y={14}
             width={8}
             height={8}
             fill="white"
@@ -451,31 +501,46 @@ const SVGNode = React.memo(function SVGNode({
         width={width}
         height={height}
       >
-        <div className="flex flex-col items-center justify-center h-full p-4 text-white">
+        <div className="flex flex-col items-center justify-center h-full p-5 text-white relative">
           {tool.image && (
-            <div className="mb-3 flex-shrink-0 relative">
+            <div className="mb-4 flex-shrink-0 relative group">
               <Image
                 src={tool.image}
                 alt={tool.label}
-                width={tool.type === 'root' ? 180 : tool.type === 'category' ? 178 : tool.type === 'vendor' ? 150 : 142}
-                height={tool.type === 'root' ? 180 : tool.type === 'category' ? 178 : tool.type === 'vendor' ? 150 : 70}
-                className={`rounded-lg shadow-lg transition-all duration-200 ${isHovered ? 'shadow-xl' : ''}`}
+                width={tool.type === 'root' ? 80 : tool.type === 'category' ? 70 : tool.type === 'vendor' ? 65 : tool.type === 'toolset' ? 75 : 60}
+                height={tool.type === 'root' ? 80 : tool.type === 'category' ? 70 : tool.type === 'vendor' ? 65 : tool.type === 'toolset' ? 75 : 60}
+                className={`rounded-xl shadow-lg transition-all duration-300 transform ${
+                  isHovered ? 'shadow-2xl scale-105' : 'shadow-md'
+                } group-hover:rotate-3`}
                 priority={tool.type === 'root'}
+                style={{
+                  filter: isHovered ? 'brightness(1.1) contrast(1.05)' : 'brightness(1)',
+                }}
               />
             </div>
           )}
-          <div className="text-center px-2">
-            <p className={`font-semibold leading-tight ${
-              tool.type === 'root' ? 'text-lg' : 
-              tool.type === 'category' ? 'text-base' :
-              tool.type === 'toolset' ? 'text-sm leading-relaxed' : 'text-sm'
-            } ${isHovered ? 'text-blue-300' : 'text-slate-100'} transition-colors duration-200`}>
+          <div className="text-center px-3 flex-1 flex flex-col justify-center">
+            <h3 className={`font-bold leading-tight tracking-wide ${
+              tool.type === 'root' ? 'text-xl' : 
+              tool.type === 'category' ? 'text-lg' :
+              tool.type === 'toolset' ? 'text-base leading-snug' : 'text-base'
+            } ${isHovered ? 'text-blue-200' : 'text-slate-50'} transition-all duration-300
+            ${isHovered ? 'transform scale-105' : ''}`}>
               {tool.label}
-            </p>
+            </h3>
             {tool.category && (
-              <p className={`text-xs mt-1 ${isHovered ? 'text-slate-300' : 'text-slate-400'} transition-colors duration-200`}>
+              <p className={`text-xs mt-2 font-medium tracking-wider uppercase ${
+                isHovered ? 'text-slate-200' : 'text-slate-300'
+              } transition-all duration-300`}>
                 {tool.category}
               </p>
+            )}
+            {tool.marketShare && (
+              <div className="mt-2">
+                <span className="inline-block text-xs bg-green-500/20 text-green-200 px-2 py-1 rounded-full font-semibold border border-green-500/30">
+                  {tool.marketShare}
+                </span>
+              </div>
             )}
           </div>
         </div>
@@ -497,12 +562,12 @@ const SVGConnection = React.memo(function SVGConnection({ from, to, zoom, hovere
   
   const getNodeDimensions = (type) => {
     switch (type) {
-      case 'root': return { width: 220, height: 180 };
-      case 'category': return { width: 260, height: 160 };
-      case 'vendor': return { width: 200, height: 140 };
-      case 'tool': return { width: 180, height: 125 };
-      case 'toolset': return { width: 300, height: 160 };
-      default: return { width: 180, height: 125 };
+      case 'root': return { width: 240, height: 190 };
+      case 'category': return { width: 280, height: 170 };
+      case 'vendor': return { width: 220, height: 150 };
+      case 'tool': return { width: 200, height: 135 };
+      case 'toolset': return { width: 320, height: 170 };
+      default: return { width: 200, height: 135 };
     }
   };
 
@@ -524,15 +589,28 @@ const SVGConnection = React.memo(function SVGConnection({ from, to, zoom, hovere
 
   return (
     <g>
+      {/* Connection glow effect */}
+      {isHighlighted && (
+        <path
+          d={path}
+          stroke={COLORS.BORDER_HOVER}
+          strokeWidth={8}
+          fill="none"
+          opacity={0.3}
+          filter="blur(4px)"
+        />
+      )}
+      {/* Main connection line */}
       <path
         d={path}
         stroke={isHighlighted ? COLORS.BORDER_HOVER : COLORS.BORDER}
-        strokeWidth={isHighlighted ? 4 : 3}
+        strokeWidth={isHighlighted ? 4 : 2.5}
         fill="none"
-        markerEnd="url(#arrowhead)"
-        opacity={isHighlighted ? 0.9 : 0.6}
+        markerEnd={isHighlighted ? "url(#arrowhead-hover)" : "url(#arrowhead)"}
+        opacity={isHighlighted ? 1 : 0.7}
         style={{
-          transition: 'all 0.25s ease-in-out'
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          strokeDasharray: isHighlighted ? 'none' : '0',
         }}
       />
     </g>
@@ -828,61 +906,80 @@ export default function VlsiFlowchart() {
           >
             {/* Enhanced Definitions */}
             <defs>
-              {/* Arrow marker */}
+              {/* Enhanced arrow markers */}
               <marker
                 id="arrowhead"
-                markerWidth="14"
-                markerHeight="10"
-                refX="13"
-                refY="5"
+                markerWidth="16"
+                markerHeight="12"
+                refX="15"
+                refY="6"
                 orient="auto"
               >
                 <polygon
-                  points="0 0, 14 5, 0 10"
+                  points="0 0, 16 6, 0 12"
                   fill={COLORS.BORDER}
                   stroke={COLORS.BORDER}
                   strokeWidth="1"
+                  style={{ transition: 'all 0.3s ease' }}
                 />
               </marker>
               
-              {/* Hover arrow marker */}
               <marker
                 id="arrowhead-hover"
-                markerWidth="14"
-                markerHeight="10"
-                refX="13"
-                refY="5"
+                markerWidth="16"
+                markerHeight="12"
+                refX="15"
+                refY="6"
                 orient="auto"
               >
                 <polygon
-                  points="0 0, 14 5, 0 10"
+                  points="0 0, 16 6, 0 12"
                   fill={COLORS.BORDER_HOVER}
                   stroke={COLORS.BORDER_HOVER}
                   strokeWidth="1"
                 />
               </marker>
 
-              {/* Enhanced grid pattern */}
+              {/* Node type gradients */}
+              {['root', 'category', 'vendor', 'tool', 'toolset'].map(type => (
+                <linearGradient key={`nodeGradient-${type}`} id={`nodeGradient-${type}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor={getStatusColor(type)} stopOpacity="0.2" />
+                  <stop offset="100%" stopColor={getStatusColor(type)} stopOpacity="0" />
+                </linearGradient>
+              ))}
+
+              {/* Enhanced subtle grid pattern */}
               <pattern
                 id="grid"
-                width="40"
-                height="40"
+                width="50"
+                height="50"
                 patternUnits="userSpaceOnUse"
               >
+                <circle cx="25" cy="25" r="1" fill={COLORS.BORDER} opacity="0.05" />
                 <path
-                  d="M 40 0 L 0 0 0 40"
+                  d="M 50 0 L 0 0 0 50"
                   fill="none"
                   stroke={COLORS.BORDER}
-                  strokeWidth="0.5"
-                  opacity="0.1"
+                  strokeWidth="0.3"
+                  opacity="0.08"
                 />
               </pattern>
 
-              {/* Radial gradient for background */}
-              <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#1E293B" />
-                <stop offset="100%" stopColor="#0F172A" />
+              {/* Enhanced background gradients */}
+              <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+                <stop offset="0%" stopColor={COLORS.GRADIENT_START} />
+                <stop offset="70%" stopColor={COLORS.BACKGROUND} />
+                <stop offset="100%" stopColor={COLORS.GRADIENT_END} />
               </radialGradient>
+
+              {/* Glow filters */}
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                <feMerge> 
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
             </defs>
 
             {/* Background with pattern */}

@@ -14,6 +14,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
 import Link from "next/link";
+import Loading from "@/app/loading";
+import Image from "next/image";
+import ContentLoading from "@/app/content-loading";
 
 // Production-level validation schema
 const loginSchema = z.object({
@@ -50,7 +53,6 @@ export default function LoginPage() {
     if (isInitialized && !authLoading && isAuthenticated && user) {
       // Redirect based on role and password change requirement
       if (user.requirePasswordChange) {
-        toast.info("You must change your password before continuing");
         router.push("/auth/change-password?required=true");
       } else if (user.role === "SUPERADMIN" || user.role === "ADMIN") {
         router.push("/admin");
@@ -105,12 +107,7 @@ export default function LoginPage() {
   if (!isInitialized || authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <Card className="w-full max-w-md shadow-xl">
-          <CardContent className="flex items-center justify-center py-8">
-            <Loader2 className="h-8 w-8 animate-spin mr-3" />
-            <span className="text-lg">Loading...</span>
-          </CardContent>
-        </Card>
+        <ContentLoading/>
       </div>
     );
   }
@@ -120,9 +117,13 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-              <Shield className="w-8 h-8 text-white" />
-            </div>
+              <Image
+                             src="/logo.png"
+                             alt="VLSID Logo"
+                             width={48}
+                             height={48}
+                             className="w-18 h-18 object-contain"
+                           />
           </div>
           <CardTitle className="text-3xl font-bold">Welcome Back</CardTitle>
           <CardDescription className="text-base">

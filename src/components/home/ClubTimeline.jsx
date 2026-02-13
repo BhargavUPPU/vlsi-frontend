@@ -165,8 +165,8 @@ export default function ClubTimeline() {
   );
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial="hidden"
@@ -177,13 +177,13 @@ export default function ClubTimeline() {
         >
           <motion.h2
             variants={staggerItem}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 lg:mb-8"
           >
             Our Journey
           </motion.h2>
           <motion.p
             variants={staggerItem}
-            className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4"
+            className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-2 sm:px-4"
           >
             Milestones that shaped our path to excellence in VLSI design and
             innovation
@@ -192,20 +192,20 @@ export default function ClubTimeline() {
           {/* Filters */}
           <motion.div
             variants={staggerItem}
-            className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap gap-2 sm:gap-3 justify-center items-center"
+            className="mt-4 sm:mt-6 md:mt-8 lg:mt-10 space-y-3 sm:space-y-4"
           >
-            <div className="flex items-center gap-2">
-              <Filter size={18} className="text-gray-500" />
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Filter size={16} className="text-gray-500" />
               <span className="text-xs sm:text-sm font-semibold text-gray-600">
-                Filters:
+                Filters
               </span>
             </div>
 
             {/* Year Filter */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
               <Badge
                 variant={selectedYear === "all" ? "default" : "outline"}
-                className="cursor-pointer px-3 py-1.5 transition-all hover:scale-105"
+                className="cursor-pointer px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm transition-all hover:scale-105 active:scale-95"
                 onClick={() => setSelectedYear("all")}
               >
                 All Years
@@ -216,7 +216,7 @@ export default function ClubTimeline() {
                   variant={
                     selectedYear === String(year) ? "default" : "outline"
                   }
-                  className="cursor-pointer px-3 py-1.5 transition-all hover:scale-105"
+                  className="cursor-pointer px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm transition-all hover:scale-105 active:scale-95"
                   onClick={() => setSelectedYear(String(year))}
                 >
                   {year}
@@ -226,10 +226,10 @@ export default function ClubTimeline() {
 
             {/* Category Filter */}
             {categories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
                 <Badge
                   variant={selectedCategory === "all" ? "default" : "outline"}
-                  className="cursor-pointer px-3 py-1.5 transition-all hover:scale-105"
+                  className="cursor-pointer px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm transition-all hover:scale-105 active:scale-95"
                   onClick={() => setSelectedCategory("all")}
                 >
                   All Categories
@@ -240,7 +240,7 @@ export default function ClubTimeline() {
                     variant={
                       selectedCategory === category ? "default" : "outline"
                     }
-                    className="cursor-pointer px-3 py-1.5 transition-all hover:scale-105 capitalize"
+                    className="cursor-pointer px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm transition-all hover:scale-105 active:scale-95 capitalize"
                     onClick={() => setSelectedCategory(category)}
                   >
                     {category}
@@ -251,18 +251,20 @@ export default function ClubTimeline() {
 
             {/* Clear filters button */}
             {(selectedYear !== "all" || selectedCategory !== "all") && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="gap-1.5"
-                onClick={() => {
-                  setSelectedYear("all");
-                  setSelectedCategory("all");
-                }}
-              >
-                <X size={14} />
-                Clear
-              </Button>
+              <div className="flex justify-center mt-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-1.5 text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5"
+                  onClick={() => {
+                    setSelectedYear("all");
+                    setSelectedCategory("all");
+                  }}
+                >
+                  <X size={12} className="sm:w-3.5 sm:h-3.5" />
+                  Clear
+                </Button>
+              </div>
             )}
           </motion.div>
         </motion.div>
@@ -283,10 +285,10 @@ export default function ClubTimeline() {
             className="relative"
           >
             {/* Timeline Line */}
-            <div className="absolute left-6 sm:left-8 lg:left-1/2 lg:transform lg:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-purple-200 to-green-200"></div>
+            <div className="absolute left-4 sm:left-6 lg:left-1/2 lg:transform lg:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-purple-200 to-green-200"></div>
 
             {/* Timeline Events */}
-            <div className="space-y-8 sm:space-y-10 lg:space-y-12">
+            <div className="space-y-6 sm:space-y-8 lg:space-y-10 xl:space-y-12">
               <AnimatePresence mode="popLayout">
                 {milestones.map((milestone, index) => {
                   const Icon =
@@ -311,31 +313,32 @@ export default function ClubTimeline() {
                       className="relative flex items-start lg:items-center"
                     >
                       {/* Timeline Dot */}
-                      <div className="absolute left-6 sm:left-8 lg:left-1/2 lg:transform lg:-translate-x-1/2 z-10 top-6 lg:top-auto">
+                      <div className="absolute left-4 sm:left-6 lg:left-1/2 lg:transform lg:-translate-x-1/2 z-10 top-4 sm:top-6 lg:top-auto">
                         <div
-                          className={`w-3 h-3 sm:w-4 sm:h-4 ${milestone.color || "bg-blue-500"} rounded-full border-2 sm:border-4 border-white shadow-lg`}
+                          className={`w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 ${milestone.color || "bg-blue-500"} rounded-full border-2 sm:border-3 md:border-4 border-white shadow-lg`}
                         ></div>
                       </div>
 
                       {/* Content Card */}
                       <div
-                        className={`w-full lg:w-5/12 ml-12 sm:ml-16 lg:ml-0 ${
+                        className={`w-full lg:w-5/12 ml-8 sm:ml-12 lg:ml-0 pr-2 sm:pr-4 lg:pr-0 ${
                           isLeft
-                            ? "lg:mr-auto lg:pr-6 xl:pr-8"
-                            : "lg:ml-auto lg:pl-6 xl:pl-8"
+                            ? "lg:mr-auto lg:pr-4 xl:pr-6 2xl:pr-8"
+                            : "lg:ml-auto lg:pl-4 xl:pl-6 2xl:pl-8"
                         }`}
                       >
                         <motion.div
                           whileHover={{ y: -2, scale: 1.01 }}
-                          className={`${milestone.bgColor || "bg-blue-50"} rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-md hover:shadow-lg lg:hover:shadow-xl transition-all duration-300 border border-white/50 relative overflow-hidden`}
+                          whileTap={{ scale: 0.98 }}
+                          className={`${milestone.bgColor || "bg-blue-50"} rounded-lg sm:rounded-xl lg:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-6 shadow-md hover:shadow-lg lg:hover:shadow-xl transition-all duration-300 border border-white/50 relative overflow-hidden`}
                         >
                           {/* Image Display if available */}
                           {hasImage &&
                             imageUrl &&
                             !failedImages.has(milestone.id) && (
-                              <div className="mb-4 sm:mb-6">
+                              <div className="mb-3 sm:mb-4 md:mb-5 lg:mb-6">
                                 <div
-                                  className="relative w-full h-48 sm:h-56 rounded-lg overflow-hidden cursor-pointer group"
+                                  className="relative w-full h-32 xs:h-40 sm:h-48 md:h-52 lg:h-56 rounded-md sm:rounded-lg overflow-hidden cursor-pointer group"
                                   // onClick={() => {
                                   //   console.log(
                                   //     "Opening lightbox for milestone:",
@@ -384,36 +387,38 @@ export default function ClubTimeline() {
                             )}
 
                           {/* Icon and Date */}
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                          <div className="flex flex-col xs:flex-row xs:items-center gap-2 sm:gap-3 lg:gap-4 mb-2 sm:mb-3 lg:mb-4">
                             <div
-                              className={`${milestone.color || "bg-blue-500"} rounded-lg sm:rounded-xl p-2 sm:p-3 shadow-md w-fit`}
+                              className={`${milestone.color || "bg-blue-500"} rounded-md sm:rounded-lg lg:rounded-xl p-1.5 sm:p-2 lg:p-3 shadow-md w-fit`}
                             >
-                              <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                              <Icon className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                             </div>
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500" />
-                              <span className="text-xs sm:text-sm font-semibold text-gray-600">
-                                {new Date(milestone.date).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    month: "long",
-                                    year: "numeric",
-                                  },
-                                )}
-                              </span>
+                            <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2 sm:gap-3">
+                              <div className="flex items-center gap-1 sm:gap-2">
+                                <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500" />
+                                <span className="text-xs sm:text-sm font-semibold text-gray-600">
+                                  {new Date(milestone.date).toLocaleDateString(
+                                    "en-US",
+                                    {
+                                      month: "long",
+                                      year: "numeric",
+                                    },
+                                  )}
+                                </span>
+                              </div>
+                              {milestone.category && (
+                                <Badge
+                                  variant="secondary"
+                                  className="text-xs capitalize w-fit"
+                                >
+                                  {milestone.category}
+                                </Badge>
+                              )}
                             </div>
-                            {milestone.category && (
-                              <Badge
-                                variant="secondary"
-                                className="text-xs capitalize w-fit"
-                              >
-                                {milestone.category}
-                              </Badge>
-                            )}
                           </div>
 
                           {/* Title */}
-                          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
+                          <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 mb-1.5 sm:mb-2 lg:mb-3 leading-tight">
                             {milestone.title}
                           </h3>
 
@@ -439,34 +444,34 @@ export default function ClubTimeline() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2 sm:p-4"
             onClick={() => setLightboxImage(null)}
           >
             <motion.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              className="relative max-w-5xl max-h-[90vh]"
+              className="relative w-full max-w-5xl max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute -top-12 right-0 text-white hover:text-gray-300"
+                className="absolute -top-8 sm:-top-12 right-0 text-white hover:text-gray-300 w-8 h-8 sm:w-10 sm:h-10"
                 onClick={() => {
                   setLightboxImage(null);
                   setImageError(false);
                 }}
               >
-                <X size={24} />
+                <X size={20} className="sm:w-6 sm:h-6" />
               </Button>
               {imageError ? (
-                <div className="bg-white rounded-lg p-8 text-center max-w-md">
-                  <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <div className="bg-white rounded-lg p-4 sm:p-6 lg:p-8 text-center max-w-sm sm:max-w-md mx-2">
+                  <AlertCircle className="w-12 h-12 sm:w-16 sm:h-16 text-red-500 mx-auto mb-3 sm:mb-4" />
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                     Image Not Available
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-sm sm:text-base text-gray-600">
                     The milestone image could not be loaded. It may have been
                     removed or is temporarily unavailable.
                   </p>
@@ -475,7 +480,7 @@ export default function ClubTimeline() {
                 <img
                   src={lightboxImage}
                   alt="Milestone"
-                  className="max-w-full max-h-[90vh] rounded-lg object-contain"
+                  className="w-full max-w-full max-h-[90vh] rounded-lg object-contain"
                   onError={(e) => {
                     console.error(
                       "Lightbox image failed to load:",

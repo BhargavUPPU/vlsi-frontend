@@ -102,7 +102,7 @@ function ImageUploadField({
         {label} {required && <span className="text-red-500">*</span>}
       </Label>
 
-      {preview && preview !== "" && preview !== null ? (
+      {preview && typeof preview === "string" && preview.trim() !== "" ? (
         <div className="relative group">
           <div className="relative w-full rounded-lg overflow-hidden border-2 border-gray-200">
             <div
@@ -388,7 +388,8 @@ function MultipleImagesField({
           {previews.map(
             (item, index) =>
               item.preview &&
-              item.preview !== "" && (
+              typeof item.preview === "string" &&
+              item.preview.trim() !== "" && (
                 <div key={index} className="relative group">
                   <div className="relative rounded-lg overflow-hidden border-2 border-gray-200">
                     <div

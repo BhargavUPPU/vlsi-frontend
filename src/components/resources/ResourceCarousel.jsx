@@ -79,12 +79,12 @@ export default function ResourceCarousel({ items, type }) {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group"
               >
                 {/* Image */}
-                <div className="relative h-64 bg-gradient-to-br from-blue-100 to-purple-100 overflow-hidden">
+                <div className="relative h-58 bg-gradient-to-br from-blue-100 to-purple-100 overflow-hidden">
                   {item.image ? (
                     <img
                       src={bufferToDataURL(item.image)}
                       alt={item.title || item.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.nextElementSibling.style.display = 'flex';

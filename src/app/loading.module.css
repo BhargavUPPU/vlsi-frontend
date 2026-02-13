@@ -1,0 +1,323 @@
+/* Production-ready loading component styles */
+.container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  z-index: 9999;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.loaderWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  max-width: min(800px, 90vw);
+  width: 100%;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* SVG Loader */
+.loader {
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* Circuit Traces */
+.traces {
+  opacity: 0;
+  animation: tracesAppear 0.8s ease-out 0.2s forwards;
+}
+
+.traceBg {
+  stroke: #2a2a2a;
+  stroke-width: 2;
+  fill: none;
+}
+
+.traceFlow {
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 40 400;
+  stroke-dashoffset: 438;
+  animation: flow 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.blue {
+  stroke: #3b82f6;
+  color: #3b82f6;
+}
+
+.blue2 {
+  stroke: #60a5fa;
+  color: #60a5fa;
+  animation-delay: 0.5s;
+}
+
+/* Main Chip */
+.chip {
+  opacity: 0;
+  animation: chipAppear 0.6s ease-out 0.5s forwards;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* Chip Pins */
+.pinsLeft,
+.pinsRight {
+  opacity: 0;
+  animation: pinsAppear 0.4s ease-out 0.7s forwards;
+}
+
+/* Chip Text */
+.chipText {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  fill: url(#textGradient);
+  opacity: 0;
+  animation: 
+    textAppear 0.4s ease-out 0.9s forwards,
+    chipGlow 3s cubic-bezier(0.4, 0, 0.2, 1) 1.2s infinite;
+}
+
+/* Loading Text */
+.loadingText {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #e5e7eb;
+  letter-spacing: 0.025em;
+  opacity: 0;
+  animation: textFadeIn 0.4s ease-out 1s forwards;
+}
+
+.dots {
+  display: flex;
+  gap: 0.125rem;
+}
+
+.dots span {
+  display: inline-block;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.dots span:nth-child(1) { animation-delay: 0s; }
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tracesAppear {
+  to { opacity: 1; }
+}
+
+@keyframes chipAppear {
+  to { opacity: 1; }
+}
+
+@keyframes pinsAppear {
+  to { opacity: 1; }
+}
+
+@keyframes textAppear {
+  to { opacity: 1; }
+}
+
+@keyframes textFadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes chipGlow {
+  0%, 100% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3));
+  }
+  50% {
+    opacity: 1;
+    filter: 
+      drop-shadow(0 0 8px rgba(59, 130, 246, 0.8))
+      drop-shadow(0 0 16px rgba(59, 130, 246, 0.4));
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loaderWrapper {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .loader {
+    max-height: 250px;
+  }
+  
+  .chipText {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+  
+  .loadingText {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .loaderWrapper {
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .loader {
+    max-height: 200px;
+  }
+  
+  .chipText {
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .traceFlow {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+  
+  .chipText {
+    animation: textAppear 0.4s ease-out 0.9s forwards;
+  }
+  
+  .dots span {
+    animation: none;
+    opacity: 0.8;
+  }
+  
+  .container,
+  .loaderWrapper,
+  .traces,
+  .chip,
+  .pinsLeft,
+  .pinsRight,
+  .loadingText {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .traceBg {
+    stroke: #666;
+  }
+  
+  .blue {
+    stroke: #4f9eff;
+  }
+  
+  .blue2 {
+    stroke: #7bb3ff;
+  }
+  
+  .loadingText {
+    color: #ffffff;
+  }
+}
+
+/* Size variants */
+.loaderSmall .loader {
+  max-height: 200px;
+}
+
+.loaderSmall .chipText {
+  font-size: 16px;
+  letter-spacing: 1.5px;
+}
+
+.loaderSmall .loadingText {
+  font-size: 0.875rem;
+}
+
+.loaderMedium .loader {
+  max-height: 350px;
+}
+
+.loaderMedium .chipText {
+  font-size: 22px;
+  letter-spacing: 3px;
+}
+
+.loaderMedium .loadingText {
+  font-size: 1.125rem;
+}
+
+.loaderLarge .loader {
+  max-height: 450px;
+}
+
+.loaderLarge .chipText {
+  font-size: 28px;
+  letter-spacing: 4px;
+}
+
+.loaderLarge .loadingText {
+  font-size: 1.25rem;
+}
+
+/* Screen reader only class */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus management for accessibility */
+.container:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 4px;
+}

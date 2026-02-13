@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
 import { motion } from "framer-motion";
-import { Users, Search, ArrowLeft, Download, Filter, ChevronLeft, ChevronRight, UserCircle } from "lucide-react";
+import { Users, Search, ArrowLeft, Download, Filter, ChevronLeft, ChevronRight, UserCircle, Calendar, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function ClubMembersPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedYear, setSelectedYear] = useState("2024-2025");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -36,12 +37,27 @@ export default function ClubMembersPage() {
       ? membersData.data.data
       : [];
 
-  const filteredMembers = allMembers.filter((member) => {
+  // Get unique academic years for dropdown
+  const academicYears = [...new Set(allMembers.map((m) => m.academicYear))]
+    .sort()
+    .reverse();
+
+  // Handle year selection change
+  useEffect(() => {
+    if (academicYears.length > 0 && !academicYears.includes(selectedYear)) {
+      setSelectedYear(academicYears[0]);
+    }
+  }, [academicYears, selectedYear]);
+
+  // Filter by academic year first
+  const membersByYear = allMembers.filter((member) => member.academicYear === selectedYear);
+
+  // Then filter by search term
+  const filteredMembers = membersByYear.filter((member) => {
     const searchStr = searchTerm.toLowerCase();
     return (
       member.name?.toLowerCase().includes(searchStr) ||
       member.rollNumber?.toLowerCase().includes(searchStr) ||
-      member.academicYear?.toLowerCase().includes(searchStr) ||
       member.sectionBranch?.toLowerCase().includes(searchStr)
     );
   });
@@ -56,7 +72,7 @@ export default function ClubMembersPage() {
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <Link
               href="/team"
               className="group flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors font-medium"
@@ -68,9 +84,35 @@ export default function ClubMembersPage() {
               <span className="sm:hidden">Team</span>
             </Link>
             
-            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-100 px-3 py-1">
-              Active Members: {allMembers.length}
+            <div className="flex gap-3">
+              <div className="flex items-center gap-2">
+              <Calendar size={16} className="text-slate-500" />
+              <div className="relative group">
+                <select
+                  value={selectedYear}
+                  onChange={(e) => {
+                    setSelectedYear(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="appearance-none bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 pr-8 font-semibold text-slate-700 hover:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all cursor-pointer text-sm"
+                >
+                  {academicYears.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-blue-500 transition-colors"
+                  size={14}
+                />
+              </div>
+            </div>
+            
+            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-100 px-3 py-1 whitespace-nowrap">
+              Members: {filteredMembers.length}
             </Badge>
+            </div>
           </div>
         </div>
       </div>

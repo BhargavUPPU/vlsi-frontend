@@ -26,7 +26,7 @@ export const columns = [
         <ActionCell
           row={row}
           onDelete={deleteClubMember.mutateAsync}
-          editPath="/admin/clubMembers/editClubMember"
+          editPath="/admin/clubMembers/createClubMember"
           itemName="Club Member"
         />
       );

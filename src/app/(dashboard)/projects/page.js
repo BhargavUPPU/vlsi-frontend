@@ -154,23 +154,23 @@ export default function ProjectsPage() {
       )} */}
 
       {/* Hero Section with Animated Blocks */}
-      <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 sm:py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 relative z-20">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium mb-3 sm:mb-4 text-sm sm:text-base transition-colors"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
             <span>Home</span>
           </Link>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
             {/* Left: Animated '11' Symbol (two columns of 3 blocks), group floats up/down */}
-            <div className="relative h-112 flex items-center justify-center">
+            <div className="relative h-80 sm:h-96 md:h-[28rem] lg:h-112 flex items-center justify-center">
               {/* Sample SVG Bubble/Cloud Background */}
               <svg
-                className="absolute inset-0 w-full h-full z-0 scale-150"
+                className="absolute inset-0 w-full h-full z-0 scale-125 sm:scale-150"
                 width="1400"
                 height="1400"
                 viewBox="0 0 1400 1400"
@@ -217,10 +217,10 @@ export default function ProjectsPage() {
                   repeat: Infinity,
                   repeatType: "loop",
                 }}
-                className="relative z-10 flex flex-row gap-12 w-full max-w-md justify-center"
+                className="relative z-10 flex flex-row gap-6 sm:gap-8 md:gap-10 lg:gap-12 w-full max-w-xs sm:max-w-sm md:max-w-md justify-center"
               >
                 {/* Left '1' (lower) - 3 static images */}
-                <div className="flex flex-col gap-6 translate-y-8">
+                <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:gap-6 translate-y-4 sm:translate-y-6 md:translate-y-8">
                   {[
                     "/projectIcon1.png",
                     "/projectIcon2.jpg",
@@ -228,7 +228,7 @@ export default function ProjectsPage() {
                   ].map((src, i) => (
                     <div
                       key={i}
-                      className="aspect-square w-24 md:w-28 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
+                      className="aspect-square w-16 sm:w-20 md:w-24 lg:w-28 rounded-xl sm:rounded-2xl bg-white/70 shadow-lg sm:shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
                     >
                       <Image
                         src={src}
@@ -241,7 +241,7 @@ export default function ProjectsPage() {
                   ))}
                 </div>
                 {/* Right '1' (higher) - 3 static images */}
-                <div className="flex flex-col gap-6 -translate-y-8">
+                <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:gap-6 -translate-y-4 sm:-translate-y-6 md:-translate-y-8">
                   {[
                     "/projectIcon4.jpg",
                     "/projectIcon5.jpg",
@@ -249,7 +249,7 @@ export default function ProjectsPage() {
                   ].map((src, i) => (
                     <div
                       key={i}
-                      className="aspect-square w-24 md:w-28 rounded-2xl bg-white/70 shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
+                      className="aspect-square w-16 sm:w-20 md:w-24 lg:w-28 rounded-xl sm:rounded-2xl bg-white/70 shadow-lg sm:shadow-xl border border-blue-100 backdrop-blur-md flex items-center justify-center overflow-hidden"
                     >
                       <Image
                         src={src}
@@ -266,15 +266,15 @@ export default function ProjectsPage() {
 
             {/* Right: Project Counter & Description for latest projects carousel - Redesigned */}
 
-            <div className="flex items-center justify-center h-96">
+            <div className="flex items-center justify-center h-80 sm:h-96">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="relative w-full max-w-md mx-auto flex flex-col items-center justify-center h-full"
+                className="relative w-full max-w-sm sm:max-w-md mx-auto flex flex-col items-center justify-center h-full"
               >
                 {/* Large soft number in background */}
                 <span
-                  className="absolute top-0 left-1/2 -translate-x-1/2 text-[8rem] md:text-[10rem] font-extrabold select-none leading-none z-0 pointer-events-none bg-gradient-to-b from-blue-400 via-blue-200 to-white text-transparent bg-clip-text opacity-90"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 text-6xl sm:text-7xl md:text-[8rem] lg:text-[10rem] font-extrabold select-none leading-none z-0 pointer-events-none bg-gradient-to-b from-blue-400 via-blue-200 to-white text-transparent bg-clip-text opacity-90"
                   style={{
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -282,41 +282,40 @@ export default function ProjectsPage() {
                 >
                   {latestProjects.length > 0
                     ? String(
-                        (carouselIndex % latestProjects.length) + 1,
-                      ).padStart(2, "0")
+                      (carouselIndex % latestProjects.length) + 1,
+                    ).padStart(2, "0")
                     : "01"}
                 </span>
-                <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center px-2">
+                <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center px-3 sm:px-4">
                   {latestProjects.length > 0 ? (
                     <>
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 mt-20 md:mt-24">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 mt-16 sm:mt-18 md:mt-20 lg:mt-24 leading-tight">
                         {
                           latestProjects[carouselIndex % latestProjects.length]
                             .title
                         }
                       </h2>
-                      <p className="text-gray-600 text-base md:text-lg font-medium mb-6 max-w-md mx-auto line-clamp-3">
+                      <p className="text-gray-600 text-sm sm:text-base md:text-lg font-medium mb-4 sm:mb-6 max-w-xs sm:max-w-sm md:max-w-md mx-auto line-clamp-3 leading-relaxed">
                         {
                           latestProjects[carouselIndex % latestProjects.length]
                             .Introduction
                         }
                       </p>
                       <Link
-                        href={`/projects/${
-                          latestProjects[carouselIndex % latestProjects.length]
+                        href={`/projects/${latestProjects[carouselIndex % latestProjects.length]
                             .id
-                        }`}
-                        className="bg-blue-600 text-white px-6 py-2 md:py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-base md:text-lg shadow-md"
+                          }`}
+                        className="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm sm:text-base md:text-lg shadow-md"
                       >
                         Know more
                       </Link>
                     </>
                   ) : (
                     <>
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 mt-20 md:mt-24">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 mt-16 sm:mt-18 md:mt-20 lg:mt-24">
                         No projects found
                       </h2>
-                      <p className="text-gray-400 italic mb-6">
+                      <p className="text-gray-400 italic mb-4 sm:mb-6 text-sm sm:text-base">
                         No project data to display.
                       </p>
                     </>
@@ -327,15 +326,15 @@ export default function ProjectsPage() {
           </div>
 
           {/* Tagline */}
-          <div className="mt-16 text-center">
-            <p className="text-2xl md:text-3xl font-serif italic text-gray-700 mb-4">
+          <div className="mt-12 sm:mt-14 md:mt-16 text-center px-3 sm:px-4">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif italic text-gray-700 mb-3 sm:mb-4 leading-relaxed">
               "Silicon is the Canvas, Logic is the Art!"
             </p>
-            <p className="text-lg text-gray-600 mb-2">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-2 leading-relaxed">
               Where VLSI, Embedded Systems, AI, and Communication come together
               to create innovation.
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
               Showcase your projects, share your ideas, and inspire your
               community!
             </p>
@@ -344,15 +343,15 @@ export default function ProjectsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white border-b  shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div className="bg-white border-b shadow-sm">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             <select
               value={filters.category}
               onChange={(e) => handleFilterChange("category", e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-colors"
             >
-              <option value="">Project type</option>
+              <option value="">All Project Types</option>
               {projectTypes.map((type) => (
                 <option key={type} value={type}>
                   {type}
@@ -365,9 +364,9 @@ export default function ProjectsPage() {
               onChange={(e) =>
                 handleFilterChange("academicYear", e.target.value)
               }
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-colors"
             >
-              <option value="">Year</option>
+              <option value="">All Years</option>
               {academicYears.map((year) => (
                 <option key={year} value={year}>
                   {year}
@@ -378,9 +377,9 @@ export default function ProjectsPage() {
             <select
               value={filters.month}
               onChange={(e) => handleFilterChange("month", e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-colors"
             >
-              <option value="">month</option>
+              <option value="">All Months</option>
               {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
                 <option key={month} value={month}>
                   {new Date(2000, month - 1).toLocaleString("default", {
@@ -389,34 +388,32 @@ export default function ProjectsPage() {
                 </option>
               ))}
             </select>
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2">
-              <Filter size={18} />
-              Filter
+            <button className="w-full sm:col-span-2 md:col-span-1 bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-1.5 sm:gap-2 text-sm font-medium">
+              <Filter size={16} className="sm:w-[18px] sm:h-[18px]" />
+              <span>Filter</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
-        <div className="flex gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 pt-8 sm:pt-10 md:pt-12 pb-4 sm:pb-6">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
           <button
             onClick={() => handleTabChange("ongoing")}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
-              activeTab === "ongoing"
+            className={`w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${activeTab === "ongoing"
                 ? "bg-blue-600 text-white shadow-lg"
-                : "bg-white text-gray-700 hover:bg-gray-100"
-            }`}
+                : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+              }`}
           >
             Ongoing Projects
           </button>
           <button
             onClick={() => handleTabChange("completed")}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
-              activeTab === "completed"
+            className={`w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${activeTab === "completed"
                 ? "bg-blue-600 text-white shadow-lg"
-                : "bg-white text-gray-700 hover:bg-gray-100"
-            }`}
+                : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+              }`}
           >
             Completed Projects
           </button>
@@ -424,18 +421,18 @@ export default function ProjectsPage() {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 pb-8 sm:pb-12">
         {/* Loading */}
         {isLoading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div
                 key={i}
-                className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse"
+                className="bg-white rounded-lg sm:rounded-xl shadow-md overflow-hidden animate-pulse"
               >
-                <div className="w-full h-48 bg-gray-200" />
-                <div className="p-6 space-y-3">
-                  <div className="h-6 bg-gray-200 rounded w-3/4" />
+                <div className="w-full h-48 sm:h-56 md:h-64 bg-gray-200" />
+                <div className="p-4 sm:p-6 space-y-3">
+                  <div className="h-5 sm:h-6 bg-gray-200 rounded w-3/4" />
                   <div className="h-4 bg-gray-200 rounded w-full" />
                   <div className="h-4 bg-gray-200 rounded w-5/6" />
                 </div>
@@ -446,21 +443,21 @@ export default function ProjectsPage() {
 
         {/* Error */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
-            <p className="text-red-600 text-lg font-semibold mb-2">
+          <div className="bg-red-50 border border-red-200 rounded-lg sm:rounded-xl p-6 sm:p-8 text-center">
+            <p className="text-red-600 text-base sm:text-lg font-semibold mb-2">
               Failed to load projects
             </p>
-            <p className="text-red-500">Please try again later</p>
+            <p className="text-red-500 text-sm sm:text-base">Please try again later</p>
           </div>
         )}
 
         {/* Empty */}
         {!isLoading && !error && filteredProjects.length === 0 && (
-          <div className="bg-white rounded-lg p-16 text-center shadow-sm">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+          <div className="bg-white rounded-lg sm:rounded-xl p-10 sm:p-12 md:p-16 text-center shadow-sm">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">
               No Projects Found
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm sm:text-base">
               {activeTab === "ongoing"
                 ? "There are no ongoing projects at the moment"
                 : "There are no completed projects to show"}
@@ -477,7 +474,7 @@ export default function ProjectsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
               >
                 {paginatedProjects.map((project, index) => {
                   const imageUrl = getProjectImage(project);
@@ -487,11 +484,11 @@ export default function ProjectsPage() {
                     <motion.div
                       key={project.id}
                       whileHover={{ y: -8 }}
-                      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+                      className="bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
                     >
                       {/* Colored Header with Image */}
                       <div
-                        className={`relative ${colorClass} flex items-center justify-center`}
+                        className={`relative h-48 sm:h-56 md:h-64 ${colorClass} flex items-center justify-center`}
                       >
                         {imageUrl ? (
                           <img
@@ -501,46 +498,45 @@ export default function ProjectsPage() {
                             loading="lazy"
                           />
                         ) : (
-                          <div className="text-center text-white">
-                            <h3 className="text-2xl font-bold">
+                          <div className="text-center text-white p-4">
+                            <h3 className="text-xl sm:text-2xl font-bold leading-tight">
                               {project.title}
                             </h3>
                           </div>
                         )}
-                        <div className="absolute top-4 right-4">
-                          <ExternalLink className="text-white w-6 h-6" />
+                        <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+                          <ExternalLink className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                         </div>
                       </div>
 
                       {/* Content */}
-                      <div className="p-6">
-                        <div className="flex items-center gap-2 mb-3">
+                      <div className="p-4 sm:p-6">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
                           <span
-                            className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                              activeTab === "ongoing"
+                            className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold ${activeTab === "ongoing"
                                 ? "bg-green-100 text-green-700"
                                 : "bg-gray-100 text-gray-700"
-                            }`}
+                              }`}
                           >
                             {project.status}
                           </span>
-                          <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
+                          <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
                             {project.projectType || "Projects"}
                           </span>
                         </div>
 
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                        <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2 leading-tight">
                           {project.title}
                         </h3>
 
-                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                        <p className="text-gray-600 text-sm sm:text-base mb-3 sm:mb-4 line-clamp-3 leading-relaxed">
                           {project.Introduction}
                         </p>
 
                         <div className="flex gap-3">
                           <Link
                             href={`/projects/${project.id}`}
-                            className="flex-1 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+                            className="flex-1 bg-blue-600 text-white text-center py-2 sm:py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm sm:text-base"
                           >
                             Know more
                           </Link>
@@ -554,13 +550,13 @@ export default function ProjectsPage() {
 
             {/* Pagination */}
             {totalPages > 1 && Number.isFinite(totalPages) && (
-              <div className="flex justify-center items-center gap-2 mt-12">
+              <div className="flex justify-center items-center gap-1 sm:gap-2 mt-8 sm:mt-10 md:mt-12 px-2">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  <ChevronLeft size={20} />
+                  <ChevronLeft size={16} className="sm:w-5 sm:h-5" />
                 </button>
 
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(
@@ -568,11 +564,10 @@ export default function ProjectsPage() {
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                        currentPage === page
+                      className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-sm sm:text-base transition-colors ${currentPage === page
                           ? "bg-blue-600 text-white"
                           : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
-                      }`}
+                        }`}
                     >
                       {String(page)}
                     </button>
@@ -584,9 +579,9 @@ export default function ProjectsPage() {
                     setCurrentPage((p) => Math.min(totalPages, p + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  <ChevronRight size={20} />
+                  <ChevronRight size={16} className="sm:w-5 sm:h-5" />
                 </button>
               </div>
             )}
