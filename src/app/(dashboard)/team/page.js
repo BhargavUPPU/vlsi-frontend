@@ -77,6 +77,7 @@ export default function TeamPage() {
     : Array.isArray(teamPhotosData?.data?.data)
       ? teamPhotosData.data.data
       : [];
+  console.log("Fetched Team Photos:", teamPhotos);
 
   // Filter members by selected year
   const filteredMembers = allCoreMembers.filter(

@@ -225,7 +225,7 @@ export default function Footer() {
         <div className="bg-black/50 backdrop-blur-sm border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <p className="text-center text-sm text-blue-200">
-              Copyright © {year} VLSID Gayatri Vidya Parishad College of Engineering
+              Copyright © {year}  Gayatri Vidya Parishad College of Engineering
               (Autonomous).
             </p>
           </div>

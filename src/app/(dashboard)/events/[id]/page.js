@@ -103,14 +103,12 @@ export default function EventDetailsPage() {
 
   // Memoize parsed JSON fields to avoid re-parsing
   const {
-    keyPoints,
     eventHighlights,
     studentCoordinators,
     facultyCoordinators,
     speakerHighlights,
   } = useMemo(() => {
     return {
-      keyPoints: event?.aboutEvent ? [event.aboutEvent] : [],
       eventHighlights: Array.isArray(event?.eventHighlights)
         ? event.eventHighlights
         : [],
@@ -216,7 +214,7 @@ export default function EventDetailsPage() {
 
       {/* Hero Section with Event Header */}
       <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-7 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Event Info */}
             <motion.div
@@ -271,7 +269,7 @@ export default function EventDetailsPage() {
                       <MapPin size={20} />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-300">Channel Type</p>
+                      <p className="text-xs text-gray-300">Event Type</p>
                       <p className="font-semibold">{event.eventType}</p>
                     </div>
                   </div>
@@ -295,13 +293,13 @@ export default function EventDetailsPage() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="relative h-80 lg:h-96 rounded-xl overflow-hidden shadow-2xl"
+              className="relative h-80 lg:h-96  overflow-hidden "
             >
               {headerImage ? (
                 <img
                   src={headerImage}
                   alt={event.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain rounded-xl shadow-lg"
                   loading="eager"
                 />
               ) : (
@@ -325,7 +323,7 @@ export default function EventDetailsPage() {
                 About the Event
               </h2>
               <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                {event.description}
+                {event.description.trim()}
               </p>
             </div>
 
@@ -340,7 +338,7 @@ export default function EventDetailsPage() {
                 </h3>
                 {event.speakerDescription && (
                   <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                    {event.speakerDescription}
+                    {event.speakerDescription.trim()}
                   </p>
                 )}
                 {speakerHighlights.length > 0 && (
@@ -366,7 +364,7 @@ export default function EventDetailsPage() {
                   Description
                 </h2>
                 <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                  {event.aboutEvent}
+                  {event.aboutEvent.trim()}
                 </p>
               </div>
             )}
@@ -377,7 +375,7 @@ export default function EventDetailsPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Event Co-ordinators
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-3 md:grid-cols-5 gap-6">
                   {facultyCoordinators.map((coordinator, index) => (
                     <div key={index} className="text-center">
                       <h3 className="font-semibold text-gray-900 text-lg">
@@ -400,15 +398,12 @@ export default function EventDetailsPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Student Co-ordinators
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
                   {studentCoordinators.map((coordinator, index) => (
                     <div key={index} className="text-center">
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold text-gray-900 text-lg">
                         {coordinator.name || coordinator}
                       </h3>
-                      <p className="text-sm text-gray-500">
-                        {coordinator.id || coordinator.rollNo || "Student ID"}
-                      </p>
                     </div>
                   ))}
                 </div>
@@ -424,15 +419,6 @@ export default function EventDetailsPage() {
                 Key points
               </h3>
               <ul className="space-y-3">
-                {keyPoints.map((point, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-2 text-sm text-gray-600"
-                  >
-                    <span className="text-blue-600 mt-1">•</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
                 {eventHighlights.map((highlight, index) => (
                   <li
                     key={index}
@@ -446,7 +432,9 @@ export default function EventDetailsPage() {
             </div>
 
             {/* Links */}
-            <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
+           {
+            event.eventPdfLink|| event.eventVideoLink ? (
+               <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
               {event.eventPdfLink && (
                 <a
                   href={event.eventPdfLink}
@@ -474,6 +462,8 @@ export default function EventDetailsPage() {
                 </a>
               )}
             </div>
+            ):null
+           }
 
                 {/* Event Certificate */}
             {certificateImage && (

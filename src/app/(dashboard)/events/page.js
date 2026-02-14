@@ -281,24 +281,24 @@ export default function EventsPage() {
                     <motion.div
                       key={event.id}
                       whileHover={{ y: -8 }}
-                      className="bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                      className="bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group w-lg"
                     >
                       {/* Event Image */}
-                      <div className="relative h-48 sm:h-56 md:h-64 bg-gradient-to-br from-blue-100 to-purple-100">
-                        {imageUrl ? (
-                          <img
-                            src={imageUrl}
-                            alt={event.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Calendar size={48} className="sm:w-14 sm:h-14 md:w-16 md:h-16 text-gray-300" />
-                          </div>
-                        )}
+                                  <div className="relative h-68 sm:h-66 md:h-110 bg-gradient-to-br from-blue-100 to-purple-100 w-full">
+                                  {imageUrl ? (
+                                    <img
+                                    src={imageUrl}
+                                    alt={event.title}
+                                    className="w-full h-full object-fit group-hover:scale-110 transition-transform duration-500"
+                                    loading="lazy"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center">
+                                    <Calendar size={48} className="sm:w-14 sm:h-14 md:w-16 md:h-16 text-gray-300" />
+                                    </div>
+                                  )}
 
-                        {/* Status Badge */}
+                                  {/* Status Badge */}
                         <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
                           <span
                             className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${

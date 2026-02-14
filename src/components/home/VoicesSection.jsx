@@ -55,7 +55,7 @@ export default function VoicesSection() {
   }, [emblaApi]);
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-xl overflow-hidden">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
@@ -71,24 +71,25 @@ export default function VoicesSection() {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4 sm:gap-6 md:gap-8">
             {voices.map((voice, index) => {
-              return (
+                return (
                 <div
                   key={voice.id}
-                  className="min-w-0 w-full max-w-full flex-shrink-0 relative overflow-hidden p-2 sm:p-3 md:p-4"
+                  className="min-w-0 w-full max-w-4xl flex-shrink-0 relative overflow-hidden p-2 sm:p-3 md:p-4"
                 >
                   {/* Image Container */}
-                  <div className="relative w-full aspect-square sm:aspect-video md:aspect-square lg:h-96 flex items-center justify-center">
-                    <Image
-                      src={voice.src}
-                      alt={voice.alt}
-                      fill
-                      className="object-contain"
-                      priority={index < 3}
-                    />
-                  </div>
+                 
+                  <Image
+                    src={voice.src}
+                    alt={voice.alt}
+                    className="w-full h-auto object-contain rounded-xl shadow-lg transition-transform duration-300 hover:scale-105"
+                    width={100}
+                    height={50}
+                    priority={index < 3} // Prioritize loading for the first few images
+                  />
                 </div>
               );
-            })}
+            }
+            )}
           </div>
           <EmblaDots
             emblaApi={emblaApi}

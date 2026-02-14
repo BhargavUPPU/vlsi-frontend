@@ -17,8 +17,9 @@ const features = [
     ),
     title: "Hands-on learning",
     bgColor: "bg-teal-500",
+    subtitle:       "Master VLSI concepts through practical workshops, lab sessions, and real-world projects.",
     points: [
-      "Master VLSI concepts through practical workshops, lab sessions, and real-world projects.",
+
       "Advanced Lab Exposure - Work with industry-grade EDA tools (Cadence, Synopsys, Mentor) and FPGA boards to gain practical experience in chip design.",
       "Project-Driven Modules - Build real-world mini-projects such as digital circuits, RTL design, and layout optimization.",
       "Mentorship-Based Skill Building - Learn directly from experts through guided labs, live demos, debugging assistance, and peer collaboration.",
@@ -30,8 +31,9 @@ const features = [
     ),
     title: "Industry Connections",
     bgColor: "bg-yellow-500",
+    subtitle:    "Network with professionals, attend guest lectures, and participate in tech talks and top tech companies.",
     points: [
-      "Network with professionals, attend guest lectures, and participate in tech talks and top tech companies.",
+   
       "Expert Guest Lectures - Interact with professionals from semiconductor companies like Intel, Qualcomm, NVIDIA, and AMD who share insights for securing internships through referrals, industry-linked events, and skill-based networking.",
       "Professional Networking - Participate in tech talks, panel discussions, and meetups that help build long-term career connections.",
     ],
@@ -41,9 +43,10 @@ const features = [
           <img src="/INDUSTRYCONNECTIONS.svg" alt="Industry Connections" className="w-12 h-12" />
     ),
     title: "Competition Excellence",
+    subtitle:"Participate in national VLSI design competitions and hackathons.",
     bgColor: "bg-pink-500",
     points: [
-      "Participate in national VLSI design competitions and hackathons.",
+
       "National-Level Participation - Get opportunities to compete in recognized EDA competitions such as Intel FPGA, IISF, and IEEE contests.",
       "Team-Based Innovation - Work in teams to solve real semiconductor design challenges from RTL coding to FPGA prototype demos.",
       "Portfolio & Recognition - Develop award-winning projects that enhance your resume and gain recognition from industry experts.",
@@ -64,7 +67,10 @@ function FeatureCard({ feature, index, isExpanded }) {
         >
           {feature.icon}
         </div>
-        <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">{feature.title}</h3>
+        <div>
+           <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">{feature.title}</h3>
+        <p className="text-sm text-gray-500 ml-auto">{feature.subtitle}</p>
+        </div>
       </div>
 
       {/* Content */}

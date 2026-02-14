@@ -18,7 +18,7 @@ export default function HeroSection() {
     setShowVideoModal(false);
   };
   return (
-    <section className="py-8 sm:py-12 md:py-16 lg:py-20">
+    <section className="py-8  ">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           <motion.div
@@ -26,11 +26,11 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <section className="w-full grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 items-center">
+            <section className="w-full grid grid-cols-1 gap-2 items-center mb-5">
               {/* Left Content */}
              
                 {/* Logo + Title */}
-                <div className="flex items-center gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
+                <div className="flex items-center gap-2 mb-4 ">
                   <Image
                              src="/FPGA.svg"
                              alt="FPGA"
@@ -44,15 +44,15 @@ export default function HeroSection() {
                 </div>
 
                 {/* Heading */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold leading-tight text-gray-900">
-                  <span className="block">Shape the</span>
-                  <span className="block text-blue-600 drop-shadow-sm">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-extrabold leading-tight text-gray-900 ">
+                  <span className="block  ">Shape the</span>
+                  <span className="block text-blue-600 drop-shadow-sm italic">
                     Future of
                   </span>
-                  <span className="block text-blue-600 drop-shadow-sm">
+                  <span className="block text-blue-600 drop-shadow-sm italic">
                     Semiconductor
                   </span>
-                  <span className="block text-blue-600 drop-shadow-sm">
+                  <span className="block text-blue-600 drop-shadow-sm italic">
                     Technology
                   </span>
                 </h1>
@@ -65,12 +65,20 @@ export default function HeroSection() {
                 </p>
 
                 {/* CTA */}
-                <button className="mt-3 sm:mt-4 md:mt-5 lg:mt-6 inline-flex w-full sm:w-1/3 items-center justify-center sm:justify-start gap-2 sm:gap-3 rounded-2xl bg-blue-600 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 text-white text-sm sm:text-base md:text-lg font-bold shadow-md hover:bg-blue-700 transition-colors duration-200 drop-shadow-xl drop-shadow-black">
-                  <span className="text-center sm:text-left">
-                    Join our <br className="hidden sm:block" /> Community
-                  </span>
-                  <span className="text-lg sm:text-xl md:text-2xl">→</span>
-                </button>
+            
+
+                <a
+  href="https://chat.whatsapp.com/DDrFF6wO70s2WQ0sOPq5nO"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-3 sm:mt-4 md:mt-5 lg:mt-6 inline-flex w-full sm:w-1/3 items-center justify-center sm:justify-start gap-2 sm:gap-3 rounded-2xl bg-blue-600 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 text-white text-sm sm:text-base md:text-lg font-bold shadow-md hover:bg-blue-700 transition-colors duration-200 drop-shadow-xl drop-shadow-black"
+  aria-label="Join our Community (WhatsApp)"
+>
+  <span className="text-center sm:text-left">
+    Join our <br className="hidden sm:block" /> Community
+  </span>
+  <span className="text-lg sm:text-xl md:text-2xl">→</span>
+</a>
               
             </section>
           </motion.div>

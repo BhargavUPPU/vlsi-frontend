@@ -10,7 +10,7 @@ import Image from "next/image";
 
 // Placeholder logos - in production, these would be actual company logos
 const employers = [
-  { name: "TEXS INSTRUMENT", logo: "/TexasInstruments-01.png" },
+  { name: "TEXAS INSTRUMENT", logo: "/TexasInstruments-01.png" },
   { name: "Samsung", logo: "/SamsungElectronics-01.png" },
   { name: "Qualcomm", logo: "/Qualcomm-Logo.png" },
   { name: "TSM", logo: "/TSM.png" },
@@ -80,7 +80,7 @@ export default function SemiconductorEmployers() {
                   />
                 </div>
                 <p className="text-xs sm:text-sm md:text-base font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
-                  {employer.name}
+                  {employer.name.toLocaleUpperCase()}
                 </p>
               </div>
             </motion.div>
