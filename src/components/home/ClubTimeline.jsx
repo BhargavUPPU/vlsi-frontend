@@ -165,7 +165,7 @@ export default function ClubTimeline() {
   );
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+    <section className="py-4 sm:py-6 md:py-8 lg:py-18 bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -338,7 +338,7 @@ export default function ClubTimeline() {
                             !failedImages.has(milestone.id) && (
                               <div className="mb-3 sm:mb-4 md:mb-5 lg:mb-6">
                                 <div
-                                  className="relative w-full h-32 xs:h-40 sm:h-48 md:h-52 lg:h-56 rounded-md sm:rounded-lg overflow-hidden cursor-pointer group"
+                                  className="relative w-full h-28 xs:h-36 sm:h-44 md:h-50 lg:h-60 rounded-md sm:rounded-lg overflow-hidden cursor-pointer group"
                                   // onClick={() => {
                                   //   console.log(
                                   //     "Opening lightbox for milestone:",
@@ -352,7 +352,7 @@ export default function ClubTimeline() {
                                   <img
                                     src={imageUrl}
                                     alt={milestone.title}
-                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    className="w-full h-full object-fit transition-transform duration-300 group-hover:scale-105"
                                     onError={() => {
                                       console.warn(
                                         "Failed to load milestone image:",

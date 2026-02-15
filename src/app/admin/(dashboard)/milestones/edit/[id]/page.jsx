@@ -178,25 +178,29 @@ export default function EditMilestonePage() {
   // Update mutation
   const updateMutation = useMutation({
     mutationFn: async (data) => {
-      const formData = new FormData();
-
-      Object.keys(data).forEach((key) => {
-        if (data[key] !== undefined && data[key] !== null) {
-          formData.append(key, data[key]);
-        }
-      });
-
+      // If there's a new image, use FormData. Otherwise, send JSON.
       if (imageFile) {
-        formData.append("image", imageFile);
-      }
+        const formData = new FormData();
 
-      return apiClient.put(
-        API_ENDPOINTS.MILESTONES.BY_ID(params.id),
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        },
-      );
+        Object.keys(data).forEach((key) => {
+          if (data[key] !== undefined && data[key] !== null) {
+            formData.append(key, String(data[key]));
+          }
+        });
+
+        formData.append("image", imageFile);
+
+        return apiClient.put(
+          API_ENDPOINTS.MILESTONES.BY_ID(params.id),
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          },
+        );
+      } else {
+        // Send as JSON when no new image
+        return apiClient.put(API_ENDPOINTS.MILESTONES.BY_ID(params.id), data);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["milestones"]);
@@ -206,6 +210,7 @@ export default function EditMilestonePage() {
       router.push("/admin/milestones");
     },
     onError: (error) => {
+      console.error("Update error:", error.response?.data || error.message);
       toast.error(
         error.response?.data?.message || "Failed to update milestone",
       );

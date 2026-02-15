@@ -31,8 +31,6 @@ const categoryOptions = [
   { value: "general", label: "General" },
   { value: "achievement", label: "Achievement" },
   { value: "event", label: "Event" },
-  { value: "partnership", label: "Partnership" },
-  { value: "innovation", label: "Innovation" },
 ];
 
 // Form validation schema
@@ -82,21 +80,25 @@ export default function CreateMilestonePage() {
   // Create mutation
   const createMutation = useMutation({
     mutationFn: async (data) => {
-      const formData = new FormData();
-      
-      Object.keys(data).forEach(key => {
-        if (data[key] !== undefined && data[key] !== null) {
-          formData.append(key, data[key]);
-        }
-      });
-
+      // If there's an image, use FormData. Otherwise, send JSON.
       if (imageFile) {
-        formData.append('image', imageFile);
-      }
+        const formData = new FormData();
+        
+        Object.keys(data).forEach(key => {
+          if (data[key] !== undefined && data[key] !== null) {
+            formData.append(key, String(data[key]));
+          }
+        });
 
-      return apiClient.post(API_ENDPOINTS.MILESTONES.BASE, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+        formData.append('image', imageFile);
+
+        return apiClient.post(API_ENDPOINTS.MILESTONES.BASE, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+      } else {
+        // Send as JSON when no image
+        return apiClient.post(API_ENDPOINTS.MILESTONES.BASE, data);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["milestones"]);
@@ -105,6 +107,7 @@ export default function CreateMilestonePage() {
       router.push("/admin/milestones");
     },
     onError: (error) => {
+      console.error("Create error:", error.response?.data || error.message);
       toast.error(error.response?.data?.message || "Failed to create milestone");
     },
   });

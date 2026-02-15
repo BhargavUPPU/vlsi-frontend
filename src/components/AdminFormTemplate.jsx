@@ -528,9 +528,9 @@ export function AdminFormTemplate({
     // Set existing multiple images - convert files array
     const initialMultipleImagesFields = {};
     multipleImagesFieldNames.forEach((fieldName) => {
-      // For eventFiles and projectImages, the data comes from defaultValues.files
+      // For eventFiles, the data comes from defaultValues.files
       if (
-        (fieldName === "eventFiles" || fieldName === "projectImages") &&
+        fieldName === "eventFiles" &&
         defaultValues.files &&
         Array.isArray(defaultValues.files)
       ) {
@@ -545,6 +545,26 @@ export function AdminFormTemplate({
               size: file.fileData?.length || 0,
               isExisting: true,
               id: file.id,
+            };
+          })
+          .filter(Boolean);
+        initialMultipleImagesFields[fieldName] = existingImages;
+      } else if (
+        fieldName === "projectImages" &&
+        defaultValues.images &&
+        Array.isArray(defaultValues.images)
+      ) {
+        // Handle Project images relation
+        const existingImages = defaultValues.images
+          .map((img, index) => {
+            const preview = bufferToDataURL(img.fileData || img);
+            if (!preview) return null;
+            return {
+              preview,
+              name: `Image ${index + 1}`,
+              size: img.fileData?.length || img?.length || 0,
+              isExisting: true,
+              id: img.id,
             };
           })
           .filter(Boolean);

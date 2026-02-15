@@ -37,7 +37,7 @@ const achievements = [
 export default function StudentAchievements() {
   const router=useRouter();
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-100 to-blue-50">
+    <section className="py-4 sm:py-6 md:py-8 lg:py-12 bg-gradient-to-br from-gray-100 to-blue-50">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -99,7 +99,7 @@ export default function StudentAchievements() {
                   alt={achievement.title}
                   width={80}
                   height={80}
-                  className="object-contain w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28"
+                  className="object-contain w-25 h-25 sm:w-24 sm:h-24 md:w-35 md:h-35"
                   sizes="(max-width: 640px) 60vw, (max-width: 1024px) 30vw, 20vw"
                   priority={index === 0}
                 />

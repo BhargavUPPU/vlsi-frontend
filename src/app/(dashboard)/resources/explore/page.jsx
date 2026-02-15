@@ -299,7 +299,7 @@ export default function ResourcesExplorePage() {
           {/* Main Content */}
           <main className="flex-1">
             {isLoading ? (
-              <div className="flex justify-center items-center h-64">
+              <div className="flex min-h-screen justify-center items-center h-64">
                 <ContentLoading message={`Loading ${RESOURCE_TYPES.find(t => t.id === selectedType)?.label}...`} />
               </div>
             ) : resources.length > 0 ? (
@@ -316,12 +316,12 @@ export default function ResourcesExplorePage() {
                         whileHover={{ y: -8 }}
                         className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col group h-full"
                       >
-                        <div className="relative aspect-[4/3] bg-gray-50 overflow-hidden">
+                        <div className="relative aspect-[5/3] bg-gray-50 overflow-hidden">
                           <Image
                             src={getImageUrl(item)}
                             alt={getTitle(item)}
                             fill
-                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="object-fit group-hover:scale-110 transition-transform duration-500"
                             unoptimized
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />

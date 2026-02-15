@@ -345,7 +345,7 @@ export default function ProjectsPage() {
       {/* Filters */}
       <div className="bg-white border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 ">
             <select
               value={filters.category}
               onChange={(e) => handleFilterChange("category", e.target.value)}
@@ -370,21 +370,6 @@ export default function ProjectsPage() {
               {academicYears.map((year) => (
                 <option key={year} value={year}>
                   {year}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={filters.month}
-              onChange={(e) => handleFilterChange("month", e.target.value)}
-              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-colors"
-            >
-              <option value="">All Months</option>
-              {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-                <option key={month} value={month}>
-                  {new Date(2000, month - 1).toLocaleString("default", {
-                    month: "long",
-                  })}
                 </option>
               ))}
             </select>

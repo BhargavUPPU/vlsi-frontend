@@ -26,7 +26,7 @@ export const columns = [
         <ActionCell
           row={row}
           onDelete={deleteProject.mutateAsync}
-          editPath="/admin/projects/editProject"
+          editPath="/admin/projects/createProject"
           itemName="Project"
         />
       );

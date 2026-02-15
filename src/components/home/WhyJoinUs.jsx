@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -19,10 +20,15 @@ const features = [
     bgColor: "bg-teal-500",
     subtitle:       "Master VLSI concepts through practical workshops, lab sessions, and real-world projects.",
     points: [
-
-      "Advanced Lab Exposure - Work with industry-grade EDA tools (Cadence, Synopsys, Mentor) and FPGA boards to gain practical experience in chip design.",
-      "Project-Driven Modules - Build real-world mini-projects such as digital circuits, RTL design, and layout optimization.",
-      "Mentorship-Based Skill Building - Learn directly from experts through guided labs, live demos, debugging assistance, and peer collaboration.",
+      <>
+        <strong>Advanced Lab Exposure -</strong> Work with industry-grade EDA tools (Cadence, Synopsys, Mentor) and FPGA boards to gain practical experience in chip design.
+      </>,
+      <>
+        <strong>Project-Driven Modules -</strong> Build real-world mini-projects such as digital circuits, RTL design, and layout optimization.
+      </>,
+      <>
+        <strong>Mentorship - Based Skill Building -</strong> Learn directly from experts through guided labs, live demos, debugging assistance, and peer collaboration.
+      </>,
     ],
   },
   {
@@ -33,9 +39,15 @@ const features = [
     bgColor: "bg-yellow-500",
     subtitle:    "Network with professionals, attend guest lectures, and participate in tech talks and top tech companies.",
     points: [
-   
-      "Expert Guest Lectures - Interact with professionals from semiconductor companies like Intel, Qualcomm, NVIDIA, and AMD who share insights for securing internships through referrals, industry-linked events, and skill-based networking.",
-      "Professional Networking - Participate in tech talks, panel discussions, and meetups that help build long-term career connections.",
+      <>
+        <strong>Expert Guest Lectures -</strong> Interact with professionals from semiconductor companies like Intel, Qualcomm, NVIDIA, and AMD who share insights for securing internships through referrals, industry-linked events, and skill-based networking.
+      </>,
+      <>
+        <strong>Internship Pathways -</strong> Get support for securing internships through referrals, industry linked events, and skill-based selection programs.
+      </>,
+      <>
+        <strong>Professional Networking -</strong> Participate in tech talks, panel discussions, and meetups that help build long-term career connections.
+      </>,
     ],
   },
   {
@@ -46,10 +58,15 @@ const features = [
     subtitle:"Participate in national VLSI design competitions and hackathons.",
     bgColor: "bg-pink-500",
     points: [
-
-      "National-Level Participation - Get opportunities to compete in recognized EDA competitions such as Intel FPGA, IISF, and IEEE contests.",
-      "Team-Based Innovation - Work in teams to solve real semiconductor design challenges from RTL coding to FPGA prototype demos.",
-      "Portfolio & Recognition - Develop award-winning projects that enhance your resume and gain recognition from industry experts.",
+      <>
+        <strong>National-Level Participation -</strong> Get opportunities to compete in recognized EDA competitions such as Intel FPGA, IISF, and IEEE contests.
+      </>,
+      <>
+        <strong>Team-Based Innovation -</strong> Work in teams to solve real semiconductor design challenges from RTL coding to FPGA prototype demos.
+      </>,
+      <>
+        <strong>Portfolio & Recognition -</strong> Develop award-winning projects that enhance your resume and gain recognition from industry experts.
+      </>,
     ],
   },
 ];
@@ -77,12 +94,40 @@ function FeatureCard({ feature, index, isExpanded }) {
       <div className="space-y-2 sm:space-y-3 md:space-y-4">
         {feature.points
           .slice(0, isExpanded ? feature.points.length : 2)
-          .map((point, idx) => (
-            <div key={idx} className="flex items-start gap-2 sm:gap-3">
-              <span className="text-gray-400 mt-1 flex-shrink-0">•</span>
-              <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed">{point}</p>
-            </div>
-          ))}
+          .map((point, idx) => {
+            const isElement = React.isValidElement(point);
+            if (isElement) {
+              return (
+                <div key={idx} className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-gray-400 mt-1 flex-shrink-0">•</span>
+                  <div className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed">{point}</div>
+                </div>
+              );
+            }
+
+            const str = String(point);
+            const hyphenIndex = str.indexOf("-");
+            if (hyphenIndex !== -1) {
+              const prefix = str.slice(0, hyphenIndex + 1); // include hyphen
+              const rest = str.slice(hyphenIndex + 1);
+              return (
+                <div key={idx} className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-gray-400 mt-1 flex-shrink-0">•</span>
+                  <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed">
+                    <strong>{prefix}</strong>
+                    {rest}
+                  </p>
+                </div>
+              );
+            }
+
+            return (
+              <div key={idx} className="flex items-start gap-2 sm:gap-3">
+                <span className="text-gray-400 mt-1 flex-shrink-0">•</span>
+                <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed">{str}</p>
+              </div>
+            );
+          })}
       </div>
     </motion.div>
   );
@@ -92,7 +137,7 @@ export default function WhyJoinUs() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section id="why-join" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50">
+    <section id="why-join" className="py-4 sm:py-6 md:py-8 lg:py-12 bg-gray-50">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -131,7 +176,7 @@ export default function WhyJoinUs() {
         {/* Common Read More/Less Button */}
         <div className="text-center mt-8">
           <button
-            className="flex items-center gap-1 text-blue-600 font-medium hover:text-blue-700 transition-colors mx-auto"
+            className="flex items-center gap-1 text-blue-600 font-medium hover:text-blue-700 transition-colors mx-auto border border-blue-600 hover:border-blue-700 rounded-lg px-4 py-2 text-sm"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? (

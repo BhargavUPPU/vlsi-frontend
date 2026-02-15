@@ -56,9 +56,8 @@ export default function MilestonesAdminPage() {
   const { data: milestones, isLoading } = useQuery({
     queryKey: ["admin-milestones"],
     queryFn: async () => {
-      const response = await apiClient.get(
-        `${API_ENDPOINTS.MILESTONES.BASE}?isActive=undefined`,
-      );
+      // Don't add isActive parameter to get all milestones
+      const response = await apiClient.get(API_ENDPOINTS.MILESTONES.BASE);
       return response.data;
     },
   });

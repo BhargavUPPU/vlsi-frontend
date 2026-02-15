@@ -32,6 +32,7 @@ export default function ProjectDetailsPage() {
   });
 
   const project = projectData?.data;
+  console.log('Fetched project data:', project);
 
   // Debug logging
   console.log('Project data loaded:', project);
@@ -66,7 +67,7 @@ export default function ProjectDetailsPage() {
   }, [emblaApi, onSelect]);
 
   // Parse JSON fields
-  const futureScope = Array.isArray(project?.futureScope) ? project.futureScope : [];
+
   const keyAchievements = Array.isArray(project?.keyAchievements) ? project.keyAchievements : [];
   const methodology = Array.isArray(project?.Methodology) ? project.Methodology.split('\n') : (project?.Methodology ? [project.Methodology] : []);
   const members = Array.isArray(project?.Members) ? project.Members : (typeof project?.Members === 'string' ? JSON.parse(project.Members) : []);
@@ -179,42 +180,9 @@ export default function ProjectDetailsPage() {
               </div>
             )}
 
-            {/* Team Members */}
-            {members.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Team Members</h2>
-                <div className="flex flex-wrap gap-3">
-                  {members.map((member, index) => (
-                    <div
-                      key={index}
-                      className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg px-4 py-2 hover:shadow-md transition-shadow"
-                    >
-                      <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm">
-                        {member.charAt(0).toUpperCase()}
-                      </div>
-                      <span className="font-medium text-gray-900">{member}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+          
 
-            {/* Tools & Technologies */}
-            {tools.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Tools & Technologies</h2>
-                <div className="flex flex-wrap gap-2">
-                  {tools.map((tool, index) => (
-                    <span
-                      key={index}
-                      className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-indigo-200 transition-colors"
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+          
 
             {/* Abstract */}
             {project.Abstract && (
@@ -245,6 +213,16 @@ export default function ProjectDetailsPage() {
                 </p>
               </div>
             )}
+            {
+              project.Conclusion && (
+                <div className="bg-white rounded-lg shadow-sm p-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Conclusion</h2>
+                  <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                    {project.Conclusion}
+                  </p>
+                </div>
+              )
+            }
 
             {/* Results */}
             {project.Results && (
@@ -286,7 +264,8 @@ export default function ProjectDetailsPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Project Resources */}
-            <div className="bg-gray-900 text-white rounded-lg shadow-sm p-6">
+           { project.reportPdfLink || project.githubLink || project.demoLink ? (
+             <div className="bg-gray-900 text-white rounded-lg shadow-sm p-6">
               <h3 className="text-lg font-bold mb-4">Project resources</h3>
               <div className="space-y-3">
                 {project.reportPdfLink && (
@@ -324,16 +303,18 @@ export default function ProjectDetailsPage() {
                 )}
               </div>
             </div>
+           ):null
+           }
 
             {/* Mentor/Guide */}
-            {project.mentorName && (
+            {project.Mentor && (
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                     <User size={32} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900">{project.mentorName}</h3>
+                    <h3 className="font-bold text-gray-900">{project.Mentor}</h3>
                     <p className="text-sm text-gray-500">{project.mentorDesignation || "Project Guide"}</p>
                   </div>
                 </div>
@@ -347,18 +328,50 @@ export default function ProjectDetailsPage() {
               </div>
             )}
 
+              {/* Team Members */}
+            {members.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Team Members</h2>
+                <div className="flex flex-wrap gap-3">
+                  {members.map((member, index) => (
+                    <div
+                      key={index}
+                      className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg px-4 py-2 hover:shadow-md transition-shadow"
+                    >
+                      <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm">
+                        {member.charAt(0).toUpperCase()}
+                      </div>
+                      <span className="font-medium text-gray-900">{member}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+              {/* Tools & Technologies */}
+            {tools.length > 0 && (
+              <div className="bg-white rounded-lg shadow-sm p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Tools & Technologies</h2>
+                <div className="flex flex-wrap gap-2">
+                  {tools.map((tool, index) => (
+                    <span
+                      key={index}
+                      className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-indigo-200 transition-colors"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Future Scope */}
-            {futureScope.length > 0 && (
+            {project.futureScope && (
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Future Scope</h3>
-                <ul className="space-y-3">
-                  {futureScope.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-gray-600">
-                      <span className="text-blue-600 mt-1">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+               <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                  {project.futureScope}
+                </p>
               </div>
             )}
 
@@ -386,25 +399,17 @@ export default function ProjectDetailsPage() {
             )}
 
             {/* Project Info */}
-            <div className="bg-white rounded-lg shadow-sm p-6 space-y-3 text-sm">
+           {
+              project.date ? ( <div className="bg-white rounded-lg shadow-sm p-6 space-y-3 text-sm">
               {project.date && (
                 <div className="flex items-center gap-2 text-gray-600">
                   <Calendar size={16} />
                   <span>{new Date(project.date).toLocaleDateString()}</span>
                 </div>
               )}
-              {project.status && (
-                <div>
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                    project.status.toLowerCase() === "completed"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-yellow-100 text-yellow-700"
-                  }`}>
-                    {project.status}
-                  </span>
-                </div>
-              )}
-            </div>
+            
+            </div>):null
+           }
           </div>
         </div>
       </div>

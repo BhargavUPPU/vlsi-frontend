@@ -239,11 +239,11 @@ export default function TeamPage() {
               </>
             )}
 
-            <div className="absolute bottom-12 sm:bottom-16 md:bottom-20 left-0 right-0 text-center px-3 sm:px-4 md:px-6">
+            <div className="absolute bottom-8 sm:bottom-10 md:bottom-16 left-0 right-0 text-center px-3 sm:px-4 md:px-6">
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-3 sm:mb-4 tracking-tight leading-tight"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white  tracking-tight leading-tight"
               >
                 Meet our team{" "}
                 <span className="text-blue-500 italic font-medium">
@@ -272,7 +272,7 @@ export default function TeamPage() {
 
       {/* Year & Navigation Section */}
       <section className="bg-white border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-6">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-2 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-6">
           <div className="flex flex-col w-full lg:w-auto">
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-tight">
               VLSID CLUB Core Members
@@ -298,11 +298,6 @@ export default function TeamPage() {
                   </option>
                 ))}
               </select>
-              <ChevronDown
-                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-blue-500 transition-colors"
-                size={16}
-                className="sm:w-[18px] sm:h-[18px]"
-              />
             </div>
 
             <Link href="/club-members" className="w-full sm:w-auto">
@@ -347,7 +342,7 @@ export default function TeamPage() {
             </p>
           </motion.div>
         ) : (
-          <div className="space-y-16 sm:space-y-20 md:space-y-24 lg:space-y-32">
+          <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-7">
             {sortedPortfolios.map((portfolio) => {
               const members = groupedByPortfolio[portfolio];
               const desc =
@@ -361,7 +356,7 @@ export default function TeamPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6 }}
-                  className="space-y-8 sm:space-y-10 md:space-y-12"
+                  className="space-y-8 sm:space-y-10 md:space-y-10"
                 >
                   {/* Category Header */}
                   <div className="text-center max-w-2xl sm:max-w-3xl mx-auto px-2">
@@ -375,7 +370,7 @@ export default function TeamPage() {
                   </div>
 
                   {/* Members Responsive Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 sm:gap-10 md:gap-12 lg:gap-14 justify-items-center">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-10 md:gap-12 lg:gap-10 justify-items-center">
                     {members.map((member, idx) => {
                       const imageUrl = getMemberImage(member);
 
@@ -423,11 +418,8 @@ export default function TeamPage() {
                             <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors leading-tight px-2">
                               {member.name}
                             </h4>
-                            <p className="text-blue-600 font-bold text-xs sm:text-sm tracking-wide uppercase">
-                              {member.portfolio}
-                            </p>
-
-                            <div className="pt-1 sm:pt-2 text-slate-500 text-xs sm:text-sm font-medium space-y-1">
+                           
+                            <div className=" text-slate-500 text-xs sm:text-sm font-medium space-y-1">
                               {member.rollNumber && (
                                 <div className="flex items-center justify-center gap-1 sm:gap-1.5">
                                   <span className="opacity-60">Roll No:</span>

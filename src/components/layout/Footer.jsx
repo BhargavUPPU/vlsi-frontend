@@ -30,7 +30,7 @@ export default function Footer() {
   }, []);
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
+    { name: "About Us", href: "/about" },
     { name: "Events", href: "/events" },
     { name: "Resources", href: "/resources" },
     { name: "Our Team", href: "/team" },
@@ -88,8 +88,8 @@ export default function Footer() {
 
       {/* Main Footer Content */}
       <div className="relative z-10">
-        <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
+        <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8 py-10 sm:py-12 md:py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-start">
             {/* Logo & Social Media */}
             <motion.div
               initial="hidden"
@@ -136,65 +136,58 @@ export default function Footer() {
               </div>
             </motion.div>
 
-            {/* Quick Links */}
+            {/* Center: Quick Links + Contact Information (side-by-side, tighter spacing) */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeInUp}
             >
-              <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
-              <ul className="space-y-3">
-                {quickLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-blue-200 hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Contact Information */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-            >
-              <h4 className="text-lg font-semibold mb-6">
-                Contact Information
-              </h4>
-              <div className="space-y-4">
-                {/* Address */}
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-blue-300 flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="text-sm font-medium mb-1">Address:</p>
-                    <p className="text-sm text-blue-200 leading-relaxed">
-                      {contactInfo.address}
-                    </p>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-14">
+                <div>
+                  <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+                  <ul className="space-y-2">
+                    {quickLinks.map((link) => (
+                      <li key={link.name}>
+                        <Link
+                          href={link.href}
+                          className="text-blue-200 hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block text-sm"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                {/* Email */}
-                <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-blue-300 flex-shrink-0 mt-1" />
-                  <div>
-                    <p className="text-sm font-medium mb-1">Email:</p>
-                    <a
-                      href={`mailto:${contactInfo.email}`}
-                      className="text-sm text-blue-200 hover:text-white transition-colors"
-                    >
-                      {contactInfo.email}
-                    </a>
+                <div>
+                  <h4 className="text-lg font-semibold mb-4">Contact</h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 text-blue-300 flex-shrink-0 mt-1" />
+                      <div className="leading-tight">
+                        <p className="font-medium">Address</p>
+                        <p className="text-blue-200">{contactInfo.address}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-2">
+                      <Mail className="w-4 h-4 text-blue-300 flex-shrink-0 mt-1" />
+                      <div className="leading-tight">
+                        <p className="font-medium">Email</p>
+                        <a
+                          href={`mailto:${contactInfo.email}`}
+                          className="text-blue-200 hover:text-white"
+                        >
+                          {contactInfo.email}
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </motion.div>
+             
 
             {/* Location - Google Map */}
             <motion.div
