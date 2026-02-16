@@ -15,21 +15,21 @@ const achievements = [
     title: "Projects",
     description:
       "A student-driven VLSI club fostering innovation through hands-on chip design and electronics projects.",
-    image: "/student_achievements_1.png", // Placeholder for rocket image
+    image: "/rocket.svg", // Placeholder for rocket image
     href:"/projects"
   },
   {
     title: "Achievements",
     description:
       "A hub of excellence where students showcase talent, earning VLSI badges, alumni top-tech placements, and recognition for outstanding projects and innovative papers.",
-    image: "/student_achievements_2.png", // Placeholder for trophy image
+    image: "/medal.svg", // Placeholder for trophy image
     href:"/achievements"
   },
   {
     title: "Photo Gallery",
     description:
       "Moments from the VLSI Club, capturing innovation, collaboration, and hands-on excellence in chip design and electronics",
-    image: "/student_achievements_3.png", // Placeholder for magazine image
+    image: "/file (2).svg", // Placeholder for magazine image
     href:"/photogallery"
   },
 ];

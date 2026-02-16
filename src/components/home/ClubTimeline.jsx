@@ -284,11 +284,10 @@ export default function ClubTimeline() {
             variants={staggerContainer}
             className="relative max-h-[70vh] overflow-y-auto pr-4 py-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
           >
-            {/* Timeline Line */}
-            <div className="absolute left-4 sm:left-6 lg:left-1/2 lg:transform lg:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-purple-200 to-green-200"></div>
-
-            {/* Timeline Events */}
-            <div className="space-y-6 sm:space-y-8 lg:space-y-10 xl:space-y-12">
+            {/* Timeline Events Container - this will define the full height */}
+            <div className="relative space-y-6 sm:space-y-8 lg:space-y-10 xl:space-y-12">
+              {/* Timeline Line - now positioned relative to the full content height */}
+              <div className="absolute left-4 sm:left-6 lg:left-1/2 lg:transform lg:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-purple-200 to-green-200"></div>
               <AnimatePresence mode="popLayout">
                 {milestones.map((milestone, index) => {
                   const Icon =

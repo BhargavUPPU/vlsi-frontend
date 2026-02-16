@@ -142,8 +142,8 @@ export default function ResourcesPage() {
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
               <BookOpen className="w-6 h-6 text-blue-600" />
             </div>
-            <h3 className="text-lg  font-semibold mb-2 text-black relative z-10">VLSI RoadMap</h3>
-            <p className=" text-sm  relative z-10">
+            <h3 className="text-lg  font-semibold mb-2 text-gray-800 relative z-10">VLSI RoadMap</h3>
+            <p className=" text-sm text-gray-600 relative z-10">
               Comprehensive guide to VLSI design and development
             </p>
           </Link>

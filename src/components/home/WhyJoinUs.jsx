@@ -33,7 +33,7 @@ const features = [
   },
   {
     icon: (
-          <img src="/INDUSTRYCONNECTIONS.svg" alt="Industry Connections" className="w-12 h-12" />
+          <img src="/AboutUs1.svg" alt="Industry Connections" className="w-12 h-12" />
     ),
     title: "Industry Connections",
     bgColor: "bg-yellow-500",
@@ -52,7 +52,7 @@ const features = [
   },
   {
     icon: (
-          <img src="/INDUSTRYCONNECTIONS.svg" alt="Industry Connections" className="w-12 h-12" />
+          <img src="/AboutUs2.svg" alt="Industry Connections" className="w-12 h-12" />
     ),
     title: "Competition Excellence",
     subtitle:"Participate in national VLSI design competitions and hackathons.",

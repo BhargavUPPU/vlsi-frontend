@@ -1,7 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, ChevronUp, Eye, Briefcase ,ArrowLeft} from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Eye,
+  Briefcase,
+  ArrowLeft,
+} from "lucide-react";
 import Link from "next/link";
 
 const AboutUs = () => {
@@ -50,7 +56,7 @@ const AboutUs = () => {
     },
   ];
 
-    const founders = [
+  const founders = [
     {
       name: "Pragada Sai Manohar",
       role: "WEB DEVELOPER",
@@ -76,7 +82,7 @@ const AboutUs = () => {
       name: "ANVESH",
       role: "WEB DESIGNER",
       roll_number: "21131A04Q9",
-      image: "/logo.png",
+      image: "/desinger.jpeg",
     },
   ];
   // VLSID Club FAQ (from image)
@@ -127,7 +133,6 @@ const AboutUs = () => {
         "Students interested in joining the VLSID Club can apply through the official Google Form. After submitting the form, applicants must attend a basic exam to assess their fundamental knowledge and interest. Candidates who qualify are called for an interview to evaluate their motivation and willingness to learn. Based on the exam and interview performance, the club finalizes the shortlist of selected members.",
     },
   ];
-  
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-white to-gray-50">
@@ -135,13 +140,13 @@ const AboutUs = () => {
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         {/* About VLSID Club Section */}
-          <Link
-                  href="/"
-                  className="inline-flex items-center gap-1.5 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4 sm:mb-6 text-sm sm:text-base"
-                >
-                  <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-                  <span>Home</span>
-                </Link>
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4 sm:mb-6 text-sm sm:text-base"
+        >
+          <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
+          <span>Home</span>
+        </Link>
         <div className="mb-12 sm:mb-16 max-w-7xl mx-auto">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 sm:mb-8 md:mb-12 text-center px-2">
             About <span className="text-[#2563eb]">VLSID</span> Club
@@ -163,8 +168,24 @@ const AboutUs = () => {
             <div className="lg:col-span-2 space-y-3 sm:space-y-4 order-2 lg:order-none">
               <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md border border-gray-100">
                 <p className="text-gray-700 text-sm sm:text-base leading-relaxed text-justify">
-                 The VLSID (VLSI Design) Club is a student-driven technical community committed to exploring and advancing the field of VLSI and semiconductor technology. Under the guidance of experienced faculty, the club aims to bridge the gap between academic learning and industry expectations by providing a strong foundation in both core concepts and practical skills.The club promotes peer-to-peer learning and mentorship, enabling effective knowledge transfer from seniors to juniors through structured classes, hands-on training with industry-standard EDA tools, collaborative projects, and regular assessments. Through workshops, industrial talks, alumni interactions, and technical conferences, members gain exposure to real-world challenges, emerging technologies, and career opportunities in the semiconductor domain.By encouraging innovation, teamwork, and continuous learning, the VLSID Club nurtures technically competent and industry-ready engineers, empowering students to design and shape the future of silicon technology.
-Think Silicon. Design the Future.
+                  The VLSID (VLSI Design) Club is a student-driven technical
+                  community committed to exploring and advancing the field of
+                  VLSI and semiconductor technology. Under the guidance of
+                  experienced faculty, the club aims to bridge the gap between
+                  academic learning and industry expectations by providing a
+                  strong foundation in both core concepts and practical
+                  skills.The club promotes peer-to-peer learning and mentorship,
+                  enabling effective knowledge transfer from seniors to juniors
+                  through structured classes, hands-on training with
+                  industry-standard EDA tools, collaborative projects, and
+                  regular assessments. Through workshops, industrial talks,
+                  alumni interactions, and technical conferences, members gain
+                  exposure to real-world challenges, emerging technologies, and
+                  career opportunities in the semiconductor domain.By
+                  encouraging innovation, teamwork, and continuous learning, the
+                  VLSID Club nurtures technically competent and industry-ready
+                  engineers, empowering students to design and shape the future
+                  of silicon technology. Think Silicon. Design the Future.
                 </p>
               </div>
               {/* <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
@@ -192,10 +213,15 @@ Think Silicon. Design the Future.
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#2563eb] to-[#3b82f6] rounded-full flex items-center justify-center mr-3 sm:mr-4 shadow-md">
                 <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Vision</h2>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+                Vision
+              </h2>
             </div>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed text-justify">
-             To create a community of innovative and skilled individuals who are passionate about VLSI and semiconductor technology, empowering them to become future leaders in chip design and hardware innovation.
+              To create a community of innovative and skilled individuals who
+              are passionate about VLSI and semiconductor technology, empowering
+              them to become future leaders in chip design and hardware
+              innovation.
             </p>
           </div>
 
@@ -205,10 +231,14 @@ Think Silicon. Design the Future.
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#2563eb] to-[#3b82f6] rounded-full flex items-center justify-center mr-3 sm:mr-4 shadow-md">
                 <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Mission</h2>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+                Mission
+              </h2>
             </div>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed text-justify">
-              To provide hands-on learning opportunities in VLSI design, verification, and fabrication through workshops, projects, and competitions.
+              To provide hands-on learning opportunities in VLSI design,
+              verification, and fabrication through workshops, projects, and
+              competitions.
             </p>
           </div>
         </div>
@@ -246,7 +276,18 @@ Think Silicon. Design the Future.
               <div className="md:w-2/3 p-4 sm:p-6 bg-white">
                 <div className="max-w-none">
                   <p className="text-sm sm:text-base md:text-md lg:text-lg text-gray-700 leading-relaxed text-justify">
-                  Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID Club,  holds a Ph.D. in ECE from NIT Rourkela, M.Tech. in Digital Systems from NIT Allahabad, and B.E. in ECE from Sir C.R. Reddy College, Eluru. With 18 years of experience - including 11 years in teaching, 4 years in research, and 3 years in industry - his expertise spans VLSI Design, Hardware Accelerators, and Approximate Computing. He has 13 international journal papers, 6 conference papers, 2 patents, and a book chapter with CRC Press. He has guided 8 M.Tech dissertations and currently supervises 2 Ph.D. scholars, consistently inspiring innovation and excellence in VLSI education and research.
+                    Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID
+                    Club, holds a Ph.D. in ECE from NIT Rourkela, M.Tech. in
+                    Digital Systems from NIT Allahabad, and B.E. in ECE from Sir
+                    C.R. Reddy College, Eluru. With 18 years of experience -
+                    including 11 years in teaching, 4 years in research, and 3
+                    years in industry - his expertise spans VLSI Design,
+                    Hardware Accelerators, and Approximate Computing. He has 13
+                    international journal papers, 6 conference papers, 2
+                    patents, and a book chapter with CRC Press. He has guided 8
+                    M.Tech dissertations and currently supervises 2 Ph.D.
+                    scholars, consistently inspiring innovation and excellence
+                    in VLSI education and research.
                   </p>
                   {/* <p className="text-gray-700 leading-relaxed text-justify mt-4">
                     Dr. Rao has earned his M.Tech in VLSI System Design and
@@ -266,105 +307,156 @@ Think Silicon. Design the Future.
         {/* Our Objectives Section */}
         <div className="mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-12 text-gray-800 flex items-center justify-center gap-2 px-2">
-            <span role="img" aria-label="Objectives">📋</span> Our Objectives
+            <span role="img" aria-label="Objectives">
+              📋
+            </span>{" "}
+            Our Objectives
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* 1 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-indigo-500 to-blue-500 shadow-md ring-1 ring-indigo-100">1</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">Knowledge Transfer from Seniors to Juniors</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-indigo-500 to-blue-500 shadow-md ring-1 ring-indigo-100">
+                  1
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">
+                  Knowledge Transfer from Seniors to Juniors
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
-                <li>Organizing Classes for 2nd-Year Students</li>
-                <li>Providing Training to 3rd-Year Students</li>
-                <li>Conducting Mock-Tests</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Organizing Classes for 2nd-Year Students</li>
+                  <li>Providing Training to 3rd-Year Students</li>
+                  <li>Conducting Mock-Tests</li>
+                </ul>
+              </div>
             </div>
             {/* 2 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-green-500 to-teal-400 shadow-md ring-1 ring-teal-100">2</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-teal-600">Updating and Practicing Question Banks</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-green-500 to-teal-400 shadow-md ring-1 ring-teal-100">
+                  2
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-teal-600">
+                  Updating and Practicing Question Banks
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
-                <li>Collecting and Organizing Questions</li>
-                <li>Practicing Questions</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Collecting and Organizing Questions</li>
+                  <li>Practicing Questions</li>
+                </ul>
+              </div>
             </div>
             {/* 3 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start text-center mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-purple-500 to-pink-500 shadow-md ring-1 ring-pink-100">3</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight  group-hover:text-pink-600">Interacting with Alumni</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-purple-500 to-pink-500 shadow-md ring-1 ring-pink-100">
+                  3
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-pink-600">
+                  Interacting with Alumni
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
-                <li>Networking Opportunities</li>
-                <li>Career Advice</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Networking Opportunities</li>
+                  <li>Career Advice</li>
+                </ul>
+              </div>
             </div>
             {/* 4 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-md ring-1 ring-yellow-100">4</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-orange-600">Conducting Industrial Talks</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-md ring-1 ring-yellow-100">
+                  4
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-orange-600">
+                  Conducting Industrial Talks
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
-                <li>Expert Talks</li>
-                <li>Industry Insights</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Expert Talks</li>
+                  <li>Industry Insights</li>
+                </ul>
+              </div>
             </div>
             {/* 5 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-red-500 to-pink-600 shadow-md ring-1 ring-red-100">5</span>
-                <span className="text-lg sm:text-base font-bold text-gray-800 leading-tight group-hover:text-pink-600">Including Juniors in Senior's Projects</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-red-500 to-pink-600 shadow-md ring-1 ring-red-100">
+                  5
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-pink-600">
+                  Including Juniors in Senior's Projects
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md  mt-2 space-y-1">
-                <li>Project Participation</li>
-                <li>Mentorship</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Project Participation</li>
+                  <li>Mentorship</li>
+                </ul>
+              </div>
             </div>
             {/* 6 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-sky-400 to-indigo-500 shadow-md ring-1 ring-sky-100">6</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">Attending or Applying for Workshops in IITs/NITs</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-sky-400 to-indigo-500 shadow-md ring-1 ring-sky-100">
+                  6
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">
+                  Attending or Applying for Workshops in IITs/NITs
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
-                <li>Workshop Participation</li>
-                <li>Application Support</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Workshop Participation</li>
+                  <li>Application Support</li>
+                </ul>
+              </div>
             </div>
             {/* 7 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-lime-400 to-green-500 shadow-md ring-1 ring-lime-100">7</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-green-600">Conducting Conferences</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-lime-400 to-green-500 shadow-md ring-1 ring-lime-100">
+                  7
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-green-600">
+                  Conducting Conferences
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
-                <li>Student Presentations</li>
-                <li>Industry Insights</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Student Presentations</li>
+                  <li>Industry Insights</li>
+                </ul>
+              </div>
             </div>
             {/* 8 */}
             <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-violet-500 to-indigo-600 shadow-md ring-1 ring-violet-100">8</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">Coordinating Juniors</span>
+              <div className="flex flex-row gap-2 sm:gap-3 items-center mb-3 sm:mb-4">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center text-white flex-shrink-0 bg-gradient-to-br from-violet-500 to-indigo-600 shadow-md ring-1 ring-violet-100">
+                  8
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">
+                  Coordinating Juniors
+                </span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
-                <li>Bridge Communication & Foster Engagement</li>
-                <li>Promote Participation & Talent Development</li>
-                <li>Mentorship & Onboarding Support</li>
-              </ul>
+              <div className="w-full max-w-md mx-auto">
+                <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1 text-left">
+                  <li>Bridge Communication & Foster Engagement</li>
+                  <li>Promote Participation & Talent Development</li>
+                  <li>Mentorship & Onboarding Support</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-        {/*Club Founders */}  
+        {/*Club Founders */}
         <div className="mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-12 text-gray-800 px-2">
-          VLSI Club Founders 
+            VLSI Club Founders
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
@@ -385,7 +477,9 @@ Think Silicon. Design the Future.
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                   {developer.name}
                 </h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{developer.roll_number}</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+                  {developer.roll_number}
+                </p>
               </div>
             ))}
           </div>
@@ -415,8 +509,12 @@ Think Silicon. Design the Future.
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                   {developer.name}
                 </h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{developer.roll_number}</p>
-                <p className="text-sm sm:text-base text-[#2563eb] font-semibold">{developer.role}</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+                  {developer.roll_number}
+                </p>
+                <p className="text-sm sm:text-base text-[#2563eb] font-semibold">
+                  {developer.role}
+                </p>
               </div>
             ))}
           </div>
@@ -432,64 +530,29 @@ Think Silicon. Design the Future.
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
               {/* Left Column */}
               <div className="space-y-3 sm:space-y-4">
-               
-
-                {vlsiFaqs.slice(0, Math.ceil(vlsiFaqs.length / 2)).map((faq, index) => (
-                  <div
-                    key={index}
-                    className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm"
-                  >
-                    <button
-                      onClick={() => toggleFAQ(index)}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                    >
-                      <span className="font-medium text-gray-800 text-xs sm:text-sm pr-2">
-                        {faq.question}
-                      </span>
-                      <div className="ml-2 sm:ml-4 flex-shrink-0">
-                        {openFAQ === index ? (
-                          <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#2563eb]" />
-                        ) : (
-                          <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" />
-                        )}
-                      </div>
-                    </button>
-                    {openFAQ === index && (
-                      <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border-t border-gray-200">
-                        <p className="text-gray-700 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-3 sm:space-y-4">
-                {vlsiFaqs.slice(Math.ceil(vlsiFaqs.length / 2)).map((faq, index) => {
-                  const actualIndex = index + Math.ceil(vlsiFaqs.length / 2);
-                  return (
+                {vlsiFaqs
+                  .slice(0, Math.ceil(vlsiFaqs.length / 2))
+                  .map((faq, index) => (
                     <div
-                      key={actualIndex}
+                      key={index}
                       className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm"
                     >
                       <button
-                        onClick={() => toggleFAQ(actualIndex)}
+                        onClick={() => toggleFAQ(index)}
                         className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                       >
                         <span className="font-medium text-gray-800 text-xs sm:text-sm pr-2">
                           {faq.question}
                         </span>
                         <div className="ml-2 sm:ml-4 flex-shrink-0">
-                          {openFAQ === actualIndex ? (
+                          {openFAQ === index ? (
                             <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#2563eb]" />
                           ) : (
                             <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" />
                           )}
                         </div>
                       </button>
-                      {openFAQ === actualIndex && (
+                      {openFAQ === index && (
                         <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border-t border-gray-200">
                           <p className="text-gray-700 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
                             {faq.answer}
@@ -497,8 +560,45 @@ Think Silicon. Design the Future.
                         </div>
                       )}
                     </div>
-                  );
-                })}
+                  ))}
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-3 sm:space-y-4">
+                {vlsiFaqs
+                  .slice(Math.ceil(vlsiFaqs.length / 2))
+                  .map((faq, index) => {
+                    const actualIndex = index + Math.ceil(vlsiFaqs.length / 2);
+                    return (
+                      <div
+                        key={actualIndex}
+                        className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm"
+                      >
+                        <button
+                          onClick={() => toggleFAQ(actualIndex)}
+                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                        >
+                          <span className="font-medium text-gray-800 text-xs sm:text-sm pr-2">
+                            {faq.question}
+                          </span>
+                          <div className="ml-2 sm:ml-4 flex-shrink-0">
+                            {openFAQ === actualIndex ? (
+                              <ChevronUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#2563eb]" />
+                            ) : (
+                              <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500" />
+                            )}
+                          </div>
+                        </button>
+                        {openFAQ === actualIndex && (
+                          <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border-t border-gray-200">
+                            <p className="text-gray-700 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
+                              {faq.answer}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
