@@ -17,6 +17,7 @@ import Link from "next/link";
 import Loading from "@/app/loading";
 import Image from "next/image";
 import ContentLoading from "@/app/content-loading";
+import { ArrowLeft } from "lucide-react";
 
 // Production-level validation schema
 const loginSchema = z.object({
@@ -44,6 +45,7 @@ export default function LoginPage() {
     isAuthenticated,
     isInitialized,
   } = useAuth();
+  console.log("Auth State:", { user, authLoading, authError, isAuthenticated, isInitialized });
   
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -113,8 +115,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
-      <Card className="w-full max-w-md shadow-xl">
+    <div className="min-h-screen flex flex-col  items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
+      <Card className="w-full max-w-md shadow-xl p-3">
+                  <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4 sm:mb-6 text-sm sm:text-base"
+        >
+          <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
+          <span>Home</span>
+        </Link>
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
               <Image
@@ -219,15 +228,6 @@ export default function LoginPage() {
 
           {/* Footer Links */}
           <div className="space-y-4">
-            <div className="text-center">
-              <Link
-                href="/auth/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-700 underline"
-              >
-                Forgot your password?
-              </Link>
-            </div>
-            
             <div className="text-center text-sm text-gray-600">
               <p>
                 Need access?{" "}

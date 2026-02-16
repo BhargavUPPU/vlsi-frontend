@@ -13,7 +13,9 @@ import {
   Image as ImageIcon,
   Camera,
   AlertCircle,
+  ArrowLeft,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function PhotoGalleryPage() {
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -160,6 +162,13 @@ export default function PhotoGalleryPage() {
     <>
       <div className="min-h-screen bg-gray-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4 sm:mb-6 text-sm sm:text-base"
+        >
+          <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
+          <span>Home</span>
+        </Link>
           {/* Page Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

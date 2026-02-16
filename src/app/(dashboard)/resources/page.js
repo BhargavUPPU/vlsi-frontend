@@ -26,7 +26,17 @@ export default function ResourcesPage() {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
+      // Scroll to the element, then offset by the header height so the section title isn't hidden
       element.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Small delay to allow the smooth scroll to occur, then adjust for fixed header
+      setTimeout(() => {
+        const header = document.querySelector("header") || document.querySelector("nav") || null;
+        const headerHeight = header ? Math.ceil(header.getBoundingClientRect().height) : 0;
+        const extraOffset = 30; // small spacing
+        if (headerHeight > 0) {
+          window.scrollBy({ top: -(headerHeight + extraOffset), left: 0, behavior: "smooth" });
+        }
+      }, 200);
     }
   };
 
@@ -126,11 +136,17 @@ export default function ResourcesPage() {
         className="w-full h-full"
       />
       {/* Quick Access Cards */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 static md:relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  static md:relative z-10">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900 mt-2 mb-2">Access free Resources,Tools,and many more</h2>
+          <p className="text-gray-600 text-sm md:text-base mb-6">
+            Explore structured learning paths, essential tools, and curated resources to get started with confidence.
+          </p>  
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           <Link
             href="/resources/roadmap"
-            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+            className="bg-white rounded-xl p-6 h-50 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
           >
             <Image
               src="/Resource1.jpg"
@@ -139,13 +155,11 @@ export default function ResourcesPage() {
               height={400}
               className="object-contain opacity-100 absolute inset-0 pointer-events-none"
             />
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
-              <BookOpen className="w-6 h-6 text-blue-600" />
+            <div className="absolute left-1 -translate-x-0 bottom-4">
+              <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
+                VLSI ROADMAP
+              </span>
             </div>
-            <h3 className="text-lg  font-semibold mb-2 text-gray-800 relative z-10">VLSI RoadMap</h3>
-            <p className=" text-sm text-gray-600 relative z-10">
-              Comprehensive guide to VLSI design and development
-            </p>
           </Link>
 
           <Link
@@ -158,13 +172,18 @@ export default function ResourcesPage() {
               fill
               className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
+            {/* <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
               <Video className="w-6 h-6 text-purple-600" />
             </div>
             <h3 className="text-lg text-white font-semibold mb-2 relative z-10">VLSI TOOLS</h3>
             <p className="text-white text-sm relative z-10">
               Industry-standard design and simulation tools
-            </p>
+            </p> */}
+             <div className="absolute left-1 -translate-x-0 bottom-4">
+              <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
+                VLSI TOOLS
+              </span>
+            </div>
           </Link>
           <Link
             href="https://drive.google.com/drive/folders/1Msf9FVMu2H0qN3IbELHT1YiYDrSlLWI_?usp=sharing"
@@ -173,18 +192,16 @@ export default function ResourcesPage() {
             className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
           >
             <Image
-              src="/Resource2.png"
+              src="/placement1.jpeg"
               alt="Placement Preparation Background"
               fill
               className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
-              <GraduationCap className="w-6 h-6 text-purple-600" />
+            <div className="absolute left-1 -translate-x-0 bottom-4">
+              <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
+                PLACEMENT PREPARATION
+              </span>
             </div>
-            <h3 className="text-lg text-white font-semibold mb-2 relative z-10">Placement Preparation</h3>
-            <p className="text-white text-sm relative z-10">
-              Resources to ace your VLSI placements
-            </p>
           </Link>
         </div>
       </div>
@@ -206,12 +223,12 @@ export default function ResourcesPage() {
                 onClick={() => scrollToSection("textbooks-section")}
                 className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm hover:bg-green-200 transition-colors cursor-pointer"
               >
-                E-E Textbooks
+                Textbooks
               </button>
             )}
             {nptelLectures.length > 0 && (
               <button
-                onClick={() => scrollToSection("textbooks-section")}
+                onClick={() => scrollToSection("nptel-lectures-section")}
                 className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm hover:bg-purple-200 transition-colors cursor-pointer"
               >
                 NPTEL Lectures
@@ -253,7 +270,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* Silicon Chronicle Magazines */}
-        <div id="magazines-section" className="mb-16">
+        <div id="magazines-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">
               Silicon Chronicle Magazines
@@ -282,7 +299,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* VLSI Textbooks*/}
-        <div id="textbooks-section" className="mb-16">
+        <div id="textbooks-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">VLSI Textbooks</h3>
             <Link
@@ -308,7 +325,7 @@ export default function ResourcesPage() {
           )}
         </div>
         {/* NPTEL Lectures */}
-        <div id="nptel-lectures-section" className="mb-16">
+        <div id="nptel-lectures-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">NPTEL Lectures</h3>
             <Link
@@ -335,7 +352,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* VLSI Materials */}
-        <div id="materials-section" className="mb-16">
+        <div id="materials-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">VLSI Materials</h3>
             <Link
@@ -362,7 +379,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* VLSID Club Question Banks */}
-        <div id="question-banks-section" className="mb-16">
+        <div id="question-banks-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Question Banks
@@ -391,7 +408,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* VLSID Club Recruitment PYQs */}
-        <div id="placement-prep-section" className="mb-16">
+        <div id="placement-prep-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">
               VLSID Club Recruitment PYQs
@@ -420,7 +437,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* ECE Gate PYQs */}
-        <div id="gate-pyqs-section" className="mb-16">
+        <div id="gate-pyqs-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">ECE Gate PYQs</h3>
             <Link

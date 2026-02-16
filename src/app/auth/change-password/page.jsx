@@ -2,6 +2,8 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
+import ContentLoading from "@/app/content-loading";
 import { Eye, EyeOff, Lock, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,9 +98,13 @@ function ChangePasswordContent() {
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-orange-600 to-red-600 rounded-full flex items-center justify-center">
-              <Lock className="w-8 h-8 text-white" />
-            </div>
+            <Image
+              src="/logo.png"
+              alt="VLSID Logo"
+              width={56}
+              height={56}
+              className="w-14 h-14 object-contain"
+            />
           </div>
           <CardTitle className="text-3xl font-bold">Change Password</CardTitle>
           <CardDescription className="text-base">
@@ -233,7 +239,7 @@ function ChangePasswordContent() {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all"
               disabled={isLoading || !isPasswordValid}
             >
               {isLoading ? (
@@ -256,15 +262,8 @@ export default function ChangePasswordPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-          <Card className="w-full max-w-md">
-            <CardHeader className="text-center">
-              <div className="animate-pulse">
-                <div className="h-6 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
-              </div>
-            </CardHeader>
-          </Card>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
+          <ContentLoading />
         </div>
       }
     >

@@ -79,7 +79,6 @@ function CreateUserContent() {
       options: [
         { value: "USER", label: "User" },
         { value: "ADMIN", label: "Admin" },
-        { value: "SUPERADMIN", label: "Super Admin" },
       ],
       placeholder: "Select role",
       required: true,

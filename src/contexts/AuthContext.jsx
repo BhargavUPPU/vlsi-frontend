@@ -281,7 +281,13 @@ export function AuthProvider({ children }) {
       
       if (user && pathname === "/auth/login") {
         logger.info('Redirecting authenticated user from login', { userId: user.id });
-        router.push("/");
+        // If the user is required to change their password, send them
+        // directly to the change-password flow instead of the homepage.
+        if (user.requirePasswordChange) {
+          router.push("/auth/change-password?required=true");
+        } else {
+          router.push("/");
+        }
       }
     } catch (error) {
       logger.error('Route protection error', { error: error.message, pathname });

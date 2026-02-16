@@ -73,13 +73,13 @@ const AboutUs = () => {
 
   const developers = [
     {
-      name: "UPPU BHARGAV SAI",
+      name: "Uppu Bhargav Sai",
       role: "WEB DEVELOPER",
       roll_number: "21131A04T7",
       image: "/developer.jpeg",
     },
     {
-      name: "ANVESH",
+      name: "Anvesh",
       role: "WEB DESIGNER",
       roll_number: "21131A04Q9",
       image: "/desinger.jpeg",
@@ -487,7 +487,7 @@ const AboutUs = () => {
         {/* Web Page Developers Section */}
         <div className="mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-12 text-gray-800 px-2">
-            WEB PAGE DEVELOPERS
+            Web Page Developers
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">

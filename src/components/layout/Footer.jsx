@@ -108,7 +108,9 @@ export default function Footer() {
                   className="w-18 h-18 object-contain"
                 />
                 <div>
-                  <h3 className="text-2xl font-bold">VLSID</h3>
+                  <h3 className="text-2xl font-bold">VLSI
+                    <span className="text-[#FF8C42]">D</span>
+                  </h3>
                   <p className="text-sm text-blue-200">VLSI Innovation Hub</p>
                 </div>
               </div>

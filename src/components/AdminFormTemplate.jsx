@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -451,6 +451,8 @@ export function AdminFormTemplate({
   isLoading = false,
   isEditing = false,
   backPath,
+  // Some callers use `cancelPath` instead of `backPath` — accept both for resilience
+  cancelPath,
   fields = [],
   children,
 }) {
@@ -470,6 +472,9 @@ export function AdminFormTemplate({
     reValidateMode: "onSubmit", // Only revalidate on submit
   });
 
+  // Prevent repeated state updates when `defaultValues` is structurally the same
+  const defaultsFingerprint = useRef(null);
+
   // Reset form when defaultValues changes (e.g., when data loads from backend)
   useEffect(() => {
     if (defaultValues && Object.keys(defaultValues).length > 0) {
@@ -484,6 +489,9 @@ export function AdminFormTemplate({
     }
   }, [defaultValues, form]);
 
+  // Resolve the back/cancel path with a safe default
+  const resolvedBackPath = backPath || cancelPath || "/admin";
+
   // Initialize array fields from defaultValues
   useEffect(() => {
     const imageFieldNames = fields
@@ -497,7 +505,17 @@ export function AdminFormTemplate({
       .map((f) => f.name);
 
     // Parse array fields - they might come as JSON strings from the database
-    const initialArrayFields = {};
+      // Avoid re-applying identical derived state to prevent update loops
+      try {
+        const fingerprint = JSON.stringify({ defaultValues, fields });
+        if (defaultsFingerprint.current === fingerprint) {
+          return;
+        }
+        defaultsFingerprint.current = fingerprint;
+      } catch (e) {
+        // ignore stringify failures and continue
+      }
+      const initialArrayFields = {};
     arrayFieldNames.forEach((fieldName) => {
       const value = defaultValues[fieldName];
       if (value) {
@@ -722,7 +740,7 @@ export function AdminFormTemplate({
         // No file/image fields, send plain object
         await onSubmit(mergedData);
       }
-      router.push(backPath);
+      router.push(resolvedBackPath);
     } catch (error) {
       console.error("Form submission error:", error);
     } finally {
@@ -749,7 +767,7 @@ export function AdminFormTemplate({
         {/* Header */}
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm" asChild>
-            <Link href={backPath}>
+            <Link href={resolvedBackPath}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Link>
@@ -1003,7 +1021,7 @@ export function AdminFormTemplate({
                       asChild
                       disabled={isSubmitting}
                     >
-                      <Link href={backPath}>Cancel</Link>
+                      <Link href={resolvedBackPath}>Cancel</Link>
                     </Button>
                     <Button
                       type="submit"

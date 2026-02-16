@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { usersService } from '../api/services/admin';
+import { useGetAll, useGetById, useCreate, useUpdate, useDelete } from './useAdmin';
 
 // User management hooks
 export const useUsers = (options) => useGetAll('users', usersService, options);

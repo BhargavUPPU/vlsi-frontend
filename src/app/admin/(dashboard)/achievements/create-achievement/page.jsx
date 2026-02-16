@@ -51,6 +51,7 @@ function CreateAchievementContent() {
   const { data: achievement, isLoading: isLoadingData } = useAchievement(id, {
     enabled: isEditing,
   });
+  console.log("Fetched achievement data:", achievement);
   const createMutation = useCreateAchievement({
     onSuccess: () => router.push("/admin/achievements"),
   });
@@ -142,7 +143,7 @@ function CreateAchievementContent() {
                   <FormLabel>
                     Achievement Type <span className="text-red-500">*</span>
                   </FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select onValueChange={field.onChange}  value={field.value || achievement?.type || "HERO_CAROUSEL"}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select Achievement Type" />
