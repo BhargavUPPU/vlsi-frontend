@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Clock, FileQuestion, ChevronRight } from "lucide-react";
+import { BookOpen, Clock, FileQuestion, ChevronRight ,ArrowLeft} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -39,7 +39,7 @@ export default function TestsPage() {
   // Status color mapping
   const getStatusColor = (status) => {
     const statusLower = status?.toLowerCase();
-    if (statusLower === "live")
+    if (statusLower === "active" || statusLower === "live")
       return { bg: "bg-red-100", text: "text-red-600", dot: "bg-red-600" };
     if (statusLower === "completed")
       return {
@@ -58,6 +58,19 @@ export default function TestsPage() {
 
   return (
     <div className="min-h-screen mt-5">
+        <div className="bg-white/80 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex items-center justify-between">
+          <Link
+            href="/"
+            className="group flex items-center gap-1.5 sm:gap-2 text-slate-600 hover:text-blue-600 transition-colors font-medium text-sm sm:text-base"
+          >
+            <div className="p-1 sm:p-1.5 rounded-full group-hover:bg-blue-50 transition-colors">
+              <ArrowLeft size={16} className="sm:w-[18px] sm:h-[18px]" />
+            </div>
+            <span>Home</span>
+          </Link>
+        </div>
+      </div>
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto bg-gray-100 p-8 rounded-lg flex flex-col md:flex-row items-center">
         <div className="flex-grow mb-4 md:mb-0">
@@ -163,7 +176,7 @@ export default function TestsPage() {
               {filteredTests.map((test, index) => {
                 const statusColors = getStatusColor(test.status);
                 const isCompleted = test.status?.toLowerCase() === "completed";
-                const isLive = test.status?.toLowerCase() === "live";
+                const isLive = test.status?.toLowerCase() === "active";
                 const isUpcoming = test.status?.toLowerCase() === "upcoming";
 
                 // Mock progress for completed tests (you can replace with actual data)
@@ -186,32 +199,36 @@ export default function TestsPage() {
                       <span
                         className={`text-sm font-semibold ${statusColors.text}`}
                       >
-                        {test.status}
+                        {test.status?.toString().toUpperCase()}
                       </span>
                     </div>
 
                     {/* Test Title */}
                     <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
-                      {test.title}
+                      {test.title?.toString().toUpperCase() || "Untitled Test"}
                     </h3>
 
                     {/* Test Info */}
                     <div className="space-y-1 mb-4">
                       <p className="text-sm text-gray-600 flex items-center gap-2">
                         <BookOpen size={16} />
-                        <span>Subject: {test.subject}</span>
+                          <span className="font-semibold text-gray-800">Subject:</span>{" "}
+                          <span className="text-gray-700">{test.subject?.toString().toUpperCase() || "No Subject"}</span>
                       </p>
                       <p className="text-sm text-gray-600 flex items-center gap-2">
                         <FileQuestion size={16} />
                         <span>
-                          {test.duration} Marks · Total Questions:{" "}
-                          {test.noOfQuestions}
+                          <span className="font-semibold text-gray-800">Marks:</span>{" "}
+                          <span className="text-gray-700">{test.duration || "0"}</span>
+                          <span className="mx-2 text-gray-400">·</span>
+                          <span className="font-semibold text-gray-800">Total Questions:</span>{" "}
+                          <span className="text-gray-700">{test.noOfQuestions || "0"}</span>
                         </span>
                       </p>
                       {test.date && (
                         <p className="text-sm text-gray-600 flex items-center gap-2">
                           <Clock size={16} />
-                          <span>
+                          <span className="font-bold">
                             {new Date(test.date).toLocaleDateString()}
                           </span>
                         </p>

@@ -18,7 +18,6 @@ const placementPrepFields = [
     label: "Category",
     type: "select",
     options: [
-      { label: "Previous Year Gate PYQs (ECE)", value: "Previous Year Gate PYQs (ECE)" },
       { label: "Previous Year Club Recruitment & Aptitude Papers (V)", value: "Previous Year Club Recruitment & Aptitude Papers (V)" },
       { label: "VLSI Club Recruitment PYQs", value: "VLSI Club Recruitment PYQs" },
     ],

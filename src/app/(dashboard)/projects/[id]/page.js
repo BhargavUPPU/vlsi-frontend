@@ -39,9 +39,9 @@ export default function ProjectDetailsPage() {
   console.log('Project images array:', project?.images);
   console.log('Images count:', project?.images?.length);
 
-  // Process images
+  // Process images (skip the first image and use from second onward)
   const images = project?.images
-    ? project.images.map((img) => {
+    ? project.images.slice(1).map((img) => {
         console.log('Processing image:', img);
         const url = bufferToDataURL(img.fileData);
         console.log('Generated image URL:', url ? 'Success' : 'Failed', url?.substring(0, 50));

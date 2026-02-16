@@ -46,7 +46,7 @@ export default function CalendarUpdates() {
             </div>
           ) : displayAnnouncements.length > 0 ? (
             <div className="w-full flex flex-col gap-4 max-w-4xl">
-              <div className="w-full max-h-96 overflow-y-auto pr-2 space-y-4">
+              <div className="w-full max-h-[50vh] overflow-y-auto pr-2 space-y-4">
                 {displayAnnouncements.map((announcement, index) => (
                   <motion.div
                     key={announcement.id || index}

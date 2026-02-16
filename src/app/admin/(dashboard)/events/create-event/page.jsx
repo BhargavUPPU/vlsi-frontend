@@ -151,12 +151,31 @@ function CreateEventContent() {
       await createEvent.mutateAsync(data);
     }
   };
+  // Format eventDate into a value compatible with `datetime-local` input
+  const formatToDateTimeLocal = (iso) => {
+    if (!iso) return undefined;
+    const d = new Date(iso);
+    const pad = (n) => String(n).padStart(2, "0");
+    const yyyy = d.getFullYear();
+    const mm = pad(d.getMonth() + 1);
+    const dd = pad(d.getDate());
+    const hh = pad(d.getHours());
+    const min = pad(d.getMinutes());
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+  };
+
+  const initialValues = event
+    ? {
+        ...event,
+        eventDate: formatToDateTimeLocal(event.eventDate),
+      }
+    : {};
 
   return (
     <AdminFormTemplate
       title="Event"
       schema={eventSchema}
-      defaultValues={event || {}}
+      defaultValues={initialValues}
       onSubmit={handleSubmit}
       isLoading={loadingEvent}
       isEditing={isEditing}
@@ -168,7 +187,7 @@ function CreateEventContent() {
           <Label>Status *</Label>
           <Select
             onValueChange={(value) => form.setValue("status", value)}
-            defaultValue={form.getValues("status")}
+            value={form.watch("status")}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select status" />

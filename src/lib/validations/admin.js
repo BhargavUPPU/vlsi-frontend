@@ -44,12 +44,17 @@ export const eventSchema = z.object({
   eventRegistrationLink: optionalUrl(),
   eventPdfLink: optionalUrl(),
   eventVideoLink: optionalUrl(),
-  noOfParticipants: z.coerce
-    .number()
-    .int()
-    .min(0, "Number must be positive")
-    .optional()
-    .nullable(),
+  noOfParticipants: z.preprocess(
+    (val) => {
+      if (val === "" || val === null || val === undefined) return undefined;
+      return val;
+    },
+    z.coerce
+      .number()
+      .int()
+      .min(0, "Number must be positive")
+      .optional(),
+  ),
   eventDate: z.string().min(1, "Event date is required"),
   eventHighlights: z.array(z.string()).default([]),
   studentCoordinators: z.array(z.string()).default([]),
@@ -278,6 +283,13 @@ export const projectSchema = z.object({
   Statement: z.string().optional().nullable().or(z.literal("")),
   Abstract: z.string().optional().nullable().or(z.literal("")),
   Conclusion: z.string().min(20, "Conclusion must be at least 20 characters"),
+  // Make Conclusion optional: allow empty string or null, but if provided keep min length
+  Conclusion: z
+    .string()
+    .min(20, "Conclusion must be at least 20 characters")
+    .optional()
+    .nullable()
+    .or(z.literal("")),
   Results: z.string().optional().nullable().or(z.literal("")),
   futureScope: z.string().optional().nullable().or(z.literal("")),
   referenceLinks: z.array(z.string()).default([]),

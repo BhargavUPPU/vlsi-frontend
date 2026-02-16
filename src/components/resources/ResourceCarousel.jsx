@@ -47,7 +47,7 @@ export default function ResourceCarousel({ items, type }) {
   return (
     <div className="relative">
       {/* Carousel Navigation Buttons */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 z-10 flex justify-between px-2 pointer-events-none">
+      <div className="absolute top-1/2 -translate-y-1/3 left-0 right-0  flex justify-between px-2 pointer-events-none">
         <button
           onClick={scrollPrev}
           className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-blue-50 transition-all pointer-events-auto"
@@ -76,7 +76,7 @@ export default function ResourceCarousel({ items, type }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group"
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-all group"
               >
                 {/* Image */}
                 <div className="relative h-58 bg-gradient-to-br from-blue-100 to-purple-100 overflow-hidden">

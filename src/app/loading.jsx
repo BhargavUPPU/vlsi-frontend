@@ -21,7 +21,13 @@ const Loading = ({
   };
 
   return (
-    <div className={`${styles.container} ${getSizeClass()}`} role="status" aria-label="Loading">
+    <div
+      className={`${styles.container} ${getSizeClass()}`}
+      role="status"
+      aria-label="Loading"
+      aria-live="polite"
+      aria-busy="true"
+    >
       <div className={styles.loaderWrapper}>
         {/* Accessible loading text for screen readers */}
         <span className={styles.srOnly}>{message}</span>

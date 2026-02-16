@@ -282,7 +282,7 @@ export default function ClubTimeline() {
             whileInView="visible"
             viewport={defaultViewport}
             variants={staggerContainer}
-            className="relative"
+            className="relative max-h-[70vh] overflow-y-auto pr-4 py-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
           >
             {/* Timeline Line */}
             <div className="absolute left-4 sm:left-6 lg:left-1/2 lg:transform lg:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-purple-200 to-green-200"></div>

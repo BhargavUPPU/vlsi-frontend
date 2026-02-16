@@ -155,7 +155,7 @@ export default function EventsPage() {
           </div>
         </header>
         {/* Tabs */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-2">
           <button
             onClick={() => handleTabChange("upcoming")}
             className={`w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-200 ${
@@ -179,7 +179,7 @@ export default function EventsPage() {
         </div>
 
         {/* Filters */}
-          <div className="bg-white p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl shadow-sm mb-6 sm:mb-8">
+          <div className=" p-4 sm:p-5 md:p-5  mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row items-stretch sm:items-end justify-between sm:justify-end gap-3 sm:gap-4">
               {/* Event Type */}
               <select
@@ -303,7 +303,7 @@ export default function EventsPage() {
                           <span
                             className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
                               activeTab === "upcoming"
-                                ? "bg-green-500 text-white"
+                                ? "bg-red-500 text-white"
                                 : "bg-gray-700 text-white"
                             }`}
                           >

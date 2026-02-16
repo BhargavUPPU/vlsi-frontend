@@ -195,7 +195,7 @@ Think Silicon. Design the Future.
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Vision</h2>
             </div>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed text-justify">
-             To create a community of innovative and skilled individuals who are passionate about VLSI and semiconductor technology, empowering them to become future leaders in chip design and hardware innovation
+             To create a community of innovative and skilled individuals who are passionate about VLSI and semiconductor technology, empowering them to become future leaders in chip design and hardware innovation.
             </p>
           </div>
 
@@ -245,7 +245,7 @@ Think Silicon. Design the Future.
               {/* Faculty Details */}
               <div className="md:w-2/3 p-4 sm:p-6 bg-white">
                 <div className="max-w-none">
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed text-justify">
+                  <p className="text-sm sm:text-base md:text-md lg:text-lg text-gray-700 leading-relaxed text-justify">
                   Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID Club,  holds a Ph.D. in ECE from NIT Rourkela, M.Tech. in Digital Systems from NIT Allahabad, and B.E. in ECE from Sir C.R. Reddy College, Eluru. With 18 years of experience - including 11 years in teaching, 4 years in research, and 3 years in industry - his expertise spans VLSI Design, Hardware Accelerators, and Approximate Computing. He has 13 international journal papers, 6 conference papers, 2 patents, and a book chapter with CRC Press. He has guided 8 M.Tech dissertations and currently supervises 2 Ph.D. scholars, consistently inspiring innovation and excellence in VLSI education and research.
                   </p>
                   {/* <p className="text-gray-700 leading-relaxed text-justify mt-4">
@@ -270,90 +270,90 @@ Think Silicon. Design the Future.
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* 1 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
               <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">1</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Knowledge Transfer from Seniors to Juniors</span>
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-indigo-500 to-blue-500 shadow-md ring-1 ring-indigo-100">1</span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">Knowledge Transfer from Seniors to Juniors</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
                 <li>Organizing Classes for 2nd-Year Students</li>
                 <li>Providing Training to 3rd-Year Students</li>
                 <li>Conducting Mock-Tests</li>
               </ul>
             </div>
             {/* 2 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
               <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">2</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Updating and Practicing Question Banks</span>
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-green-500 to-teal-400 shadow-md ring-1 ring-teal-100">2</span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-teal-600">Updating and Practicing Question Banks</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
                 <li>Collecting and Organizing Questions</li>
                 <li>Practicing Questions</li>
               </ul>
             </div>
             {/* 3 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
-              <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">3</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Interacting with Alumni</span>
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
+              <div className="flex items-start text-center mb-2">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-purple-500 to-pink-500 shadow-md ring-1 ring-pink-100">3</span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight  group-hover:text-pink-600">Interacting with Alumni</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
                 <li>Networking Opportunities</li>
                 <li>Career Advice</li>
               </ul>
             </div>
             {/* 4 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
               <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">4</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Conducting Industrial Talks</span>
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-md ring-1 ring-yellow-100">4</span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-orange-600">Conducting Industrial Talks</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
                 <li>Expert Talks</li>
                 <li>Industry Insights</li>
               </ul>
             </div>
             {/* 5 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
               <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">5</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Including Juniors in Senior's Projects</span>
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-red-500 to-pink-600 shadow-md ring-1 ring-red-100">5</span>
+                <span className="text-lg sm:text-base font-bold text-gray-800 leading-tight group-hover:text-pink-600">Including Juniors in Senior's Projects</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md  mt-2 space-y-1">
                 <li>Project Participation</li>
                 <li>Mentorship</li>
               </ul>
             </div>
             {/* 6 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
               <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">6</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Attending or Applying for Workshops in IITs/NITs</span>
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-sky-400 to-indigo-500 shadow-md ring-1 ring-sky-100">6</span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">Attending or Applying for Workshops in IITs/NITs</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
                 <li>Workshop Participation</li>
                 <li>Application Support</li>
               </ul>
             </div>
             {/* 7 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
               <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">7</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Conducting Conferences</span>
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-lime-400 to-green-500 shadow-md ring-1 ring-lime-100">7</span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-green-600">Conducting Conferences</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
                 <li>Student Presentations</li>
                 <li>Industry Insights</li>
               </ul>
             </div>
             {/* 8 */}
-            <div className="bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm">
+            <div className="group bg-white border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 flex flex-col shadow-sm transform transition-all hover:shadow-xl hover:scale-105 hover:-translate-y-2">
               <div className="flex items-start mb-2">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-gray-400 border border-gray-300 flex-shrink-0 mt-0.5">8</span>
-                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight">Coordinating Juniors</span>
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xl font-bold flex items-center justify-center mr-2 sm:mr-3 text-white flex-shrink-0 mt-0.5 bg-gradient-to-br from-violet-500 to-indigo-600 shadow-md ring-1 ring-violet-100">8</span>
+                <span className="text-sm sm:text-base font-bold text-gray-800 leading-tight group-hover:text-indigo-600">Coordinating Juniors</span>
               </div>
-              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-xs sm:text-sm mt-2 space-y-1">
+              <ul className="list-disc pl-6 sm:pl-8 text-gray-700 text-md mt-2 space-y-1">
                 <li>Bridge Communication & Foster Engagement</li>
                 <li>Promote Participation & Talent Development</li>
                 <li>Mentorship & Onboarding Support</li>
@@ -386,7 +386,6 @@ Think Silicon. Design the Future.
                   {developer.name}
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{developer.roll_number}</p>
-                <p className="text-sm sm:text-base text-[#2563eb] font-semibold">{developer.role}</p>
               </div>
             ))}
           </div>

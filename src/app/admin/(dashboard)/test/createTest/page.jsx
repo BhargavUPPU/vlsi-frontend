@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Controller } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 
 const testFields = [
@@ -60,7 +61,26 @@ function CreateTestContent() {
     <AdminFormTemplate
       title="Test"
       schema={testSchema}
-      defaultValues={test || {}}
+      defaultValues={
+        test
+          ? {
+              ...test,
+              date: test.date
+                ? (() => {
+                    try {
+                      const d = new Date(test.date);
+                      // convert to local YYYY-MM-DDTHH:mm for datetime-local input
+                      const tzOffsetMs = d.getTimezoneOffset() * 60000;
+                      const local = new Date(d.getTime() - tzOffsetMs);
+                      return local.toISOString().slice(0, 16);
+                    } catch (e) {
+                      return test.date;
+                    }
+                  })()
+                : test.date,
+            }
+          : {}
+      }
       onSubmit={handleSubmit}
       isLoading={isLoading}
       isEditing={isEditing}
@@ -70,18 +90,23 @@ function CreateTestContent() {
       {(form) => (
         <div className="space-y-2">
           <Label>Status</Label>
-          <Select
-            onValueChange={(value) => form.setValue("status", value)}
-            defaultValue={form.getValues("status")}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="inactive">Inactive</SelectItem>
-            </SelectContent>
-          </Select>
+          <Controller
+            control={form.control}
+            name="status"
+            render={({ field: { onChange, value } }) => (
+              <Select onValueChange={onChange} value={value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="upcoming">Upcoming</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
         </div>
       )}
     </AdminFormTemplate>

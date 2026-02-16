@@ -227,13 +227,13 @@ export default function EventDetailsPage() {
               </h1>
 
               <div className="grid grid-cols-2 gap-4">
-                {event.noOfParticipants && (
+                {Number(event.noOfParticipants) > 0 && (
                   <div className="flex items-center gap-2">
                     <div className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center">
                       <Users size={20} />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-300">Participants</p>
+                      <p className="text-lg text-gray-300">Participants</p>
                       <p className="font-semibold">{event.noOfParticipants}+</p>
                     </div>
                   </div>
@@ -375,7 +375,7 @@ export default function EventDetailsPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Event Co-ordinators
                 </h2>
-                <div className="grid grid-cols-3 md:grid-cols-5 gap-6">
+                <div className="grid grid-cols-3  gap-6">
                   {facultyCoordinators.map((coordinator, index) => (
                     <div key={index} className="text-center">
                       <h3 className="font-semibold text-gray-900 text-lg">

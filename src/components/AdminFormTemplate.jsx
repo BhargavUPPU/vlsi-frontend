@@ -181,7 +181,16 @@ function ArrayField({
 
   // Update items when value prop changes (e.g., when data loads)
   useEffect(() => {
-    setItems(value);
+    setItems((prev) => {
+      try {
+        const prevStr = JSON.stringify(prev || []);
+        const nextStr = JSON.stringify(value || []);
+        if (prevStr === nextStr) return prev;
+      } catch (e) {
+        // If stringify fails, fall back to replacing
+      }
+      return Array.isArray(value) ? value : [];
+    });
   }, [value]);
 
   const addItem = () => {
@@ -618,6 +627,38 @@ export function AdminFormTemplate({
       // Get ALL form values (includes values from Select components in children)
       const allFormValues = form.getValues();
       const mergedData = { ...allFormValues, ...data };
+
+      // Sanitize any NaN values (recursively) so zod coercion/validation won't receive NaN
+      let foundNaN = false;
+      const sanitizeNaN = (obj) => {
+        if (obj === null || obj === undefined) return obj;
+        if (Array.isArray(obj)) {
+          return obj.map((v, i) => {
+            if (typeof v === "number" && Number.isNaN(v)) {
+              foundNaN = true;
+              return undefined;
+            }
+            if (typeof v === "object") return sanitizeNaN(v);
+            return v;
+          });
+        }
+        if (typeof obj === "object") {
+          Object.keys(obj).forEach((k) => {
+            const v = obj[k];
+            if (typeof v === "number" && Number.isNaN(v)) {
+              foundNaN = true;
+              obj[k] = undefined;
+            } else if (typeof v === "object" && v !== null) {
+              sanitizeNaN(v);
+            }
+          });
+          return obj;
+        }
+        return obj;
+      };
+
+      sanitizeNaN(mergedData);
+      if (foundNaN) console.warn("Sanitized NaN values from form submission", mergedData);
 
       // Check if any image or file field is present
       const hasFileField = fields.some(

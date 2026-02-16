@@ -34,24 +34,22 @@ const RESOURCE_TYPES = [
 // Category mappings based on resource type
 const CATEGORY_MAP = {
   textbooks: [
-    "VLSI Textbooks & NPTEL Lectures",
-    "Analog Design (CMOS)",
-    "CMOS VLSI Design (B)",
-    "DFT (B)",
-    "Digital Design (B)",
-    "Digital IC Design (B)",
+    "Analog Design",
+    "CMOS VLSI Design",
+    "DFT",
+    "Digital Design",
+    "Digital IC Design",
     "VLSI Flow",
     "Scripting Language (TCL, PERL)",
     "Verilog & SystemVerilog",
     "Semiconductor Physics & FPGAs"
   ],
   nptelLectures: [
-    "VLSI Textbooks & NPTEL Lectures",
-    "Analog Design (CMOS)",
-    "CMOS VLSI Design (B)",
-    "DFT (B)",
-    "Digital Design (B)",
-    "Digital IC Design (B)",
+    "Analog Design",
+    "CMOS VLSI Design",
+    "DFT",
+    "Digital Design",
+    "Digital IC Design",
     "VLSI Flow",
     "Scripting Language (TCL, PERL)",
     "Verilog & SystemVerilog",
@@ -80,7 +78,6 @@ const CATEGORY_MAP = {
     "EDC"
   ],
   placementPrep: [
-    "Previous Year Gate PYQs (ECE)",
     "Previous Year Club Recruitment & Aptitude Papers (V)",
     "VLSI Club Recruitment PYQs"
   ],

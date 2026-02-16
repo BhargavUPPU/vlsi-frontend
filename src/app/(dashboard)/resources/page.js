@@ -135,14 +135,15 @@ export default function ResourcesPage() {
             <Image
               src="/Resource1.jpg"
               alt="VLSI RoadMap Background"
-              fill
-              className="object-cover opacity-100 absolute inset-0 pointer-events-none"
+              width={400}
+              height={400}
+              className="object-contain opacity-100 absolute inset-0 pointer-events-none"
             />
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
               <BookOpen className="w-6 h-6 text-blue-600" />
             </div>
-            <h3 className="text-lg  text-white font-semibold mb-2 relative z-10">VLSI RoadMap</h3>
-            <p className="text-white text-sm relative z-10">
+            <h3 className="text-lg  font-semibold mb-2 text-black relative z-10">VLSI RoadMap</h3>
+            <p className=" text-sm  relative z-10">
               Comprehensive guide to VLSI design and development
             </p>
           </Link>

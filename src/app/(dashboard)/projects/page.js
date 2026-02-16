@@ -289,7 +289,7 @@ export default function ProjectsPage() {
                 <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center px-3 sm:px-4">
                   {latestProjects.length > 0 ? (
                     <>
-                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 mt-16 sm:mt-18 md:mt-20 lg:mt-24 leading-tight">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 mt-16 sm:mt-18 md:mt-20 lg:mt-24 line-clamp-2 leading-tight">
                         {
                           latestProjects[carouselIndex % latestProjects.length]
                             .title
@@ -469,17 +469,17 @@ export default function ProjectsPage() {
                     <motion.div
                       key={project.id}
                       whileHover={{ y: -8 }}
-                      className="bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
+                      className="bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden w-xl"
                     >
                       {/* Colored Header with Image */}
                       <div
-                        className={`relative h-48 sm:h-56 md:h-64 ${colorClass} flex items-center justify-center`}
+                        className={`relative  h-68 sm:h-66 md:h-88 ${colorClass} flex items-center justify-center`}
                       >
                         {imageUrl ? (
                           <img
                             src={imageUrl}
                             alt={project.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="w-full h-full object-fit group-hover:scale-110 transition-transform duration-500"
                             loading="lazy"
                           />
                         ) : (
@@ -489,9 +489,6 @@ export default function ProjectsPage() {
                             </h3>
                           </div>
                         )}
-                        <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-                          <ExternalLink className="text-white w-5 h-5 sm:w-6 sm:h-6" />
-                        </div>
                       </div>
 
                       {/* Content */}
