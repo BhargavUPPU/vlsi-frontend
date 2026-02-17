@@ -179,7 +179,9 @@ export default function ClubTimeline() {
             variants={staggerItem}
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 lg:mb-8"
           >
-            Our Journey
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              Journey
+            </span>
           </motion.h2>
           <motion.p
             variants={staggerItem}

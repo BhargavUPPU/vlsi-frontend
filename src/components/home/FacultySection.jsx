@@ -30,7 +30,9 @@ export default function FacultySection() {
   return (
     <section className="py-4 bg-white">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16">Our Faculty</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16">
+          Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Faculty</span>
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 justify-center">
           {faculty.map((f, idx) => (
             <div

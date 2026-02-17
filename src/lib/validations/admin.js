@@ -76,10 +76,7 @@ export const textbookSchema = z.object({
     .string()
     .min(3, "Name must be at least 3 characters")
     .max(200, "Name is too long"),
-  description: z
-    .string()
-    .min(10, "Description must be at least 10 characters")
-    .max(1000, "Description is too long"),
+  description: optionalString(),
   subject: z.string().min(1, "Subject is required"),
   category: optionalString(),
   author: z

@@ -139,23 +139,27 @@ export default function WhyJoinUs() {
   return (
     <section id="why-join" className="py-4 sm:py-6 md:py-8 lg:py-12 bg-gray-50">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewport}
-          variants={staggerContainer}
-          className="text-center mb-8 sm:mb-12 md:mb-16"
-        >
-          <motion.h2
-            variants={staggerItem}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6"
+        
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={defaultViewport}
+            variants={staggerContainer}
+            className="text-center mb-8 sm:mb-12 md:mb-16"
           >
-            Why Join US?
-          </motion.h2>
-        </motion.div>
+            <motion.h2
+              variants={staggerItem}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 "
+            >
+              Why {""}
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 ">
+                Join Us?
+              </span>
+              
+            </motion.h2>
+          </motion.div>
 
-        {/* Feature Cards */}
+          {/* Feature Cards */}
         <motion.div
           initial="hidden"
           whileInView="visible"

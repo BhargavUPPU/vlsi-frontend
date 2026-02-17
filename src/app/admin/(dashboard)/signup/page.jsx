@@ -430,7 +430,7 @@ export default function AdminSignup() {
             </Link>
           </div>
           <p className="text-gray-500 text-sm">
-            VLSI System Design Club © {new Date().getFullYear()}
+            VLSI Design Club © {new Date().getFullYear()}
           </p>
         </div>
       </div>

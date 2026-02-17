@@ -63,7 +63,10 @@ export default function StudentAchievements() {
             variants={staggerItem}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6"
           >
-            Student Achievements
+            Student {""}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              Achievements
+            </span>
           </motion.h2>
 
           <motion.p

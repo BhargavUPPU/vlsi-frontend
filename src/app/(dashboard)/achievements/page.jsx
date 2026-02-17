@@ -231,11 +231,26 @@ export default function AchievementsPage() {
     isLoading: galleryLoading,
     error: galleryError,
   } = useActiveAchievements("GALLERY_IMAGE");
+  console.log("Hero Data:", heroData);
+  console.log("Milestone Data:", milestoneData);
+  console.log("Stat Data:", statData);
+  console.log("Proud Data:", proudData);
+  console.log("Award Data:", awardData);
   console.log("Gallery Data:", galleryData);
   console.log("Gallery Error:", galleryError);
   console.log("API_BASE_URL:", API_BASE_URL);
 
   const [activeHero, setActiveHero] = useState(0);
+
+  // Normalize API responses which may be wrapped (e.g., { data: [...] })
+  const _heroData = Array.isArray(heroData) ? heroData : heroData?.data || [];
+  const _milestoneData = Array.isArray(milestoneData)
+    ? milestoneData
+    : milestoneData?.data || [];
+  const _statData = Array.isArray(statData) ? statData : statData?.data || [];
+  const _proudData = Array.isArray(proudData) ? proudData : proudData?.data || [];
+  const _awardData = Array.isArray(awardData) ? awardData : awardData?.data || [];
+  const _galleryData = Array.isArray(galleryData) ? galleryData : galleryData?.data || [];
   const [heroImageErrors, setHeroImageErrors] = useState({});
   const [proudImageErrors, setProudImageErrors] = useState({});
   const [awardImageErrors, setAwardImageErrors] = useState({});
@@ -317,13 +332,13 @@ function ImageCard({ src, alt, title, onError }) {
   ]);
 
   useEffect(() => {
-    if (heroData?.length > 0) {
+    if (_heroData.length > 0) {
       const timer = setInterval(() => {
-        setActiveHero((prev) => (prev + 1) % heroData.length);
+        setActiveHero((prev) => (prev + 1) % _heroData.length);
       }, 5000);
       return () => clearInterval(timer);
     }
-  }, [heroData]);
+  }, [_heroData]);
 
   const statsIcons = {
     "Website Views": <Eye className="w-8 h-8 text-blue-500" />,
@@ -335,97 +350,79 @@ function ImageCard({ src, alt, title, onError }) {
     <div className="min-h-screen bg-gray-50 flex flex-col">
         <Link
                 href="/"
-                className="inline-flex items-center gap-1.5 sm:gap-2 text-blue-600 hover:text-blue-700 font-medium m-4 sm:m-6 text-sm sm:text-base"
+                className="group flex items-center gap-1.5 sm:gap-2 text-slate-600 hover:text-blue-600 transition-colors font-medium text-sm sm:text-base m-4 sm:m-6"
               >
                 <ArrowLeft size={16} className="sm:w-5 sm:h-5" />
-                <span>Home</span>
+                <span>Home &gt;&gt; Our Achievements</span>
               </Link>
-      {/* Hero Section (render only if loading or data exists) */}
-      {(heroLoading || (heroData && heroData.length > 0)) && (
-        <section
-          role="region"
-          aria-label="Hero"
-          className="relative h-[50vh] sm:h-[55vh] md:h-[60vh] lg:h-[65vh] min-h-[300px] sm:min-h-[350px] md:min-h-[400px] overflow-hidden bg-gray-900"
-        >
-          {heroLoading ? (
-            <div className="absolute inset-0 flex items-center justify-center" aria-busy="true">
-              <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-4 border-white border-t-transparent" />
+      {/* Hero Section (title above carousel) */}
+      {(heroLoading || _heroData.length > 0) && (
+        <section role="region" aria-label="Hero" className="w-full bg-gray-50 py-5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-6">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900">
+                Celebrating the excellence of the VLSI Club
+              </h1>
+              <p className="mt-2 text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+                Innovation, research, and milestones from our community — spanning projects, papers, competitions, and internships.
+              </p>
             </div>
-          ) : (
-            <>
-              {heroData.map((hero, index) => (
-                <motion.div
-                  key={hero.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: activeHero === index ? 1 : 0 }}
-                  transition={{ duration: 1 }}
-                  className="absolute inset-0"
-                >
-                  <div className="absolute inset-0 bg-black/40 z-10" />
-                  {!heroImageErrors[hero.id] && hero.images?.[0]?.id ? (
-                    <Image
-                      src={`${API_BASE_URL}/achievements/image/${hero.images[0].id}`}
-                      alt={hero.title || "Hero image"}
-                      fill
-                      className="object-cover"
-                      priority={index === 0}
-                      unoptimized
-                      onError={() =>
-                        setHeroImageErrors((prev) => ({ ...prev, [hero.id]: true }))
-                      }
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-900" />
-                  )}
 
-                  <div className="absolute inset-0 flex flex-col items-center justify-end z-40 text-white text-center px-3 sm:px-4 md:px-6 pb-6 sm:pb-8 md:pb-11">
-                    <motion.h1
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{
-                        y: activeHero === index ? 0 : 20,
-                        opacity: activeHero === index ? 1 : 0,
-                      }}
-                      transition={{ delay: 0.5 }}
-                      className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold leading-tight"
-                    >
-                      { "Celebrating the excellence of the VLSI Club"}
-                    </motion.h1>
-
-                    <motion.p
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{
-                        y: activeHero === index ? 0 : 20,
-                        opacity: activeHero === index ? 1 : 0,
-                      }}
-                      transition={{ delay: 0.7 }}
-                      className="text-sm sm:text-base md:text-lg lg:text-xl max-w-xs sm:max-w-lg md:max-w-2xl leading-relaxed"
-                    >
-                      {
-                        "Innovation, research, and milestones from our community — spanning projects, papers, competitions, and internships."}
-                    </motion.p>
+            <div className="flex items-center justify-center">
+              <div className="w-full max-w-4xl">
+                {heroLoading ? (
+                  <div className="flex items-center justify-center h-64">
+                    <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-4 border-gray-300 border-t-transparent" />
                   </div>
-                </motion.div>
-              ))}
+                ) : (
+                  <div className="relative">
+                    {_heroData.map((hero, index) => (
+                      <motion.div
+                        key={hero.id ?? index}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: activeHero === index ? 1 : 0, y: activeHero === index ? 0 : 10 }}
+                        transition={{ duration: 0.6 }}
+                        className={`rounded-xl overflow-hidden ${activeHero === index ? "block" : "hidden"}`}
+                      >
+                        <div className="w-full h-56 sm:h-72 md:h-96 bg-gray-200 relative rounded-xl">
+                          {!heroImageErrors[hero.id] && hero.images?.[0]?.id ? (
+                            <Image
+                              src={`${API_BASE_URL}/achievements/image/${hero.images[0].id}`}
+                              alt={hero.title || "Hero image"}
+                              fill
+                              className="object-cover rounded-xl"
+                              unoptimized
+                              onError={() => setHeroImageErrors((prev) => ({ ...prev, [hero.id]: true }))}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl">
+                              <Trophy className="w-12 h-12 text-gray-300" />
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
 
-              <div className="absolute bottom-3 sm:bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-1 sm:gap-2">
-                {heroData.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveHero(i)}
-                    aria-label={`Show hero ${i + 1}`}
-                    className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all ${
-                      activeHero === i ? "bg-white scale-125" : "bg-white/50"
-                    }`}
-                  />
-                ))}
+                    <div className="flex items-center justify-center gap-3 mt-4">
+                      {_heroData.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setActiveHero(i)}
+                          aria-label={`Show hero ${i + 1}`}
+                          className={`w-2.5 h-2.5 rounded-full transition-all ${activeHero === i ? "bg-blue-600 scale-110" : "bg-gray-300"}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            </>
-          )}
+            </div>
+          </div>
         </section>
       )}
       {/* End Hero Section */}
-      {(milestoneLoading || (milestoneData && milestoneData.length > 0)) && (
-        <section className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 md:px-6">
+      {(milestoneLoading || _milestoneData.length > 0) && (
+        <section className="py-6 px-3 sm:px-4 md:px-6">
           <div className="max-w-7xl mx-auto">
             <SectionHeader title="CLUB MILESTONES" />
             {milestoneLoading ? (
@@ -439,7 +436,7 @@ function ImageCard({ src, alt, title, onError }) {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                {milestoneData.map((milestone) => (
+                {_milestoneData.map((milestone) => (
                   <motion.div
                     key={milestone.id}
                     whileHover={{ y: -5 }}
@@ -461,7 +458,7 @@ function ImageCard({ src, alt, title, onError }) {
       )}
 
       {/* Summary Stats */}
-      {(statLoading || (statData && statData.length > 0)) && (
+      {(statLoading || _statData.length > 0) && (
         <section className="py-12 sm:py-16 md:py-20 bg-white border-y border-gray-100 flex flex-col items-center">
           <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 w-full">
             {statLoading ? (
@@ -479,7 +476,7 @@ function ImageCard({ src, alt, title, onError }) {
               </div>
             ) : (
               <div className="flex flex-wrap justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24">
-                {statData.map((stat) => (
+                {_statData.map((stat) => (
                   <motion.div
                     key={stat.id}
                     className="flex flex-col items-center text-center"
@@ -504,8 +501,8 @@ function ImageCard({ src, alt, title, onError }) {
       )}
 
       {/* Proud Moments */}
-      {(proudLoading || (proudData && proudData.length > 0)) && (
-        <section className="py-12 sm:py-16 md:py-20 px-3 sm:px-4 md:px-6 bg-gray-50">
+      {(proudLoading || _proudData.length > 0) && (
+        <section className="py-6 px-3 sm:px-4 md:px-6 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             <SectionHeader title="PROUD MOMENTS OF VLSID" />
             {proudLoading ? (
@@ -573,7 +570,7 @@ function ImageCard({ src, alt, title, onError }) {
 
       {/* Awards & Achievements */}
       {(awardLoading || (awardData && awardData.length > 0)) && (
-        <section className="py-12 sm:py-16 md:py-20 lg:py-24 px-3 sm:px-4 md:px-6 bg-white">
+        <section className="py-6 px-3 sm:px-4 md:px-6 bg-white">
           <div className="max-w-4xl sm:max-w-5xl md:max-w-6xl mx-auto">
             <div className="border-[1.5px] border-blue-200 rounded-2xl sm:rounded-3xl md:rounded-[2rem] p-6 sm:p-8 md:p-12 relative overflow-hidden bg-white/50 backdrop-blur-sm">
               <div className="absolute top-0 left-0 w-2 h-full bg-blue-600" />
@@ -591,7 +588,7 @@ function ImageCard({ src, alt, title, onError }) {
                 </div>
               ) : (
                 <div className="space-y-6 sm:space-y-8 max-w-4xl mx-auto">
-                  <VerticalAwardsCarousel awardData={awardData} />
+                  <VerticalAwardsCarousel awardData={_awardData} />
                 </div>
               )}
             </div>
@@ -617,10 +614,10 @@ function ImageCard({ src, alt, title, onError }) {
                 ></div>
               ))}
             </div>
-          ) : (
-            galleryData && galleryData.length > 0 && (
+            ) : (
+            _galleryData && _galleryData.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-                {galleryData.flatMap((gallery) =>
+                {_galleryData.flatMap((gallery) =>
                     gallery.images?.map((image, index) => (
                       <ImageCard
                         key={`${gallery.id}-${image.id}`}

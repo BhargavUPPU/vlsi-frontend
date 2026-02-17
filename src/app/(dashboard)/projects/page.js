@@ -289,7 +289,7 @@ export default function ProjectsPage() {
                 <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center px-3 sm:px-4">
                   {latestProjects.length > 0 ? (
                     <>
-                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 mt-16 sm:mt-18 md:mt-20 lg:mt-24 line-clamp-2 leading-tight">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 mt-8 sm:mt-12 md:mt-16 lg:mt-20 line-clamp-2 leading-tight">
                         {
                           latestProjects[carouselIndex % latestProjects.length]
                             .title

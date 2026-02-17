@@ -26,7 +26,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <section className="w-full grid grid-cols-1 gap-2 items-center mb-5">
+            <section className="w-full grid grid-cols-1 gap-2 items-center mb-5 ml-30">
               {/* Left Content */}
              
                 {/* Logo + Title */}
@@ -58,7 +58,7 @@ export default function HeroSection() {
                 </h1>
 
                 {/* Description */}
-                <p className="mt-4 sm:mt-6 max-w-full text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed italic">
+                <p className="mt-4 sm:mt-6 max-w-full text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed ">
                   Join our community of aspiring engineers and unlock endless
                   opportunities in VLSI design, research, and innovation. From
                   beginner workshops to industry collaborations.
@@ -71,13 +71,13 @@ export default function HeroSection() {
   href="https://chat.whatsapp.com/DDrFF6wO70s2WQ0sOPq5nO"
   target="_blank"
   rel="noopener noreferrer"
-  className="mt-3 sm:mt-4 md:mt-5 lg:mt-6 inline-flex w-full sm:w-1/3 items-center justify-center sm:justify-start gap-2 sm:gap-3 rounded-2xl bg-blue-600 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 text-white text-sm sm:text-base md:text-lg font-bold shadow-md hover:bg-blue-700 transition-colors duration-200 drop-shadow-xl drop-shadow-black"
+  className="mt-3 sm:mt-4 md:mt-5 lg:mt-7 inline-flex w-full sm:w-1/3 items-center justify-center sm:justify-start gap-2 sm:gap-3 rounded-2xl bg-blue-600 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 text-white text-sm sm:text-base md:text-lg font-bold shadow-md hover:bg-blue-700 transition-colors duration-200 drop-shadow-xl drop-shadow-black"
   aria-label="Join our Community (WhatsApp)"
 >
-  <span className="text-center sm:text-left">
+  <span className="text-center sm:text-left mt-2">
     Join our <br className="hidden sm:block" /> Community
   </span>
-  <span className="text-lg sm:text-xl md:text-2xl">→</span>
+  <span className="text-md sm:text-xl md:text-2xl">→</span>
 </a>
               
             </section>

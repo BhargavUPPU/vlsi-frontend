@@ -18,13 +18,28 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "Events", href: "/events" },
-    { name: "Resources", href: "/resources" },
+    { name: "Resources", href: "/resources/" },
     { name: "Projects", href: "/projects" },
     { name: "Our Team", href: "/team" },
     { name: "Test Portal", href: "/tests" },
   ];
 
-  const isActive = (href) => pathname === href;
+  const isActive = (href) => {
+    if (!pathname) return false;
+
+    const normalize = (p) => (p ? p.replace(/\/+$|^\s+|\s+$/g, "") : "");
+    const normalizedHref = normalize(href) || "/";
+    const normalizedPath = normalize(pathname) || "/";
+
+    // Exact match for root
+    if (normalizedHref === "/") return normalizedPath === "/";
+
+    // Match exact or any nested route under the href (e.g. /resources -> /resources/roadmap)
+    return (
+      normalizedPath === normalizedHref ||
+      normalizedPath.startsWith(normalizedHref + "/")
+    );
+  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-200">

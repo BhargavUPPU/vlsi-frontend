@@ -148,7 +148,7 @@ export default function EventsPage() {
             <Image
               src="/eventHeader.jpg"
               alt="Event Header"
-              className="rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl hover:scale-105 transition-transform duration-300 w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-cover"
+              className=" hover:scale-105 transition-transform duration-300 w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-cover"
               width={256}
               height={256}
             />

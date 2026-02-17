@@ -184,7 +184,7 @@ export default function TeamPage() {
             <div className="p-1 sm:p-1.5 rounded-full group-hover:bg-blue-50 transition-colors">
               <ArrowLeft size={16} className="sm:w-[18px] sm:h-[18px]" />
             </div>
-            <span>Home</span>
+            <span>Home &gt;&gt; Our Team</span>
           </Link>
         </div>
       </div>
@@ -246,7 +246,7 @@ export default function TeamPage() {
                 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white  tracking-tight leading-tight"
               >
                 Meet our team{" "}
-                <span className="text-blue-500 italic font-medium">
+                <span className="text-blue-500  font-medium">
                   members
                 </span>
               </motion.h1>

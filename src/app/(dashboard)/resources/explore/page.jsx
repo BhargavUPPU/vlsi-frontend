@@ -28,7 +28,6 @@ const RESOURCE_TYPES = [
   { id: "gatePyqs", label: "Gate PYQs" },
   { id: "vlsiMaterials", label: "VLSI Materials" },
   { id: "questionBanks", label: "Question Banks" },
-  { id: "projects", label: "Projects" }
 ];
 
 // Category mappings based on resource type
@@ -95,12 +94,6 @@ const CATEGORY_MAP = {
     "Technical",
     "Research"
   ],
-  projects: [
-    "VLSI",
-    "Embedded",
-    "AI",
-    "Communication"
-  ]
 };
 
 // Get categories based on selected resource type
@@ -330,20 +323,41 @@ export default function ResourcesExplorePage() {
                         </div>
 
                         <div className="p-6 flex flex-col flex-1">
-                          <div className="flex items-center gap-2 mb-3">
+                          <div className="flex items-center gap-2 mb-2">
                             <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
                               {item.category || "General"}
                             </span>
                           </div>
                           
-                          <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                          <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2">
                             {getTitle(item)}
                           </h3>
                           
-                          <p className="text-sm text-gray-500 mb-6 flex items-center gap-1">
+                          <p className="text-sm text-gray-500 mb-1 flex items-center gap-1">
                             {getSubtitle(item)}
                           </p>
-
+        
+                 
+                  {
+                    item.subject && (
+                      <p className="text-sm text-gray-500 mb-1 font-medium">
+                        Subject: {item.subject}
+                      </p>
+                    )
+                  }
+          
+                  {
+                    item.year && (
+                      <p className="text-sm text-gray-500 mb-1 font-medium">
+                        Year: {item.year}
+                      </p>
+                    )
+                  }
+                  {item.description && (
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
+                      {item.description}
+                    </p>
+                  )}
                           <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
                             <a 
                               href={item.link} 

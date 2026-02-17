@@ -150,7 +150,7 @@ export default function ResourceCarousel({ items, type }) {
 
                 {/* Content */}
                 <div className="p-4 sm:p-6 flex-grow flex flex-col">
-                  <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-2 line-clamp-2 min-h-[3rem]">
+                  <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 line-clamp-2 ">
                     {item.title ||
                       item.name ||
                       item.topicName ||
@@ -158,10 +158,32 @@ export default function ResourceCarousel({ items, type }) {
                       "Untitled"}
                   </h3>
                   {item.professorName && (
-                    <p className="text-sm text-gray-500 mb-3 font-medium">
+                    <p className="text-sm text-gray-500 mb-1 font-medium">
                       By {item.professorName}
                     </p>
                   )}
+                  {
+                    item.author && !item.professorName && (
+                      <p className="text-sm text-gray-500 mb-1 font-medium">
+                        By {item.author}
+                      </p>
+                    )
+                  }
+                  {
+                    item.subject && (
+                      <p className="text-sm text-gray-500 mb-1 font-medium">
+                        Subject: {item.subject}
+                      </p>
+                    )
+                  }
+                 
+                  {
+                    item.year && (
+                      <p className="text-sm text-gray-500 mb-1 font-medium">
+                        Year: {item.year}
+                      </p>
+                    )
+                  }
                   {item.description && (
                     <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
                       {item.description}

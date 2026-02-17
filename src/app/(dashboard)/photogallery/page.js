@@ -52,6 +52,11 @@ export default function PhotoGalleryPage() {
     );
   }, [photoGalleries]);
 
+  // Log raw response for debugging
+  useEffect(() => {
+    console.log("photoGalleries raw:", photoGalleries);
+  }, [photoGalleries]);
+
   // Memoize processed galleries with images
   const processedGalleries = useMemo(() => {
     return sortedGalleries.map((gallery) => ({
@@ -65,6 +70,10 @@ export default function PhotoGalleryPage() {
         })) || [],
     }));
   }, [sortedGalleries]);
+
+  useEffect(() => {
+    console.log("processedGalleries:", processedGalleries);
+  }, [processedGalleries]);
 
   const openLightbox = useCallback((gallery, imageIndex) => {
     const images = gallery.processedImages.map((img) => ({
@@ -201,9 +210,9 @@ export default function PhotoGalleryPage() {
             </div>
           ) : (
             <div className="space-y-16">
-              {processedGalleries.map((gallery) => (
+              {processedGalleries.map((gallery, gIndex) => (
                 <motion.div
-                  key={gallery.id}
+                  key={gallery.id ?? `${gallery.title ?? 'gallery'}-${gIndex}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -227,9 +236,9 @@ export default function PhotoGalleryPage() {
 
                   {/* Images Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {gallery.processedImages.map((image) => (
+                    {gallery.processedImages.map((image, imgIndex) => (
                       <motion.div
-                        key={image.id}
+                        key={image.id ?? `${gallery.id ?? gIndex}-${imgIndex}`}
                         whileHover={{ scale: 1.05 }}
                         className="aspect-square rounded-lg overflow-hidden shadow-lg cursor-pointer group relative"
                         onClick={() =>

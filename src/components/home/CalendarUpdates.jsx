@@ -20,14 +20,24 @@ export default function CalendarUpdates() {
   // Filter for active announcements and sort by priority if not done by backend
   // The service call uses /active endpoint or basic getAll
   // Let's use the data as is for now, assuming the backend returns what we need
-  const displayAnnouncements = announcements?.filter(a => a.isActive) || [];
+  // Ensure we have an array (backend may return an object wrapper)
+  const _announcements = Array.isArray(announcements)
+    ? announcements
+    : announcements?.data || [];
+
+  const displayAnnouncements = (_announcements || []).filter(
+    (a) => a?.isActive,
+  );
 
   return (
     <section className="py-4 sm:py-6 md:py-8 lg:py-12 bg-white">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">
-            Calendar & Updates Hub
+            Calendar & {""}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+               Updates Hub
+            </span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed">
             Your central hub for events, deadlines, and important announcements.

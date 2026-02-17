@@ -128,13 +128,15 @@ export default function ResourcesPage() {
         <ArrowLeft size={20} />
         <span>Home</span>
       </Link>
-      <Image
-        src="/resourceBanner.svg"
-        alt="Resources Hero Banner"
-        width={1920}
-        height={400}
-        className="w-full h-full"
-      />
+      <div className="w-full">
+        <Image
+          src="/resourceBanner.svg"
+          alt="Resources Hero Banner"
+          width={1920}
+          height={400}
+          className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover"
+        />
+      </div>
       {/* Quick Access Cards */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  static md:relative z-10">
         <div>
@@ -143,19 +145,19 @@ export default function ResourcesPage() {
             Explore structured learning paths, essential tools, and curated resources to get started with confidence.
           </p>  
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
           <Link
             href="/resources/roadmap"
-            className="bg-white rounded-xl p-6 h-50 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+            className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden h-28 sm:h-36 md:h-44 lg:h-52"
           >
             <Image
               src="/Resource1.jpg"
               alt="VLSI RoadMap Background"
               width={400}
-              height={400}
-              className="object-contain opacity-100 absolute inset-0 pointer-events-none"
+              height={200}
+              className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-            <div className="absolute left-1 -translate-x-0 bottom-4">
+            <div className="absolute left-4 bottom-4">
               <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
                 VLSI ROADMAP
               </span>
@@ -164,7 +166,7 @@ export default function ResourcesPage() {
 
           <Link
             href="/resources/softwaretools"
-            className="bg-white rounded-xl p-2 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+            className="bg-white rounded-xl p-2 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden h-28 sm:h-36 md:h-44 lg:h-52"
           >
             <Image
               src="/Resource2.png"
@@ -172,14 +174,7 @@ export default function ResourcesPage() {
               fill
               className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-            {/* <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 relative z-10">
-              <Video className="w-6 h-6 text-purple-600" />
-            </div>
-            <h3 className="text-lg text-white font-semibold mb-2 relative z-10">VLSI TOOLS</h3>
-            <p className="text-white text-sm relative z-10">
-              Industry-standard design and simulation tools
-            </p> */}
-             <div className="absolute left-1 -translate-x-0 bottom-4">
+             <div className="absolute left-4 bottom-4">
               <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
                 VLSI TOOLS
               </span>
@@ -189,7 +184,7 @@ export default function ResourcesPage() {
             href="https://drive.google.com/drive/folders/1Msf9FVMu2H0qN3IbELHT1YiYDrSlLWI_?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden"
+            className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden h-28 sm:h-36 md:h-44 lg:h-52"
           >
             <Image
               src="/placement1.jpeg"
@@ -197,7 +192,7 @@ export default function ResourcesPage() {
               fill
               className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-            <div className="absolute left-1 -translate-x-0 bottom-4">
+            <div className="absolute left-4 bottom-4">
               <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
                 PLACEMENT PREPARATION
               </span>

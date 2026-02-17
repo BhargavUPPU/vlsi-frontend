@@ -232,7 +232,7 @@ export default function LoginPage() {
               <p>
                 Need access?{" "}
                 <Link
-                  href="/contact"
+                  href="mailto:vlsid@gvpce.ac.in"
                   className="text-blue-600 hover:text-blue-700 underline"
                 >
                   Contact administrator
