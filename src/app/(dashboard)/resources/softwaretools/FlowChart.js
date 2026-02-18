@@ -225,7 +225,7 @@ const TOOLS_DATA = {
   "primetime": {
     id: "primetime",
     label: "Synopsys Digital",
-    image: "/synopsys_tools.png",
+    image: "/sample1.jpeg",
     description: "Complete digital design and verification flow from RTL to GDSII",
     category: "Digital Design",
     tools: ["Design Compiler", "IC Compiler", "PrimeTime", "StarRC", "Formality"],
@@ -243,7 +243,7 @@ const TOOLS_DATA = {
   "tessent": {
     id: "tessent",
     label: "Siemens Suite",
-    image: "/mentor_tools.png",
+    image: "/sample2.jpeg",
     description: "Verification, test and physical design solutions",
     category: "Verification",
     tools: ["Tessent", "Calibre", "Questa", "ModelSim", "Analog FastSPICE"],
