@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect, useRef } from "react";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
-import { API_ENDPOINTS } from "@/lib/api/config";
+import { API_ENDPOINTS, API_BASE_URL } from "@/lib/api/config";
 import { bufferToDataURL } from "@/lib/utils/imageUtils";
+import ContentLoading from "@/app/content-loading";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Users,
@@ -30,7 +31,7 @@ const TEAM_DESCRIPTIONS = {
     "Conducts technical sessions, mentors juniors, and builds structured learning modules on VLSI concepts and tools.",
   "Question Bank & Resource Collection Team":
     "Curates academic resources, interview questions, tool manuals, and organizes them into a systematic repository.",
-  "Alumni Interaction With Junior Team":
+  "Alumni Interaction with Juniors Team":
     "Connects with alumni, coordinates interactions, and facilitates sessions that help members learn from real industry experiences.",
   "Juniors Recruitment Team":
     "Identifies, evaluates, and recruits enthusiastic juniors while helping build a strong incoming talent pipeline.",
@@ -47,35 +48,99 @@ const TEAM_DESCRIPTIONS = {
  
 };
 
+// Normalize keys (lowercase, collapse spaces, strip punctuation) so
+// portfolio names coming from the backend still match our preferred order
+// and description map even if spacing/capitalization differs.
+const normalizeKey = (s) =>
+  String(s || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const normalizedDescriptionMap = new Map(
+  Object.entries(TEAM_DESCRIPTIONS).map(([k, v]) => [normalizeKey(k), v]),
+);
+
 export default function TeamPage() {
-  const [selectedYear, setSelectedYear] = useState("2024-2025");
+  const [selectedYear, setSelectedYear] = useState("2025");
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const sentinelRef = useRef(null);
+  const limit = 24;
 
-  // Fetch core members
-  const { data: coreMembersData, isLoading: loadingCoreMembers } = useQuery({
-    queryKey: ["coreMembers"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.CORE_MEMBERS.BASE),
+  // Fetch core members (infinite scroll, filtered by year)
+  const {
+    data: coreMembersPages,
+    isLoading: loadingCoreMembers,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["coreMembers", selectedYear, limit],
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await apiClient.get(API_ENDPOINTS.CORE_MEMBERS.BASE, {
+        params: { academicYear: selectedYear, page: pageParam, limit },
+      });
+      return res.data;
+    },
+    getNextPageParam: (lastPage, pages) => {
+      const total = lastPage?.total || 0;
+      const totalPages = Math.ceil(total / limit) || 1;
+      const nextPage = pages.length + 1;
+      return nextPage <= totalPages ? nextPage : undefined;
+    },
+    keepPreviousData: true,
+    enabled: !!selectedYear,
   });
 
-  // Fetch team photos
+  // Fetch team photos (prefer server-side filtering by year)
   const { data: teamPhotosData, isLoading: loadingTeamPhotos } = useQuery({
-    queryKey: ["teamPhotos"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.TEAM_PHOTOS.BASE),
+    queryKey: ["teamPhotos", selectedYear],
+    queryFn: async () => {
+      const res = await apiClient.get(API_ENDPOINTS.TEAM_PHOTOS.BASE, {
+        params: { academicYear: selectedYear },
+      });
+      return res.data;
+    },
+    keepPreviousData: true,
   });
 
-  // Backend returns array directly
-  const allCoreMembers = Array.isArray(coreMembersData?.data)
-    ? coreMembersData.data
-    : Array.isArray(coreMembersData?.data?.data)
-      ? coreMembersData.data.data
-      : [];
+  // Fetch all core members (only to derive available academic years for the dropdown)
+  const { data: allYearsData } = useQuery({
+    queryKey: ["coreMembersYears"],
+    queryFn: async () => {
+      const res = await apiClient.get(API_ENDPOINTS.CORE_MEMBERS.BASE);
+      return res.data;
+    },
+    staleTime: 1000 * 60 * 60, // 1 hour
+  });
 
-  // Backend returns array directly
-  const teamPhotos = Array.isArray(teamPhotosData?.data)
-    ? teamPhotosData.data
-    : Array.isArray(teamPhotosData?.data?.data)
-      ? teamPhotosData.data.data
+  // Backend returns { data: [...], total }
+  const allCoreMembers = (() => {
+    const items =
+      coreMembersPages?.pages?.flatMap((p) =>
+        Array.isArray(p) ? p : p?.data || [],
+      ) || [];
+    const map = new Map();
+    for (const it of items) {
+      if (!it) continue;
+      const id = it.id ?? `${it.name}-${it.rollNumber}`;
+      if (!map.has(id)) map.set(id, { ...it, id });
+    }
+    return Array.from(map.values());
+  })();
+  const totalMembers = coreMembersPages?.pages?.[0]?.total ?? allCoreMembers.length;
+  const totalPages = Math.ceil(totalMembers / limit) || 1;
+
+  // Team photos: support both array response and single record
+  const _teamPhotosRaw = Array.isArray(teamPhotosData)
+    ? teamPhotosData
+    : teamPhotosData?.data ?? teamPhotosData ?? [];
+  const teamPhotos = Array.isArray(_teamPhotosRaw)
+    ? _teamPhotosRaw
+    : _teamPhotosRaw
+      ? [_teamPhotosRaw]
       : [];
   console.log("Fetched Team Photos:", teamPhotos);
 
@@ -84,8 +149,19 @@ export default function TeamPage() {
     (member) => member.academicYear === selectedYear,
   );
 
-  // Get unique academic years for dropdown
-  const academicYears = [...new Set(allCoreMembers.map((m) => m.academicYear))]
+  // Get unique academic years for dropdown (prefer server-wide list)
+  const yearsFromAll = Array.isArray(allYearsData)
+    ? allYearsData.map((m) => m.academicYear)
+    : Array.isArray(allYearsData?.data)
+    ? allYearsData.data.map((m) => m.academicYear)
+    : [];
+
+  const academicYears = (yearsFromAll.length > 0
+    ? yearsFromAll
+    : allCoreMembers.map((m) => m.academicYear)
+  )
+    .filter(Boolean)
+    .reduce((acc, y) => (acc.includes(y) ? acc : [...acc, y]), [])
     .sort()
     .reverse();
 
@@ -96,8 +172,15 @@ export default function TeamPage() {
     }
   }, [academicYears, selectedYear]);
 
-  // Define hierarchy order
+  // When selected year changes, reset carousel index
+  useEffect(() => {
+    setCurrentPhotoIndex(0);
+  }, [selectedYear]);
+
+  // Define hierarchy order (use normalized keys for robust matching)
   const hierarchyOrder = Object.keys(TEAM_DESCRIPTIONS);
+  const normalizedOrderMap = new Map();
+  hierarchyOrder.forEach((k, i) => normalizedOrderMap.set(normalizeKey(k), i));
 
   // Group members by portfolio
   const groupedByPortfolio = filteredMembers.reduce((acc, member) => {
@@ -109,11 +192,13 @@ export default function TeamPage() {
     return acc;
   }, {});
 
-  // Sort portfolios by hierarchy
+  // Sort portfolios by hierarchy (use normalized keys for matching)
   const sortedPortfolios = Object.keys(groupedByPortfolio).sort((a, b) => {
-    const indexA = hierarchyOrder.indexOf(a);
-    const indexB = hierarchyOrder.indexOf(b);
-    if (indexA === -1 && indexB === -1) return 0;
+    const na = normalizeKey(a);
+    const nb = normalizeKey(b);
+    const indexA = normalizedOrderMap.has(na) ? normalizedOrderMap.get(na) : -1;
+    const indexB = normalizedOrderMap.has(nb) ? normalizedOrderMap.get(nb) : -1;
+    if (indexA === -1 && indexB === -1) return a.localeCompare(b);
     if (indexA === -1) return 1;
     if (indexB === -1) return -1;
     return indexA - indexB;
@@ -121,28 +206,48 @@ export default function TeamPage() {
 
   // Get member image
   const getMemberImage = (member) => {
+    // Prefer backend-served image (resizable) when member has id
+    if (member?.id) {
+      return `${API_BASE_URL}${API_ENDPOINTS.CORE_MEMBERS.BY_ID(member.id)}/image?size=256`;
+    }
+
     if (member.image && Object.keys(member.image).length > 0) {
       return bufferToDataURL(member.image);
     }
+
     return null;
   };
 
   // Get team photos for current year
   const getTeamPhotosByYear = () => {
-    const photoRecord = teamPhotos.find((p) => p.academicYear === selectedYear);
-    if (
-      photoRecord &&
-      photoRecord.images &&
-      Array.isArray(photoRecord.images)
-    ) {
-      return photoRecord.images
-        .map((img) => bufferToDataURL(img.imageData))
-        .filter(Boolean);
+    // If API returned records filtered by year, take the first record
+    const photoRecord = teamPhotos.find((p) => p.academicYear === selectedYear) || teamPhotos[0];
+    if (!photoRecord) return [];
+
+    // Build entries with primary `src` (server URL when available) and `fallback` (data URL)
+    const entries = [];
+
+    if (photoRecord.images && Array.isArray(photoRecord.images)) {
+      for (let idx = 0; idx < photoRecord.images.length; idx++) {
+        const img = photoRecord.images[idx];
+        const fallback = img?.imageData ? bufferToDataURL(img.imageData) : null;
+        if (photoRecord.id) {
+          // Use thumbnail endpoint with high resolution for better quality and caching
+          const src = `${API_BASE_URL}${API_ENDPOINTS.TEAM_PHOTOS.BY_ID(photoRecord.id)}/thumbnail/${idx}?size=1200`;
+          entries.push({ src, fallback });
+        } else if (fallback) {
+          entries.push({ src: fallback, fallback: null });
+        }
+      }
     }
-    // Fallback if images is not an array yet (old data)
-    if (photoRecord && photoRecord.imageData) {
-      return [bufferToDataURL(photoRecord.imageData)].filter(Boolean);
+
+    if (entries.length > 0) return entries;
+
+    if (photoRecord.imageData) {
+      const dataUrl = bufferToDataURL(photoRecord.imageData);
+      return dataUrl ? [{ src: dataUrl, fallback: null }] : [];
     }
+
     return [];
   };
 
@@ -158,6 +263,25 @@ export default function TeamPage() {
 
     return () => clearInterval(interval);
   }, [currentYearPhotos.length, isPaused]);
+
+  // IntersectionObserver to trigger loading next page for infinite scroll
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+          }
+        });
+      },
+      { root: null, rootMargin: "200px", threshold: 0.1 },
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   // Photo Navigation
   const nextPhoto = () => {
@@ -204,7 +328,18 @@ export default function TeamPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.7 }}
-                src={currentYearPhotos[currentPhotoIndex]}
+                src={
+                  currentYearPhotos[currentPhotoIndex]?.src ||
+                  currentYearPhotos[currentPhotoIndex]
+                }
+                onError={(e) => {
+                  try {
+                    const fallback = currentYearPhotos[currentPhotoIndex]?.fallback;
+                    if (fallback && e?.target) e.target.src = fallback;
+                  } catch (err) {
+                    // noop
+                  }
+                }}
                 alt={`Team ${selectedYear}`}
                 className="w-full h-full object-contain opacity-80"
               />
@@ -315,14 +450,8 @@ export default function TeamPage() {
       {/* Team Content Grid */}
       <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-12 sm:py-16 md:py-20">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-20 sm:py-32 md:py-40 gap-3 sm:gap-4">
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20">
-              <div className="absolute inset-0 border-4 border-blue-100 rounded-full" />
-              <div className="absolute inset-0 border-4 border-t-blue-600 rounded-full animate-spin" />
-            </div>
-            <p className="text-slate-500 font-medium animate-pulse text-sm sm:text-base">
-              Assembling the team...
-            </p>
+          <div className="flex min-h-screen justify-center items-center py-20 sm:py-32 md:py-40 gap-3 sm:gap-4">
+            <ContentLoading message={`Assembling the team...`} />
           </div>
         ) : filteredMembers.length === 0 ? (
           <motion.div
@@ -342,11 +471,13 @@ export default function TeamPage() {
             </p>
           </motion.div>
         ) : (
-          <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-7">
-            {sortedPortfolios.map((portfolio) => {
+          <>
+            <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-7">
+              {sortedPortfolios.map((portfolio) => {
               const members = groupedByPortfolio[portfolio];
               const desc =
                 TEAM_DESCRIPTIONS[portfolio] ||
+                normalizedDescriptionMap.get(normalizeKey(portfolio)) ||
                 "Passionate contributors working together to drive excellence and innovation.";
 
               return (
@@ -397,6 +528,25 @@ export default function TeamPage() {
                                   src={imageUrl}
                                   alt={member.name}
                                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                  onError={(e) => {
+                                    try {
+                                      const t = e?.target;
+                                      if (!t) return;
+                                      const src = t.src || "";
+                                      // Retry without the size query param first
+                                      if (src.includes("?size=")) {
+                                        t.src = src.split("?size=")[0];
+                                        return;
+                                      }
+
+                                      // Final fallback: SVG data URL with initial
+                                      const initial = (member.name || "?").charAt(0).toUpperCase();
+                                      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='100%' height='100%' fill='%23dbeafe'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='180' font-family='Arial' fill='%2310369a'>${initial}</text></svg>`;
+                                      t.src = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+                                    } catch (err) {
+                                      // noop
+                                    }
+                                  }}
                                 />
                               ) : (
                                 <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white text-3xl sm:text-4xl md:text-5xl font-black">
@@ -441,8 +591,17 @@ export default function TeamPage() {
                   </div>
                 </motion.div>
               );
-            })}
-          </div>
+              })}
+            </div>
+
+            {/* Infinite scroll sentinel and loader */}
+            <div ref={sentinelRef} className="h-6" />
+            {(isFetchingNextPage || loadingCoreMembers) && (
+              <div className="flex items-center justify-center gap-3 mt-6">
+                <ContentLoading message={isFetchingNextPage ? "Loading more members..." : `Assembling the team...`} />
+              </div>
+            )}
+          </>
         )}
       </main>
 

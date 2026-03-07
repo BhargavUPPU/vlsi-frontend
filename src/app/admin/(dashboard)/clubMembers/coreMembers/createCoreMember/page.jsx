@@ -129,7 +129,7 @@ function CreateCoreMemberContent() {
                   "Designing Team",
                   "Juniors Coordinator Team",
                   "Promotion & Insta Handling Team",
-                  "Translation & Data Handling Team",
+                  "Events Organising Team",
                   "Documentation Team",
                   "Web Handling Team",
                 ].map((team) => (

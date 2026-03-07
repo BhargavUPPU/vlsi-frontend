@@ -14,8 +14,8 @@ export default function RoadMap() {
           <ArrowLeft size={20} />
           <span className="text-sm sm:text-base">RoadMap</span>
         </Link>
-        <header className="mb-8 sm:mb-12">
-          <div className="flex items-center gap-2 sm:gap-3 mb-4">
+        <header className="mb-2 sm:mb-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-3">
             <span className="text-2xl sm:text-4xl" role="img" aria-label="roadmap">
               🗺️
             </span>
@@ -23,13 +23,13 @@ export default function RoadMap() {
               VLSI Roadmap
             </h1>
           </div>
-          <p className="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 mb-1 sm:mb-3 leading-relaxed">
             A beginner-friendly roadmap for VLSI engineers introducing frontend
             (design, Verilog, simulation) and backend (synthesis, placement,
             routing) concepts to build strong fundamentals in chip design and
             physical implementation workflows.
           </p>
-          <h2 className="text-xl sm:text-2xl font-bold mb-3 text-gray-800">
+          <h2 className="text-lg sm:text-2xl font-bold mb-1 sm:mb-3 text-gray-800">
             How to prepare for a VLSI profile from scratch?
           </h2>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -39,7 +39,7 @@ export default function RoadMap() {
           </p>
         </header>
         {/* Types of Semiconductor Companies */}
-        <section className="mb-12 sm:mb-16 items-center">
+        <section className="mb-2 sm:mb-3 items-center">
           <h3 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-gray-800">
             First, you should know the types of Semiconductors companies
           </h3>
@@ -87,8 +87,8 @@ export default function RoadMap() {
               (Hardware Description Languages).
             </p>
           </div>
-          <div className="bg-gray-50 rounded-2xl p-4 sm:p-8 shadow-md overflow-x-auto">
-            <svg className="w-full h-auto min-h-96" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
+          <div className="bg-gray-50 rounded-2xl p-2 sm:p-4 shadow-md overflow-x-auto">
+            <svg className="w-full h-auto min-h-50 sm:min-h-96" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
               <line
                 x1="60"
                 y1="80"

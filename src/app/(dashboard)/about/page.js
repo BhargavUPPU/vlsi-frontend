@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import Image from "next/image";
 import {
   ChevronDown,
@@ -9,6 +9,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const AboutUs = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -16,7 +17,103 @@ const AboutUs = () => {
   const toggleFAQ = (index) => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
+  
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};
 
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 24,
+    scale: 0.97,
+    filter: "blur(4px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.55,
+      ease: [0.21, 0.47, 0.32, 0.98],
+    },
+  },
+};
+
+const avatarRingVariants = {
+  hidden: { opacity: 0, scale: 0.8, rotate: -15 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.34, 1.56, 0.64, 1], // spring-like overshoot
+      delay: 0.15,
+    },
+  },
+};
+
+const textRevealVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.35,
+      ease: "easeOut",
+      delay: 0.25 + i * 0.07,
+    },
+  }),
+};
+
+const shimmerVariants = {
+  initial: { x: "-100%", opacity: 0 },
+  hover: {
+    x: "100%",
+    opacity: [0, 0.6, 0],
+    transition: { duration: 0.55, ease: "easeInOut" },
+  },
+};
+
+// ─── Tilt Card Hook ───────────────────────────────────────────────────────────
+
+function useTilt() {
+  const ref = useRef(null);
+
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+
+  const x = useSpring(rawX, { stiffness: 300, damping: 30 });
+  const y = useSpring(rawY, { stiffness: 300, damping: 30 });
+
+  const rotateX = useTransform(y, [-0.5, 0.5], [6, -6]);
+  const rotateY = useTransform(x, [-0.5, 0.5], [-6, 6]);
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    rawX.set(nx);
+    rawY.set(ny);
+  };
+
+  const handleMouseLeave = () => {
+    rawX.set(0);
+    rawY.set(0);
+  };
+
+  return { ref, rotateX, rotateY, handleMouseMove, handleMouseLeave };
+}
+  
   const objectives = [
     {
       title: "Competition Excellence",
@@ -72,6 +169,12 @@ const AboutUs = () => {
   ];
 
   const developers = [
+    {
+      name:"Nazeer Hussain Khan",
+      role:"WEB TEAM LEAD",
+      roll_number:"21131A04H9",
+      image:"/NAZEER.jpg"
+    },
     {
       name: "Uppu Bhargav Sai",
       role: "WEB DEVELOPER",
@@ -133,6 +236,127 @@ const AboutUs = () => {
         "Students interested in joining the VLSID Club can apply through the official Google Form. After submitting the form, applicants must attend a basic exam to assess their fundamental knowledge and interest. Candidates who qualify are called for an interview to evaluate their motivation and willingness to learn. Based on the exam and interview performance, the club finalizes the shortlist of selected members.",
     },
   ];
+
+  function DeveloperCard({ dev, idx }) {
+    const { ref, rotateX, rotateY, handleMouseMove, handleMouseLeave } = useTilt();
+  
+    return (
+      <motion.article
+        ref={ref }
+        key={dev.id ?? idx}
+        role="listitem"
+        variants={cardVariants}
+        tabIndex={0}
+        aria-label={`Developer ${dev.name}, ${dev.role}`}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+          perspective: 800,
+        }}
+        whileFocus={{ scale: 1.02 }}
+        className="relative group bg-white rounded-2xl p-7 sm:p-9
+          shadow-[0_2px_16px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.05)]
+          border border-gray-100/80 text-center
+          cursor-default overflow-hidden
+          focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2
+          will-change-transform"
+      >
+        {/* ── Shimmer sweep on hover ─────────────────────────────────────── */}
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-10
+            bg-gradient-to-r from-transparent via-white/60 to-transparent
+            skew-x-[-20deg]"
+          variants={shimmerVariants}
+          initial="initial"
+          whileHover="hover"
+        />
+  
+        {/* ── Subtle gradient wash ──────────────────────────────────────── */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-0
+            group-hover:opacity-100 transition-opacity duration-500
+            bg-gradient-to-b from-indigo-50/40 via-transparent to-transparent rounded-2xl"
+        />
+  
+        {/* ── Avatar ───────────────────────────────────────────────────── */}
+        <motion.div
+          variants={avatarRingVariants}
+          className="flex items-center justify-center mb-5 sm:mb-7"
+        >
+          <div
+            className="relative p-[3px] rounded-full
+              bg-gradient-to-br from-indigo-400 via-violet-400 to-pink-400
+              shadow-[0_0_0_4px_white]
+              group-hover:shadow-[0_0_0_4px_white,0_4px_20px_rgba(99,102,241,0.25)]
+              transition-shadow duration-300"
+          >
+            <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 relative rounded-full overflow-hidden bg-gray-100">
+              <Image
+                src={dev.image ?? "/images/avatar-placeholder.png"}
+                alt={dev.alt ?? dev.name}
+                fill
+                sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 112px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                priority={false}
+              />
+            </div>
+          </div>
+        </motion.div>
+  
+        {/* ── Name ─────────────────────────────────────────────────────── */}
+        <motion.h3
+          custom={0}
+          variants={textRevealVariants}
+          className="text-lg sm:text-xl font-semibold tracking-tight text-gray-900 mb-1"
+        >
+          {dev.name}
+        </motion.h3>
+  
+        {/* ── Roll number ──────────────────────────────────────────────── */}
+        {dev.roll_number ? (
+          <motion.p
+            custom={1}
+            variants={textRevealVariants}
+            className="text-sm text-gray-400 font-mono mb-2 tracking-wide"
+          >
+            {dev.roll_number}
+          </motion.p>
+        ) : null}
+  
+        {/* ── Role badge ───────────────────────────────────────────────── */}
+        <motion.span
+          custom={2}
+          variants={textRevealVariants}
+          className="inline-block mt-1 px-3 py-1 rounded-full
+            text-xs sm:text-sm font-medium
+            bg-indigo-50 text-indigo-600
+            ring-1 ring-indigo-100
+            group-hover:bg-indigo-100 group-hover:ring-indigo-200
+            transition-colors duration-200"
+        >
+          {dev.role}
+        </motion.span>
+  
+        {/* ── Bottom accent line ────────────────────────────────────────── */}
+        <motion.div
+          aria-hidden
+          className="absolute bottom-0 left-1/2 -translate-x-1/2
+            h-[2px] rounded-full
+            bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400"
+          initial={{ width: 0, opacity: 0 }}
+          whileHover={{ width: "60%", opacity: 1 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        />
+      </motion.article>
+    );
+  }
+  
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-white to-gray-50">
@@ -243,67 +467,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        {/* Faculty Coordinator Section */}
-        <div className="mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-12 text-gray-800 px-2">
-            Our Faculty Coordinator
-          </h2>
-
-          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden max-w-5xl mx-auto border border-gray-100">
-            <div className="md:flex">
-              {/* Faculty Image */}
-              <div className="md:w-1/3 p-6 sm:p-8 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50">
-                <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl sm:rounded-2xl mb-4 sm:mb-6 overflow-hidden shadow-lg border-2 sm:border-4 border-white">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Image
-                      src="/faculty5.jpeg"
-                      alt="Dr.J.Bhaskara Rao"
-                      width={500}
-                      height={500}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-center text-gray-800 mb-1 sm:mb-2">
-                  Dr.J.Bhaskara Rao
-                </h3>
-                <p className="text-sm sm:text-base text-[#2563eb] font-semibold text-center">
-                  Associate Professor
-                </p>
-              </div>
-
-              {/* Faculty Details */}
-              <div className="md:w-2/3 p-4 sm:p-6 bg-white">
-                <div className="max-w-none">
-                  <p className="text-sm sm:text-base md:text-md lg:text-lg text-gray-700 leading-relaxed text-justify">
-                    Dr. Bhaskara Rao Jammu, Faculty Coordinator of the VLSID
-                    Club, holds a Ph.D. in ECE from NIT Rourkela, M.Tech. in
-                    Digital Systems from NIT Allahabad, and B.E. in ECE from Sir
-                    C.R. Reddy College, Eluru. With 18 years of experience -
-                    including 11 years in teaching, 4 years in research, and 3
-                    years in industry - his expertise spans VLSI Design,
-                    Hardware Accelerators, and Approximate Computing. He has 13
-                    international journal papers, 6 conference papers, 2
-                    patents, and a book chapter with CRC Press. He has guided 8
-                    M.Tech dissertations and currently supervises 2 Ph.D.
-                    scholars, consistently inspiring innovation and excellence
-                    in VLSI education and research.
-                  </p>
-                  {/* <p className="text-gray-700 leading-relaxed text-justify mt-4">
-                    Dr. Rao has earned his M.Tech in VLSI System Design and
-                    Embedded Systems from NIT Allahabad, and B.E in ECE from Sir
-                    C.R. Reddy College of Engineering, Eluru. His research
-                    contributions include 13 international journal papers, 6
-                    international conference papers, 3 patents published, and 1
-                    book chapter. He has successfully guided 6 M.Tech.
-                    dissertations and is currently supervising 2 Ph.D. scholars.
-                  </p> */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      
         {/* Our Objectives Section */}
         <div className="mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-12 text-gray-800 flex items-center justify-center gap-2 px-2">
@@ -486,38 +650,69 @@ const AboutUs = () => {
         </div>
         {/* Web Page Developers Section */}
         <div className="mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-12 text-gray-800 px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-5 text-gray-800 px-2">
             Web Page Developers
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
-            {developers.map((developer, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 text-center transform transition-all hover:shadow-xl hover:scale-105"
-              >
-                <div className="flex items-center justify-center mb-4 sm:mb-6">
-                  <Image
-                    src={developer.image}
-                    alt={developer.name}
-                    width={100}
-                    height={100}
-                    quality={90}
-                    className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-cover rounded-full"
-                  />
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
-                  {developer.name}
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
-                  {developer.roll_number}
-                </p>
-                <p className="text-sm sm:text-base text-[#2563eb] font-semibold">
-                  {developer.role}
-                </p>
-              </div>
-            ))}
+          </h2> 
+          <div className="py-5 bg-neutral-50">
+  <div className="max-w-5xl mx-auto px-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+      {developers.map((developer, index) => (
+        <div
+          key={index}
+          className="group bg-white rounded-3xl p-8 border border-neutral-200 
+          shadow-sm transition-all duration-500 
+          hover:-translate-y-2 hover:shadow-xl"
+        >
+          {/* Image */}
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <Image
+                src={developer.image}
+                alt={developer.name}
+                width={120}
+                height={120}
+                quality={90}
+                className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover 
+                transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 rounded-full ring-1 ring-neutral-200"></div>
+            </div>
           </div>
+
+          {/* Name */}
+          <h3 className="text-lg font-semibold text-neutral-800 text-center tracking-tight">
+            {developer.name}
+          </h3>
+
+          {/* Roll Number */}
+          <p className="text-sm text-neutral-500 text-center mt-2">
+            {developer.roll_number}
+          </p>
+
+          {/* Divider */}
+          <div className="w-10 h-[1px] bg-neutral-200 mx-auto my-4"></div>
+
+          {/* Role */}
+          <p className="text-sm text-neutral-700 text-center font-medium">
+            {developer.role}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+  {/* <motion.div
+      role="list"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.12 }}
+      variants={containerVariants}
+      className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-7 max-w-4xl mx-auto"
+    >
+      {developers.map((dev, idx) => (
+        <DeveloperCard key={dev.id ?? idx} dev={dev} idx={idx} />
+      ))}
+    </motion.div> */}
         </div>
 
         {/* FAQ Section */}

@@ -26,7 +26,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <section className="w-full grid grid-cols-1 gap-2 items-center mb-5 ml-30">
+            <section className="w-full grid grid-cols-1 gap-2 items-center mb-5 xl:ml-32">
               {/* Left Content */}
              
                 {/* Logo + Title */}

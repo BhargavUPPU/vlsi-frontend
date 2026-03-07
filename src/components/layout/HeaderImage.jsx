@@ -13,6 +13,7 @@ export default function HeaderImage() {
               alt="Header Image"
               width={800}
               height={200}
+              quality={75}
               className="w-full h-auto"
               priority
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 95vw, (max-width: 1024px) 90vw, 1280px"

@@ -43,26 +43,26 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-200">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14">
-          <div className="flex items-center gap-1">
+      <div className="max-w-full mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-14 sm:h-16">
+          <div className="flex items-center gap-1.5 sm:gap-2">
                <Image
                               src="/logo.png"
                               alt="VLSID Logo"
                               width={48}
                               height={48}
-                              className="w-10 h-10 object-contain"
+                              className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
                             />
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold ">VLSI</span>
-              <span className="text-xl font-bold text-indigo-600">D</span>
+              <span className="text-lg sm:text-xl font-bold">VLSI</span>
+              <span className="text-lg sm:text-xl font-bold text-indigo-600">D</span>
             </Link>
           </div>
 
-          <div className="flex ">
+          <div className="flex items-center">
             {/* Desktop Navigation - Centered */}
             <div
-              className={`hidden md:flex items-center space-x-1 ${pathname === "/" ? "mx-auto" : ""}`}
+              className={`hidden lg:flex items-center space-x-1 ${pathname === "/" ? "mx-auto" : ""}`}
             >
               {navigation.map((item) => (
                 <Link
@@ -72,7 +72,7 @@ export default function Navbar() {
                     isActive(item.href)
                       ? "text-white bg-blue-600"
                       : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                  } px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md m-2`}
+                  } px-3 lg:px-4 py-2 text-sm font-medium transition-all duration-200 rounded-md whitespace-nowrap`}
                 >
                   {item.name}
                 </Link>
@@ -80,24 +80,24 @@ export default function Navbar() {
             </div>
 
             {/* Auth Buttons - Desktop */}
-            <div className="hidden md:flex items-center space-x-3">
+            <div className="hidden lg:flex items-center space-x-2 ml-4">
               {user ? (
                 <>
                   <div className="flex items-center gap-2 text-gray-700 bg-gray-100 px-3 py-1.5 rounded-md">
                     <User size={16} />
-                    <span className="text-sm font-medium">{user.name}</span>
+                    <span className="text-sm font-medium max-w-[120px] truncate">{user.name}</span>
                   </div>
                   {user.role === "ADMIN" || user.role === "SUPERADMIN" ? (
                     <Link
                       href="/admin"
-                      className="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-1.5 rounded-md text-sm font-medium transition"
+                      className="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-1.5 rounded-md text-sm font-medium transition whitespace-nowrap"
                     >
                       ADMIN 
                     </Link>
                   ) : null}
                   <button
                     onClick={logout}
-                    className="bg-red-600 text-white hover:bg-red-700 px-4 py-1.5 rounded-md text-sm font-medium transition inline-flex items-center gap-2"
+                    className="bg-red-600 text-white hover:bg-red-700 px-4 py-1.5 rounded-md text-sm font-medium transition inline-flex items-center gap-2 whitespace-nowrap"
                   >
                     Sign out
                   </button>
@@ -106,7 +106,7 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/auth/login"
-                    className="bg-blue-600 text-white hover:bg-blue-700 px-5 py-1.5 rounded-md text-sm font-medium transition"
+                    className="bg-blue-600 text-white hover:bg-blue-700 px-4 sm:px-5 py-1.5 rounded-md text-sm font-medium transition whitespace-nowrap"
                   >
                     Login
                   </Link>
@@ -116,10 +116,11 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 p-2"
+              className="text-gray-700 hover:text-blue-600 p-2 transition-colors"
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -129,8 +130,8 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white">
-          <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="lg:hidden border-t border-gray-200 bg-white shadow-lg">
+          <div className="px-3 sm:px-4 pt-2 pb-3 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -139,26 +140,26 @@ export default function Navbar() {
                 className={`${
                   isActive(item.href)
                     ? "bg-blue-600 text-white"
-                    : "text-gray-700 hover:bg-blue-50"
-                } block px-3 py-2 rounded-md text-base font-medium`}
+                    : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                } block px-4 py-2.5 rounded-md text-base font-medium transition-all`}
               >
                 {item.name}
               </Link>
             ))}
 
             {/* Mobile Auth */}
-            <div className="pt-4 pb-2 border-t border-gray-200 space-y-2">
+            <div className="pt-3 pb-2 border-t border-gray-200 space-y-2">
               {user ? (
                 <>
-                  <div className="px-3 py-2 text-gray-700 bg-gray-100 rounded-md">
-                    <User className="inline mr-2" size={20} />
-                    {user.name}
+                  <div className="px-4 py-2.5 text-gray-700 bg-gray-100 rounded-md flex items-center gap-2">
+                    <User size={20} />
+                    <span className="font-medium">{user.name}</span>
                   </div>
                   {user.role === "ADMIN" || user.role === "SUPERADMIN" ? (
                     <Link
                       href="/admin"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md"
+                      className="block px-4 py-2.5 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md font-medium transition-all"
                     >
                       ADMIN 
                     </Link>
@@ -168,9 +169,9 @@ export default function Navbar() {
                       logout();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full text-left px-3 py-2 bg-red-600 text-white hover:bg-red-700 rounded-md"
+                    className="w-full text-left px-4 py-2.5 bg-red-600 text-white hover:bg-red-700 rounded-md font-medium transition-all flex items-center gap-2"
                   >
-                    <LogOut className="inline mr-2" size={20} />
+                    <LogOut size={20} />
                     Sign out
                   </button>
                 </>
@@ -179,7 +180,7 @@ export default function Navbar() {
                   <Link
                     href="/auth/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md"
+                    className="block px-4 py-2.5 bg-blue-600 text-white hover:bg-blue-700 rounded-md font-medium text-center transition-all"
                   >
                     Login
                   </Link>

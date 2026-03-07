@@ -4,7 +4,6 @@ import HeroSection from "@/components/home/HeroSection";
 import WhyJoinUs from "@/components/home/WhyJoinUs";
 import StudentAchievements from "@/components/home/StudentAchievements";
 import CalendarUpdates from "@/components/home/CalendarUpdates";
-import FacultySection from "@/components/home/FacultySection";
 import ClubTimeline from "@/components/home/ClubTimeline";
 import ClubHighlights from "@/components/home/ClubHighlights";
 import VoicesSection from "@/components/home/VoicesSection";
@@ -27,8 +26,6 @@ export default function HomePage() {
       {/* Calendar & Updates */}
       <CalendarUpdates />
 
-      {/* Faculty Section */}
-      <FacultySection />
 
       {/* Club Timeline */}
       <ClubTimeline />

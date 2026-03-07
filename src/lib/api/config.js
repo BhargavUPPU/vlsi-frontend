@@ -3,7 +3,7 @@
  * Base URL will be set via environment variables
  */
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL = 'http://49.205.68.25:8080/api';
 
 export const API_ENDPOINTS = {
   // Auth
@@ -40,6 +40,7 @@ export const API_ENDPOINTS = {
     GET_ALL: '/projects',
     BY_ID: (id) => `/projects/${id}`,
     IMAGES: (id) => `/projects/${id}/images`,
+    IMAGE_BY_ID: (imageId) => `/projects/images/${imageId}`,
   },
   
   //Users
@@ -61,36 +62,43 @@ export const API_ENDPOINTS = {
   QUESTION_BANKS: {
     BASE: '/questionBanks',
     BY_ID: (id) => `/questionBanks/${id}`,
+    THUMBNAIL: (id) => `/questionBanks/${id}/thumbnail`,
   },
   
   TEXTBOOKS: {
-    BASE: '/textBooks',
-    BY_ID: (id) => `/textBooks/${id}`,
+    BASE: '/textbooks',
+    BY_ID: (id) => `/textbooks/${id}`,
+    THUMBNAIL: (id) => `/textbooks/${id}/thumbnail`,
   },
   
   NPTEL_LECTURES: {
     BASE: '/nptelLectures',
     BY_ID: (id) => `/nptelLectures/${id}`,
+    THUMBNAIL: (id) => `/nptelLectures/${id}/thumbnail`,
   },
   
   PLACEMENT_PREP: {
     BASE: '/placementPrep',
     BY_ID: (id) => `/placementPrep/${id}`,
+    THUMBNAIL: (id) => `/placementPrep/${id}/thumbnail`,
   },
   
   VLSI_MATERIALS: {
     BASE: '/vlsiMaterials',
     BY_ID: (id) => `/vlsiMaterials/${id}`,
+    THUMBNAIL: (id) => `/vlsiMaterials/${id}/thumbnail`,
   },
   
   GATE_PYQS: {
     BASE: '/gatePyqs',
     BY_ID: (id) => `/gatePyqs/${id}`,
+    THUMBNAIL: (id) => `/gatePyqs/${id}/thumbnail`,
   },
   
   MAGAZINES: {
     BASE: '/magazines',
     BY_ID: (id) => `/magazines/${id}`,
+    THUMBNAIL: (id) => `/magazines/${id}/thumbnail`,
   },
   
   // Tests
@@ -123,6 +131,8 @@ export const API_ENDPOINTS = {
     BY_ID: (id) => `/photoGallery/${id}`,
     BY_CATEGORY: (category) => `/photoGallery?category=${category}`,
     IMAGES: (id) => `/photoGallery/${id}/images`,
+    IMAGE_BY_INDEX: (id, index) => `/photoGallery/${id}/image/${index}`,
+    THUMBNAIL: (id, index) => `/photoGallery/${id}/thumbnail/${index}`,
     TOGGLE_ACTIVE: (id) => `/photoGallery/${id}/toggle-active`,
   },
   
@@ -135,6 +145,16 @@ export const API_ENDPOINTS = {
     CATEGORIES: '/milestones/categories',
     TOGGLE_ACTIVE: (id) => `/milestones/${id}/toggle-active`,
     UPDATE_PRIORITY: (id) => `/milestones/${id}/priority`,
+  },
+  
+  // Achievements
+  ACHIEVEMENTS: {
+    BASE: '/achievements',
+    BY_ID: (id) => `/achievements/${id}`,
+    ACTIVE: '/achievements/active',
+    IMAGE: (imageId) => `/achievements/image/${imageId}`,
+    THUMBNAIL: (imageId) => `/achievements/thumbnail/${imageId}`,
+    MAIN_IMAGE: (id) => `/achievements/${id}/main-image`,
   },
   
   // File Upload

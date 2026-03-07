@@ -40,45 +40,45 @@ export default function ResourcesPage() {
     }
   };
 
-  // Fetch all resource types
+  // Pagination for resource previews (fetch first page with a limit)
+  const page = 1;
+  const limit = 6;
+  // Fetch resource previews (paginated)
   const { data: textbooksData, isLoading: loadingTextbooks } = useQuery({
-    queryKey: ["textbooks"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.TEXTBOOKS.BASE),
+    queryKey: ["textbooks", page, limit],
+    queryFn: () => apiClient.get(API_ENDPOINTS.TEXTBOOKS.BASE, { params: { page, limit } }),
   });
 
   const { data: nptelData, isLoading: loadingNptel } = useQuery({
-    queryKey: ["nptel"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.NPTEL_LECTURES.BASE),
+    queryKey: ["nptel", page, limit],
+    queryFn: () => apiClient.get(API_ENDPOINTS.NPTEL_LECTURES.BASE, { params: { page, limit } }),
   });
 
   const { data: materialsData, isLoading: loadingMaterials } = useQuery({
-    queryKey: ["vlsiMaterials"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.VLSI_MATERIALS.BASE),
+    queryKey: ["vlsiMaterials", page, limit],
+    queryFn: () => apiClient.get(API_ENDPOINTS.VLSI_MATERIALS.BASE, { params: { page, limit } }),
   });
 
-  const { data: questionBanksData, isLoading: loadingQuestionBanks } = useQuery(
-    {
-      queryKey: ["questionBanks"],
-      queryFn: () => apiClient.get(API_ENDPOINTS.QUESTION_BANKS.BASE),
-    },
-  );
+  const { data: questionBanksData, isLoading: loadingQuestionBanks } = useQuery({
+    queryKey: ["questionBanks", page, limit],
+    queryFn: () => apiClient.get(API_ENDPOINTS.QUESTION_BANKS.BASE, { params: { page, limit } }),
+  });
 
-  const { data: placementPrepData, isLoading: loadingPlacementPrep } = useQuery(
-    {
-      queryKey: ["placementPrep"],
-      queryFn: () => apiClient.get(API_ENDPOINTS.PLACEMENT_PREP.BASE),
-    },
-  );
+  const { data: placementPrepData, isLoading: loadingPlacementPrep } = useQuery({
+    queryKey: ["placementPrep", page, limit],
+    queryFn: () => apiClient.get(API_ENDPOINTS.PLACEMENT_PREP.BASE, { params: { page, limit } }),
+  });
 
   const { data: magazinesData, isLoading: loadingMagazines } = useQuery({
-    queryKey: ["magazines"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.MAGAZINES.BASE),
+    queryKey: ["magazines", page, limit],
+    queryFn: () => apiClient.get(API_ENDPOINTS.MAGAZINES.BASE, { params: { page, limit } }),
   });
 
   const { data: gatePyqsData, isLoading: loadingGatePyqs } = useQuery({
-    queryKey: ["gatePyqs"],
-    queryFn: () => apiClient.get(API_ENDPOINTS.GATE_PYQS.BASE),
+    queryKey: ["gatePyqs", page, limit],
+    queryFn: () => apiClient.get(API_ENDPOINTS.GATE_PYQS.BASE, { params: { page, limit } }),
   });
+
 
   const textbooks = Array.isArray(textbooksData?.data?.data)
     ? textbooksData.data.data
@@ -123,32 +123,42 @@ export default function ResourcesPage() {
       {/* Hero Banner */}
       <Link
         href="/"
-        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium p-4"
+        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium px-4 pt-4"
       >
         <ArrowLeft size={20} />
         <span>Home</span>
       </Link>
       <div className="w-full">
-        <Image
-          src="/resourceBanner.svg"
-          alt="Resources Hero Banner"
-          width={1920}
-          height={400}
-          className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover"
-        />
-      </div>
+  <div className="relative w-full aspect-[16/5]">
+    <Image
+      src="/resourceBanner.svg"
+      alt="Resources Hero Banner"
+      fill
+      priority
+      className="object-contain"
+    />
+  </div>
+</div>
       {/* Quick Access Cards */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  static md:relative z-10">
-        <div>
-          <h2 className="text-3xl font-bold text-gray-900 mt-2 mb-2">Access free Resources,Tools,and many more</h2>
-          <p className="text-gray-600 text-sm md:text-base mb-6">
-            Explore structured learning paths, essential tools, and curated resources to get started with confidence.
-          </p>  
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
+      <div className="text-center md:text-left px-4 sm:px-6 md:px-0 max-w-3xl mx-auto md:mx-0">
+  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 
+  font-bold tracking-tight text-neutral-900 
+  leading-snug md:leading-tight mb-4">
+    Access Free Resources, Tools & More
+  </h2>
+
+  <p className="text-neutral-600 
+  text-sm sm:text-base md:text-lg 
+  leading-relaxed max-w-2xl mx-auto md:mx-0">
+    Explore structured learning paths, essential tools, and curated
+    resources to get started with confidence.
+  </p>
+</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
           <Link
             href="/resources/roadmap"
-            className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden h-28 sm:h-36 md:h-44 lg:h-52"
+            className="bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow block relative overflow-hidden text-center h-28 sm:h-36 md:h-44 lg:h-52"
           >
             <Image
               src="/Resource1.jpg"
@@ -157,7 +167,7 @@ export default function ResourcesPage() {
               height={200}
               className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-            <div className="absolute left-4 bottom-4">
+            <div className="absolute left-1/4 lg:left-4 bottom-4">
               <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
                 VLSI ROADMAP
               </span>
@@ -174,7 +184,7 @@ export default function ResourcesPage() {
               fill
               className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-             <div className="absolute left-4 bottom-4">
+             <div className="absolute left-1/4 lg:left-4 bottom-4">
               <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
                 VLSI TOOLS
               </span>
@@ -192,7 +202,7 @@ export default function ResourcesPage() {
               fill
               className="object-cover opacity-100 absolute inset-0 pointer-events-none"
             />
-            <div className="absolute left-4 bottom-4">
+            <div className="absolute left-1/4 lg:left-4 bottom-4">
               <span className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
                 PLACEMENT PREPARATION
               </span>
@@ -201,9 +211,9 @@ export default function ResourcesPage() {
         </div>
       </div>
       {/* Resources Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Resources</h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 lg:text-3xl">Resources</h2>
           <div className="flex flex-wrap gap-2">
             {magazines.length > 0 && (
               <button
@@ -267,12 +277,12 @@ export default function ResourcesPage() {
         {/* Silicon Chronicle Magazines */}
         <div id="magazines-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               Silicon Chronicle Magazines
             </h3>
             <Link
               href="/resources/explore?type=magazines"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+              className=" text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
               Explore All{" "}
               <span className="group-hover:translate-x-1 transition-transform">
@@ -296,10 +306,10 @@ export default function ResourcesPage() {
         {/* VLSI Textbooks*/}
         <div id="textbooks-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">VLSI Textbooks</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">VLSI Textbooks</h3>
             <Link
               href="/resources/explore?type=textbooks"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+              className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
               Explore All{" "}
               <span className="group-hover:translate-x-1 transition-transform">
@@ -322,10 +332,10 @@ export default function ResourcesPage() {
         {/* NPTEL Lectures */}
         <div id="nptel-lectures-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">NPTEL Lectures</h3>
+            <h3 className=" text-xl sm:text-2xl font-bold text-gray-900">NPTEL Lectures</h3>
             <Link
               href="/resources/explore?type=nptelLectures"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+              className=" text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
               Explore All{" "}
               <span className="group-hover:translate-x-1 transition-transform">
@@ -349,10 +359,10 @@ export default function ResourcesPage() {
         {/* VLSI Materials */}
         <div id="materials-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">VLSI Materials</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">VLSI Materials</h3>
             <Link
               href="/resources/explore?type=vlsiMaterials"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+              className=" text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
               Explore All{" "}
               <span className="group-hover:translate-x-1 transition-transform">
@@ -376,12 +386,12 @@ export default function ResourcesPage() {
         {/* VLSID Club Question Banks */}
         <div id="question-banks-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               VLSID Club Question Banks
             </h3>
             <Link
               href="/resources/explore?type=questionBanks"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+              className=" text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
               Explore All{" "}
               <span className="group-hover:translate-x-1 transition-transform">
@@ -405,12 +415,12 @@ export default function ResourcesPage() {
         {/* VLSID Club Recruitment PYQs */}
         <div id="placement-prep-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               VLSID Club Recruitment PYQs
             </h3>
             <Link
               href="/resources/explore?type=placementPrep"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+              className=" text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
               Explore All{" "}
               <span className="group-hover:translate-x-1 transition-transform">
@@ -434,10 +444,10 @@ export default function ResourcesPage() {
         {/* ECE Gate PYQs */}
         <div id="gate-pyqs-section" className="mb-4">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">ECE Gate PYQs</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">ECE Gate PYQs</h3>
             <Link
               href="/resources/explore?type=gatePyqs"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
+              className=" text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 group"
             >
               Explore All{" "}
               <span className="group-hover:translate-x-1 transition-transform">

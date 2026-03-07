@@ -67,17 +67,7 @@ const CATEGORY_MAP = {
     "Protocols",
     "Semiconductor Physics"
   ],
-  gatePyqs: [
-    "Analog Electronics",
-    "Digital Electronics",
-    "Network Theory",
-    "Signals & Systems",
-    "Communication",
-    "Verilog",
-    "EDC"
-  ],
   placementPrep: [
-    "Previous Year Club Recruitment & Aptitude Papers (V)",
     "VLSI Club Recruitment PYQs"
   ],
   questionBanks: [
@@ -147,7 +137,11 @@ export default function ResourcesExplorePage() {
 
   const getImageUrl = (item) => {
     if (item.image) {
-      return `${API_BASE_URL}/${selectedType}/${item.id}/image`;
+      try {
+        return bufferToDataURL(item.image);
+      } catch (e) {
+        return `${API_BASE_URL}/${selectedType}/${item.id}/image`;
+      }
     }
     return "/resource_placeholder.png"; // Fallback
   };
@@ -159,7 +153,6 @@ export default function ResourcesExplorePage() {
   const getSubtitle = (item) => {
     if (selectedType === "textbooks") return item.author;
     if (selectedType === "nptelLectures") return item.professorName;
-    if (selectedType === "gatePyqs") return `Year: ${item.year}`;
     if (selectedType === "questionBanks") return item.subject;
     return item.category || "Club Resource";
   };
@@ -340,16 +333,16 @@ export default function ResourcesExplorePage() {
                  
                   {
                     item.subject && (
-                      <p className="text-sm text-gray-500 mb-1 font-medium">
-                        Subject: {item.subject}
-                      </p>
+                      <p className="text-sm text-gray-500 mb-1">
+                      <span className="font-bold">Subject:</span> {item.subject}
+                    </p>
                     )
                   }
           
                   {
                     item.year && (
                       <p className="text-sm text-gray-500 mb-1 font-medium">
-                        Year: {item.year}
+                        <span className="font-bold">Year: </span>{''}{item.year}
                       </p>
                     )
                   }

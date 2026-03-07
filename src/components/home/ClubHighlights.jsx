@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api/client";
 import { API_ENDPOINTS } from "@/lib/api/config";
-import { combineHighlightImages } from "@/lib/utils/imageUtils";
 import {
   staggerContainer,
   staggerItem,
@@ -24,33 +23,73 @@ export default function ClubHighlights() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  // Fetch photo gallery items for club highlights with caching
-  const { data: photoGalleries, error: photoGalleriesError } = useQuery({
+  // Fetch photo gallery items for club highlights with caching and pagination
+  const { data: photoGalleryResponse, error: photoGalleriesError, isLoading: photoGalleriesLoading } = useQuery({
     queryKey: ["photo-gallery-highlights"],
     queryFn: async () => {
-      // Fetch galleries with CLUB_HIGHLIGHTS or BOTH category
+      // Fetch galleries with CLUB_HIGHLIGHTS or BOTH category (limit to 12 for homepage)
       const [highlights, both] = await Promise.all([
         apiClient.get(
-          `${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=CLUB_HIGHLIGHTS`,
+          `${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=CLUB_HIGHLIGHTS&limit=6`,
         ),
-        apiClient.get(`${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=BOTH`),
+        apiClient.get(`${API_ENDPOINTS.PHOTO_GALLERY.BASE}?category=BOTH&limit=6`),
       ]);
-      return [...(highlights.data || []), ...(both.data || [])];
+      // Extract data from paginated response
+      const highlightsData = highlights.data?.data?.data || highlights.data?.data || [];
+      const bothData = both.data?.data?.data || both.data?.data || [];
+      return [...highlightsData, ...bothData];
     },
     staleTime: 5 * 60 * 1000,
     cacheTime: 15 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
 
+  // Process gallery images to use API endpoints
+  const processGalleryImages = useMemo(() => {
+    const photoGalleries = photoGalleryResponse || [];
+    const images = [];
+    
+    console.log('ClubHighlights debug:', {
+      photoGalleryResponse: photoGalleryResponse,
+      count: photoGalleries.length
+    });
+    
+    photoGalleries.forEach(gallery => {
+      console.log('Processing gallery:', gallery.title, 'Images:', gallery.images?.length);
+      if (gallery.images && Array.isArray(gallery.images)) {
+        gallery.images.forEach((image, index) => {
+          // Use thumbnail endpoint for better performance
+          const thumbnailUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://49.205.68.25:8080/api'}/photoGallery/${gallery.id}/thumbnail/${index}`;
+          images.push({
+            url: thumbnailUrl,
+            title: gallery.title,
+            type: 'photo gallery',
+            id: gallery.id,
+            priority: gallery.priority || 0,
+            caption: image.caption || gallery.title,
+            imageIndex: index
+          });
+        });
+      }
+    });
+    
+    console.log('Processed images:', images.length);
+    
+    // Sort by priority and shuffle
+    return images.sort((a, b) => {
+      const priorityA = a.priority || 0;
+      const priorityB = b.priority || 0;
+      if (priorityA !== priorityB) {
+        return priorityB - priorityA;
+      }
+      return Math.random() - 0.5;
+    }).slice(0, 12);
+  }, [photoGalleryResponse]);
+
   // Memoize processed images to avoid recalculation
   const images = useMemo(() => {
-    return combineHighlightImages(
-      [],
-      [],
-      photoGalleries || [],
-      12,
-    );
-  }, [photoGalleries]);
+    return processGalleryImages;
+  }, [processGalleryImages]);
 
   // Check for errors
   const hasError = photoGalleriesError;
@@ -121,6 +160,12 @@ export default function ClubHighlights() {
             <div className="text-center py-20 text-red-500">
               <p>Failed to load highlights. Please try again later.</p>
             </div>
+          ) : photoGalleriesLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="animate-pulse aspect-video rounded-xl bg-gray-200" />
+              ))}
+            </div>
           ) : images.length > 0 ? (
             <>
               {/* Carousel Viewport */}
@@ -140,18 +185,12 @@ export default function ClubHighlights() {
                           alt={image.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           loading="lazy"
+                          onError={(e) => {
+                            console.warn(`Failed to load image: ${image.url}`);
+                            // You could set a fallback image here if needed
+                          }}
                         />
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="absolute bottom-0 left-0 right-0 p-4">
-                            <p className="text-white font-semibold text-lg">
-                              {image.title}
-                            </p>
-                            <p className="text-white/80 text-sm capitalize">
-                              {image.type}
-                            </p>
-                          </div>
-                        </div>
+                      
                       </motion.div>
                     </div>
                   ))}

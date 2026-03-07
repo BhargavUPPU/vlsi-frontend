@@ -26,8 +26,8 @@ export default function EventDetailsPage() {
   const eventId = params.id;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start", slidesToScroll: 1 },
-    [Autoplay({ delay: 3000, stopOnInteraction: true })],
+    { loop: true, align: "start", slidesToScroll: 1, skipSnaps: false },
+    [Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })],
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -135,36 +135,36 @@ export default function EventDetailsPage() {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="bg-white border-b">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="h-6 w-48 bg-gray-200 rounded animate-pulse"></div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4">
+            <div className="h-5 sm:h-6 w-32 sm:w-48 bg-gray-200 rounded animate-pulse"></div>
           </div>
         </div>
         <div className="bg-gradient-to-r from-gray-900 to-gray-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <div className="h-10 bg-gray-700 rounded animate-pulse"></div>
-                <div className="h-32 bg-gray-700 rounded animate-pulse"></div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-8 sm:py-10 md:py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+              <div className="space-y-4 sm:space-y-6">
+                <div className="h-8 sm:h-10 bg-gray-700 rounded animate-pulse"></div>
+                <div className="h-24 sm:h-32 bg-gray-700 rounded animate-pulse"></div>
               </div>
-              <div className="h-96 bg-gray-700 rounded-xl animate-pulse"></div>
+              <div className="h-64 sm:h-80 md:h-96 bg-gray-700 rounded-lg sm:rounded-xl animate-pulse"></div>
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-8">
-              <div className="bg-white rounded-lg p-8">
-                <div className="h-8 w-48 bg-gray-200 rounded animate-pulse mb-4"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-8 sm:py-10 md:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+              <div className="bg-white rounded-lg p-4 sm:p-6 md:p-8">
+                <div className="h-6 sm:h-8 w-36 sm:w-48 bg-gray-200 rounded animate-pulse mb-3 sm:mb-4"></div>
                 <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
-                  <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
-                  <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                  <div className="h-3 sm:h-4 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-3 sm:h-4 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-3 sm:h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
                 </div>
               </div>
             </div>
-            <div className="space-y-6">
-              <div className="bg-white rounded-lg p-6">
-                <div className="h-6 w-32 bg-gray-200 rounded animate-pulse"></div>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="bg-white rounded-lg p-4 sm:p-6">
+                <div className="h-5 sm:h-6 w-24 sm:w-32 bg-gray-200 rounded animate-pulse"></div>
               </div>
             </div>
           </div>
@@ -176,17 +176,17 @@ export default function EventDetailsPage() {
   // Error state
   if (error || !event) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
             Event Not Found
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
             The event you're looking for doesn't exist
           </p>
           <Link
             href="/events"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-block bg-blue-600 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base"
           >
             Back to Events
           </Link>
@@ -199,53 +199,53 @@ export default function EventDetailsPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Breadcrumb */}
       <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4">
           <Link
             href="/events"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
             <span>Events</span>
-            <span className="text-gray-400">&gt;&gt;</span>
-            <span className="text-gray-900">{event.title}</span>
+            <span className="text-gray-400 hidden sm:inline">&gt;&gt;</span>
+            <span className="text-gray-900 truncate max-w-[200px] sm:max-w-none">{event.title}</span>
           </Link>
         </div>
       </div>
 
       {/* Hero Section with Event Header */}
       <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-7 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-6 sm:py-8 md:py-10 lg:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
             {/* Event Info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6"
             >
-              <h1 className="text-3xl md:text-4xl font-bold leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
                 {event.title}
               </h1>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {Number(event.noOfParticipants) > 0 && (
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center">
-                      <Users size={20} />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0">
+                      <Users size={16} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <p className="text-lg text-gray-300">Participants</p>
-                      <p className="font-semibold">{event.noOfParticipants}+</p>
+                      <p className="text-xs sm:text-sm text-gray-300">Participants</p>
+                      <p className="text-sm sm:text-base font-semibold">{event.noOfParticipants}+</p>
                     </div>
                   </div>
                 )}
 
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-                    <Calendar size={20} />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                    <Calendar size={16} className="sm:w-5 sm:h-5" />
                   </div>
                   <div>
                     <p className="text-xs text-gray-300">Date</p>
-                    <p className="font-semibold">
+                    <p className="text-sm sm:text-base font-semibold">
                       {new Date(event.eventDate).toLocaleDateString()}
                     </p>
                   </div>
@@ -253,24 +253,24 @@ export default function EventDetailsPage() {
 
                 {event.status && (
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
                       <span className="text-xs font-bold">S</span>
                     </div>
                     <div>
                       <p className="text-xs text-gray-300">Status</p>
-                      <p className="font-semibold capitalize">{event.status}</p>
+                      <p className="text-sm sm:text-base font-semibold capitalize">{event.status}</p>
                     </div>
                   </div>
                 )}
 
                 {event.eventType && (
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center">
-                      <MapPin size={20} />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0">
+                      <MapPin size={16} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-300">Event Type</p>
-                      <p className="font-semibold">{event.eventType}</p>
+                      <p className="text-sm sm:text-base font-semibold">{event.eventType}</p>
                     </div>
                   </div>
                 )}
@@ -281,10 +281,10 @@ export default function EventDetailsPage() {
                   href={event.eventRegistrationLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base"
                 >
                   Register
-                  <ExternalLink size={18} />
+                  <ExternalLink size={16} className="sm:w-[18px] sm:h-[18px]" />
                 </a>
               )}
             </motion.div>
@@ -293,18 +293,20 @@ export default function EventDetailsPage() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="relative h-80 lg:h-96  overflow-hidden "
+              className="relative h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden"
             >
               {headerImage ? (
                 <img
                   src={headerImage}
                   alt={event.title}
-                  className="w-full h-full object-contain rounded-xl shadow-lg"
+                  className="w-full h-full object-contain rounded-lg sm:rounded-xl shadow-lg"
                   loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                  <Calendar size={80} className="text-white opacity-50" />
+                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center rounded-lg sm:rounded-xl">
+                  <Calendar size={60} className="sm:w-20 sm:h-20 text-white opacity-50" />
                 </div>
               )}
             </motion.div>
@@ -313,40 +315,40 @@ export default function EventDetailsPage() {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-6 sm:py-8 md:py-10 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 sm:space-y-8">
             {/* About the Event */}
-            <div className="bg-white rounded-lg shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                 About the Event
               </h2>
-              <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-line">
                 {event.description.trim()}
               </p>
             </div>
 
             {/* Speaker */}
             {event.speakerName && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                   Speaker
                 </h2>
-                <h3 className="text-xl font-semibold text-blue-600 mb-2">
+                <h3 className="text-lg sm:text-xl font-semibold text-blue-600 mb-2">
                   {event.speakerName}
                 </h3>
                 {event.speakerDescription && (
-                  <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-line">
                     {event.speakerDescription.trim()}
                   </p>
                 )}
                 {speakerHighlights.length > 0 && (
-                  <ul className="mt-4 space-y-2">
+                  <ul className="mt-3 sm:mt-4 space-y-2">
                     {speakerHighlights.map((highlight, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-2 text-gray-600"
+                        className="flex items-start gap-2 text-sm sm:text-base text-gray-600"
                       >
                         <span className="text-blue-600 mt-1">•</span>
                         <span>{highlight}</span>
@@ -359,11 +361,11 @@ export default function EventDetailsPage() {
 
             {/* Description / More Details */}
             {event.aboutEvent && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                   Description
                 </h2>
-                <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-line">
                   {event.aboutEvent.trim()}
                 </p>
               </div>
@@ -371,17 +373,17 @@ export default function EventDetailsPage() {
 
             {/* Event Co-ordinators */}
             {facultyCoordinators.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Event Co-ordinators
                 </h2>
-                <div className="grid grid-cols-3  gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                   {facultyCoordinators.map((coordinator, index) => (
                     <div key={index} className="text-center">
-                      <h3 className="font-semibold text-gray-900 text-lg">
+                      <h3 className="font-semibold text-gray-900 text-base sm:text-lg">
                         {coordinator.name || coordinator}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs sm:text-sm text-gray-500">
                         {coordinator.title ||
                           coordinator.position ||
                           "Faculty Coordinator"}
@@ -394,14 +396,14 @@ export default function EventDetailsPage() {
 
             {/* Student Co-ordinators */}
             {studentCoordinators.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Student Co-ordinators
                 </h2>
-                <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                   {studentCoordinators.map((coordinator, index) => (
                     <div key={index} className="text-center">
-                      <h3 className="font-semibold text-gray-900 text-lg">
+                      <h3 className="font-semibold text-gray-900 text-sm sm:text-base md:text-lg">
                         {coordinator.name || coordinator}
                       </h3>
                     </div>
@@ -412,19 +414,19 @@ export default function EventDetailsPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Key Points */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Key points
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3">
                 {eventHighlights.map((highlight, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-2 text-sm text-gray-600"
+                    className="flex items-start gap-2 text-xs sm:text-sm text-gray-600"
                   >
-                    <span className="text-blue-600 mt-1">•</span>
+                    <span className="text-blue-600 mt-1 flex-shrink-0">•</span>
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -434,18 +436,18 @@ export default function EventDetailsPage() {
             {/* Links */}
            {
             event.eventPdfLink|| event.eventVideoLink ? (
-               <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
+               <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 space-y-2 sm:space-y-3">
               {event.eventPdfLink && (
                 <a
                   href={event.eventPdfLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-between p-2 sm:p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-xs sm:text-sm font-medium text-gray-700">
                     Event PDF
                   </span>
-                  <ExternalLink size={16} className="text-gray-400" />
+                  <ExternalLink size={14} className="sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
                 </a>
               )}
               {event.eventVideoLink && (
@@ -453,12 +455,12 @@ export default function EventDetailsPage() {
                   href={event.eventVideoLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-between p-2 sm:p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-xs sm:text-sm font-medium text-gray-700">
                     Event Video
                   </span>
-                  <ExternalLink size={16} className="text-gray-400" />
+                  <ExternalLink size={14} className="sm:w-4 sm:h-4 text-gray-400 flex-shrink-0" />
                 </a>
               )}
             </div>
@@ -467,16 +469,17 @@ export default function EventDetailsPage() {
 
                 {/* Event Certificate */}
             {certificateImage && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
                   Event Certificate
                 </h2>
-                <div className="relative rounded-xl overflow-hidden shadow-lg">
+                <div className="relative rounded-lg sm:rounded-xl overflow-hidden shadow-lg">
                   <img
                     src={certificateImage}
                     alt="Event Certificate"
                     className="w-full h-auto object-contain"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -486,15 +489,15 @@ export default function EventDetailsPage() {
       </div>
         {/* Event Highlights Carousel */}
             {carouselImages.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <div className="bg-white rounded-lg sm:rounded-xl shadow-sm p-4 sm:p-6 md:p-8">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 md:mb-8">
                   Event Highlights
                 </h2>
 
                 <div className="relative group">
                   {/* Carousel Container */}
                   <div
-                    className="overflow-hidden rounded-xl"
+                    className="overflow-hidden rounded-lg sm:rounded-xl"
                     ref={emblaRef}
                     aria-label="Event Highlights Carousel"
                   >
@@ -502,21 +505,21 @@ export default function EventDetailsPage() {
                       {carouselImages.map((image, index) => (
                         <div
                           key={index}
-                          className="flex-[0_0_calc(33.333%-1rem)] min-w-0 px-2"
+                          className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-0.5rem)] md:flex-[0_0_calc(33.333%-1rem)] min-w-0 px-1 sm:px-2"
                           role="group"
                           aria-roledescription="slide"
                           aria-label={`Slide ${index + 1} of ${carouselImages.length}`}
                         >
                           <div
                             className="relative w-full"
-                            style={{ minHeight: "300px" }}
+                            style={{ minHeight: "200px" }}
                           >
                             <img
                               src={image}
                               alt={`Event highlight ${index + 1}`}
                               className="w-full h-full object-contain"
                               style={{ maxHeight: "300px" }}
-                              loading="lazy"
+                              loading={index < 3 ? "eager" : "lazy"}
                               onError={(e) => {
                                 e.target.src = "/fallback-image.jpg"; // Fallback image
                               }}
@@ -532,32 +535,32 @@ export default function EventDetailsPage() {
                     <>
                       <button
                         onClick={scrollPrev}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         aria-label="Previous image"
                       >
-                        <ChevronLeft size={24} className="text-gray-800" />
+                        <ChevronLeft size={18} className="sm:w-6 sm:h-6 text-gray-800 flex-shrink-0" />
                       </button>
                       <button
                         onClick={scrollNext}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         aria-label="Next image"
                       >
-                        <ChevronRight size={24} className="text-gray-800" />
+                        <ChevronRight size={18} className="sm:w-6 sm:h-6 text-gray-800 flex-shrink-0" />
                       </button>
                     </>
                   )}
 
                   {/* Dots Navigation */}
                   {carouselImages.length > 1 && (
-                    <div className="flex justify-center items-center gap-2 mt-6">
+                    <div className="flex justify-center items-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
                       {scrollSnaps.map((_, index) => (
                         <button
                           key={index}
                           onClick={() => scrollTo(index)}
-                          className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 ${
+                          className={`h-1.5 sm:h-2 md:h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 flex-shrink-0 ${
                             index === selectedIndex
-                              ? "w-8 bg-blue-600"
-                              : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                              ? "w-6 sm:w-8 bg-blue-600"
+                              : "w-1.5 sm:w-2 md:w-2.5 bg-gray-300 hover:bg-gray-400"
                           }`}
                           aria-label={`Go to slide ${index + 1}`}
                         />
@@ -567,7 +570,7 @@ export default function EventDetailsPage() {
 
                   {/* Image Counter */}
                   {carouselImages.length > 1 && (
-                    <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1.5 rounded-full text-sm font-medium">
+                    <div className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 bg-black/60 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium">
                       {selectedIndex + 1} / {carouselImages.length}
                     </div>
                   )}

@@ -3,10 +3,55 @@ import {apiClient} from '../client';
 /**
  * Dashboard API Service
  * Handles all dashboard-related data fetching
+ * 
+ * NOTE: Provides both optimized and legacy methods
  */
 
 /**
- * Get dashboard statistics
+ * Get dashboard data using the optimized endpoint (RECOMMENDED)
+ * Single API call for all dashboard data - best performance
+ * @param {number} activityLimit - Number of activity items to fetch
+ * @returns {Promise<Object>} Complete dashboard data (stats + activity)
+ */
+export const getDashboardOverview = async (activityLimit = 10) => {
+    try {
+        const response = await apiClient.get(`/dashboard/overview?activityLimit=${activityLimit}`);
+        
+        if (response.data?.success) {
+            return {
+                success: true,
+                data: {
+                    ...response.data.stats,
+                    activities: response.data.activity || [],
+                },
+            };
+        }
+        
+        throw new Error(response.data?.error || 'Failed to fetch dashboard overview');
+    } catch (error) {
+        console.error('Error fetching dashboard overview:', error);
+        
+        let errorMessage = 'Failed to fetch dashboard data';
+        
+        if (error.response) {
+            errorMessage = error.response.data?.message || error.response.data?.error || `Server error: ${error.response.status}`;
+        } else if (error.request) {
+            errorMessage = 'Unable to reach the server. Please check your connection.';
+        } else {
+            errorMessage = error.message || errorMessage;
+        }
+        
+        return {
+            success: false,
+            error: errorMessage,
+            errorCode: error.response?.status,
+        };
+    }
+};
+
+/**
+ * Get dashboard statistics (LEGACY - use getDashboardOverview instead)
+ * Makes multiple API calls - less efficient but more flexible
  * @returns {Promise<Object>} Dashboard statistics including counts for members, events, projects, resources
  */
 export const getDashboardStats = async () => {
@@ -27,28 +72,41 @@ export const getDashboardStats = async () => {
             apiClient.get('/nptelLectures'),
         ]);
 
-        const totalMembers = membersResponse.data?.length || 0;
-        const totalEvents = eventsResponse.data?.length || 0;
-        const totalProjects = projectsResponse.data?.length || 0;
-        const totalResources =
-            (textBooksResponse.data?.length || 0) +
-            (vlsiMaterialsResponse.data?.length || 0) +
-            (nptelLecturesResponse.data?.length || 0);
+        // Backend returns { data: [...], total: number }
+        const members = Array.isArray(membersResponse.data?.data) ? membersResponse.data.data : [];
+        const events = Array.isArray(eventsResponse.data?.data) ? eventsResponse.data.data : [];
+        const projects = Array.isArray(projectsResponse.data?.data) ? projectsResponse.data.data : [];
+        const textBooks = Array.isArray(textBooksResponse.data?.data) ? textBooksResponse.data.data : [];
+        const vlsiMaterials = Array.isArray(vlsiMaterialsResponse.data?.data) ? vlsiMaterialsResponse.data.data : [];
+        const nptelLectures = Array.isArray(nptelLecturesResponse.data?.data) ? nptelLecturesResponse.data.data : [];
+
+        const totalMembers = members.length;
+        const totalEvents = events.length;
+        const totalProjects = projects.length;
+        const totalResources = textBooks.length + vlsiMaterials.length + nptelLectures.length;
 
         // Calculate active events (events with future dates)
         const now = new Date();
-        const activeEvents = eventsResponse.data?.filter(event => {
-            const eventDate = new Date(event.date);
-            return eventDate >= now;
-        }).length || 0;
+        const activeEvents = events.filter(event => {
+            try {
+                const eventDate = new Date(event.eventDate || event.date);
+                return eventDate >= now;
+            } catch {
+                return false;
+            }
+        }).length;
 
         // Calculate recent projects (projects from this month)
         const thisMonth = new Date().getMonth();
         const thisYear = new Date().getFullYear();
-        const recentProjects = projectsResponse.data?.filter(project => {
-            const projectDate = new Date(project.createdAt);
-            return projectDate.getMonth() === thisMonth && projectDate.getFullYear() === thisYear;
-        }).length || 0;
+        const recentProjects = projects.filter(project => {
+            try {
+                const projectDate = new Date(project.createdAt);
+                return projectDate.getMonth() === thisMonth && projectDate.getFullYear() === thisYear;
+            } catch {
+                return false;
+            }
+        }).length;
 
         return {
             success: true,
@@ -63,9 +121,25 @@ export const getDashboardStats = async () => {
         };
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);
+        
+        // Production-level error handling
+        let errorMessage = 'Failed to fetch dashboard statistics';
+        
+        if (error.response) {
+            // Server responded with error status
+            errorMessage = error.response.data?.message || `Server error: ${error.response.status}`;
+        } else if (error.request) {
+            // Request was made but no response received
+            errorMessage = 'Unable to reach the server. Please check your connection.';
+        } else {
+            // Something else happened
+            errorMessage = error.message || errorMessage;
+        }
+        
         return {
             success: false,
-            error: error.message || 'Failed to fetch dashboard statistics',
+            error: errorMessage,
+            errorCode: error.response?.status,
         };
     }
 };
@@ -82,54 +156,59 @@ export const getRecentActivity = async (limit = 10) => {
             eventsResponse,
             projectsResponse,
         ] = await Promise.all([
-            apiClient.get('/clubMembers'),
-            apiClient.get('/events'),
-            apiClient.get('/projects'),
+            apiClient.get('/clubMembers?limit=3'),
+            apiClient.get('/events?limit=3'),
+            apiClient.get('/projects?limit=3'),
         ]);
 
         const activities = [];
 
+        // Backend returns { data: [...], total: number }
+        const members = Array.isArray(membersResponse.data?.data) ? membersResponse.data.data : [];
+        const events = Array.isArray(eventsResponse.data?.data) ? eventsResponse.data.data : [];
+        const projects = Array.isArray(projectsResponse.data?.data) ? projectsResponse.data.data : [];
+
         // Add member activities
-        if (membersResponse.data && Array.isArray(membersResponse.data)) {
-            membersResponse.data.slice(0, 3).forEach(member => {
+        members.slice(0, 3).forEach(member => {
+            if (member?.name) {
                 activities.push({
                     type: 'member',
                     icon: 'Users',
-                    title: 'New member registered',
-                    description: member.name || 'New member',
+                    title: `New member: ${member.name}`,
+                    description: member.rollNumber || member.email || '',
                     timestamp: member.createdAt || new Date(),
                     color: 'blue',
                 });
-            });
-        }
+            }
+        });
 
         // Add event activities
-        if (eventsResponse.data && Array.isArray(eventsResponse.data)) {
-            eventsResponse.data.slice(0, 3).forEach(event => {
+        events.slice(0, 3).forEach(event => {
+            if (event?.title) {
                 activities.push({
                     type: 'event',
                     icon: 'Calendar',
-                    title: `Event created: ${event.title || 'New Event'}`,
+                    title: `Event: ${event.title}`,
                     description: event.description || '',
                     timestamp: event.createdAt || new Date(),
                     color: 'green',
                 });
-            });
-        }
+            }
+        });
 
         // Add project activities
-        if (projectsResponse.data && Array.isArray(projectsResponse.data)) {
-            projectsResponse.data.slice(0, 3).forEach(project => {
+        projects.slice(0, 3).forEach(project => {
+            if (project?.title) {
                 activities.push({
                     type: 'project',
                     icon: 'FolderOpen',
-                    title: `Project updated: ${project.title || 'New Project'}`,
-                    description: project.Introduction || '',
+                    title: `Project: ${project.title}`,
+                    description: project.Introduction || project.description || '',
                     timestamp: project.updatedAt || project.createdAt || new Date(),
                     color: 'purple',
                 });
-            });
-        }
+            }
+        });
 
         // Sort by timestamp (most recent first) and limit
         const sortedActivities = activities
@@ -142,9 +221,22 @@ export const getRecentActivity = async (limit = 10) => {
         };
     } catch (error) {
         console.error('Error fetching recent activity:', error);
+        
+        // Production-level error handling
+        let errorMessage = 'Failed to fetch recent activity';
+        
+        if (error.response) {
+            errorMessage = error.response.data?.message || `Server error: ${error.response.status}`;
+        } else if (error.request) {
+            errorMessage = 'Unable to reach the server. Please check your connection.';
+        } else {
+            errorMessage = error.message || errorMessage;
+        }
+        
         return {
             success: false,
-            error: error.message || 'Failed to fetch recent activity',
+            error: errorMessage,
+            errorCode: error.response?.status,
         };
     }
 };

@@ -18,20 +18,6 @@ const gatePyqFields = [
   },
   { name: "link", label: "Download Link", placeholder: "https://..." },
   { name: "image", label: "Paper Image", type: "image" },
-  {
-    name: "category",
-    label: "Category",
-    type: "select",
-    options: [
-      { label: "Analog Electronics", value: "Analog Electronics" },
-      { label: "Digital Electronics", value: "Digital Electronics" },
-      { label: "Network Theory", value: "Network Theory" },
-      { label: "Signals & Systems", value: "Signals & Systems" },
-      { label: "Communication", value: "Communication" },
-      { label: "Verilog", value: "Verilog" },
-      { label: "EDC", value: "EDC" },
-    ],
-  },
 ];
 
 function CreateGatePyqContent() {

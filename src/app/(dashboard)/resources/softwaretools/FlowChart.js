@@ -182,7 +182,6 @@ const TOOLS_DATA = {
     label: "Synopsys",
     image: "/SYNOPSIS.svg",
     description: "World leader in EDA software, IP and application security testing solutions",
-    downloadLink: "https://www.synopsys.com/support/downloads.html",
     website: "https://www.synopsys.com/",
     category: "Commercial EDA",
     tools: ["Design Compiler", "IC Compiler", "PrimeTime", "HSPICE", "VCS", "Fusion Compiler"],
