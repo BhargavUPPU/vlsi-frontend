@@ -63,7 +63,7 @@ const normalizedDescriptionMap = new Map(
 );
 
 export default function TeamPage() {
-  const [selectedYear, setSelectedYear] = useState("2025");
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const sentinelRef = useRef(null);

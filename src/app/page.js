@@ -12,6 +12,7 @@ import ClubHighlights from "@/components/home/ClubHighlights";
 import VoicesSection from "@/components/home/VoicesSection";
 import SemiconductorEmployers from "@/components/home/SemiconductorEmployers";
 import Footer from "@/components/layout/Footer";
+import FacultySection from "@/components/home/FacultySection";
 
 export default function HomePage() {
   return (
@@ -39,7 +40,7 @@ export default function HomePage() {
         {/* Calendar & Updates */}
         <CalendarUpdates />
 
-       
+       <FacultySection/>
 
         {/* Club Timeline */}
         <ClubTimeline />

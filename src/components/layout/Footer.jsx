@@ -101,7 +101,7 @@ export default function Footer() {
               {/* Logo */}
               <div className="flex items-center gap-3">
                 <Image
-                  src="/logo.png"
+                  src="/vlsid.png"
                   alt="VLSID Logo"
                   width={48}
                   height={48}

@@ -73,7 +73,7 @@ const ResourceImageCard = memo(({ src, alt, onError, onClick, type, index = 0 })
             src={src}
             alt={alt}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+            sizes="(max-width: 640px) 100vw, (max-width:1200px) 50vw, 33vw"
             className={`object-cover group-hover:scale-110 transition-transform duration-500 ${
               loaded ? "opacity-100" : "opacity-0"
             }`}
@@ -83,7 +83,7 @@ const ResourceImageCard = memo(({ src, alt, onError, onClick, type, index = 0 })
             quality={90}
             unoptimized
           />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+        
           
         </>
       ) : null}
@@ -167,7 +167,7 @@ const ResourceImageCard = memo(({ src, alt, onError, onClick, type, index = 0 })
 // Memoized Carousel Item Component - Production Design
 const ResourceCarouselItem = memo(({ item, index, type }) => {
   return (
-    <div className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_33.333%] xl:flex-[0_0_33.333%] pl-4 first:pl-0">
+    <div className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_33.333%] xl:flex-[0_0_33.333%] pl-4 first:pl-2">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
